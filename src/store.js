@@ -1,49 +1,24 @@
-export const $ = (selector, root=document) => root.querySelector(selector);
-export const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
+export const $=(s,r=document)=>r.querySelector(s);
+export const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+export const money=n=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(n);
 
 export async function loadProducts(){
-  const response = await fetch("assets/products.json");
-  if(!response.ok) throw new Error("Could not load product catalog.");
-  return response.json();
+  const r=await fetch("assets/products.json");
+  if(!r.ok) throw new Error("Product catalogue unavailable");
+  return r.json();
 }
-
-export const money = value => new Intl.NumberFormat("en-IN", {
-  style:"currency", currency:"INR", maximumFractionDigits:0
-}).format(value);
-
-export class Store {
+export class Store{
   constructor(products){
-    this.products = products;
-    this.items = JSON.parse(localStorage.getItem("omer-bag") || "[]")
-      .map(item => ({...item, product:products.find(p=>p.id===item.id)}))
-      .filter(item => item.product);
+    this.products=products;
+    this._items=JSON.parse(localStorage.getItem("omer-cart")||"[]")
+      .map(x=>({...x,product:products.find(p=>p.id===x.id)}))
+      .filter(x=>x.product);
   }
-  get count(){ return this.items.reduce((n,i)=>n+i.qty,0); }
-  get total(){ return this.items.reduce((n,i)=>n+i.product.price*i.qty,0); }
-  add(id){
-    const existing = this.items.find(i=>i.id===id);
-    if(existing) existing.qty++;
-    else {
-      const p=this.products.find(p=>p.id===id);
-      if(p) this.items.push({id,qty:1,product:p});
-    }
-    this.persist();
-  }
-  remove(id){
-    this.items=this.items.filter(i=>i.id!==id);
-    this.persist();
-  }
-  persist(){
-    localStorage.setItem("omer-bag",JSON.stringify(this.items.map(i=>({id:i.id,qty:i.qty}))));
-  }
-  get items(){ return this._items || []; }
-  set items(value){ this._items=value; }
+  get items(){return this._items}
+  get count(){return this._items.reduce((n,x)=>n+x.qty,0)}
+  get total(){return this._items.reduce((n,x)=>n+x.qty*x.product.price,0)}
+  add(id){const x=this._items.find(x=>x.id===id);x?x.qty++:this._items.push({id,qty:1});this.save()}
+  remove(id){this._items=this._items.filter(x=>x.id!==id);this.save()}
+  save(){localStorage.setItem("omer-cart",JSON.stringify(this._items.map(x=>({id:x.id,qty:x.qty}))))}
 }
-
-export function toast(message){
-  const el=$("#toast");
-  el.textContent=message;
-  el.classList.add("show");
-  clearTimeout(window.__omerToast);
-  window.__omerToast=setTimeout(()=>el.classList.remove("show"),2200);
-}
+export function toast(message){const x=$("#toast");x.textContent=message;x.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>x.classList.remove("show"),2200)}

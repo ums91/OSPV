@@ -1,54 +1,62 @@
 [
   {
-    "id": "postcard-kashmir-01",
-    "title": "After the Mist",
-    "type": "Postcard",
-    "category": "Landscapes",
-    "price": 499,
-    "currency": "INR",
-    "edition": "Limited \u00b7 50 copies",
-    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=88",
-    "description": "Archival matte postcard capturing a quiet mountain morning.",
-    "dimensions": "A6 \u00b7 105 \u00d7 148 mm",
-    "stock": 17
-  },
-  {
-    "id": "print-quiet-road-01",
-    "title": "The Quiet Road",
+    "id": "mountain-peak-print",
+    "title": "Mountain Peak",
     "type": "Fine Art Print",
-    "category": "Travel",
-    "price": 2499,
-    "currency": "INR",
+    "price": 1999,
     "edition": "Signed \u00b7 Edition of 25",
-    "image": "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=88",
-    "description": "Museum-grade fine art print on textured cotton rag paper.",
-    "dimensions": "8 \u00d7 10 in",
+    "size": "12 \u00d7 16 in",
+    "image": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1000&q=88",
     "stock": 8
   },
   {
-    "id": "postcard-blue-hour-01",
-    "title": "Blue Hour",
+    "id": "coastal-calm-postcard",
+    "title": "Coastal Calm",
     "type": "Postcard",
-    "category": "Oceans",
-    "price": 449,
-    "currency": "INR",
-    "edition": "Limited \u00b7 75 copies",
+    "price": 199,
+    "edition": "Limited \u00b7 100 copies",
+    "size": "4 \u00d7 6 in",
     "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88",
-    "description": "A calm coastal frame printed on heavyweight uncoated stock.",
-    "dimensions": "A6 \u00b7 105 \u00d7 148 mm",
-    "stock": 29
+    "stock": 42
   },
   {
-    "id": "print-old-city-01",
-    "title": "Old City, New Light",
+    "id": "evening-streets-print",
+    "title": "Evening Streets",
     "type": "Fine Art Print",
-    "category": "Cities",
-    "price": 2999,
-    "currency": "INR",
+    "price": 2299,
     "edition": "Signed \u00b7 Edition of 20",
+    "size": "12 \u00d7 18 in",
     "image": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1000&q=88",
-    "description": "A cinematic urban study printed on 100% cotton rag paper.",
-    "dimensions": "12 \u00d7 16 in",
-    "stock": 5
+    "stock": 6
+  },
+  {
+    "id": "into-the-mist-print",
+    "title": "Into the Mist",
+    "type": "Fine Art Print",
+    "price": 2499,
+    "edition": "Signed \u00b7 Edition of 30",
+    "size": "16 \u00d7 20 in",
+    "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=88",
+    "stock": 12
+  },
+  {
+    "id": "blue-hour-postcard",
+    "title": "Blue Hour",
+    "type": "Postcard",
+    "price": 249,
+    "edition": "Limited \u00b7 75 copies",
+    "size": "4 \u00d7 6 in",
+    "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88",
+    "stock": 28
+  },
+  {
+    "id": "quiet-road-print",
+    "title": "The Quiet Road",
+    "type": "Fine Art Print",
+    "price": 2799,
+    "edition": "Signed \u00b7 Edition of 20",
+    "size": "12 \u00d7 16 in",
+    "image": "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=88",
+    "stock": 9
   }
 ]

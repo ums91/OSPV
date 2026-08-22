@@ -1,107 +1,98 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10100e">
-  <meta name="description" content="OMER — an editorial photography journal and collectible print shop.">
-  <title>OMER — Visual Journal & Editions</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10110f">
+<meta name="description" content="OMER — Visual Journal, photography and collectible editions.">
+<title>OMER — Visual Journal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="cursor" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
-  <div class="progress"><span></span></div>
+<div class="grain"></div><div class="cursor"></div><div class="progress"><i></i></div>
 
-  <header class="site-header">
-    <a class="brand" href="#top"><span>OMER</span><small>VISUAL JOURNAL / EDITIONS</small></a>
-    <nav class="nav" aria-label="Main navigation">
-      <a class="active" href="#top">Home</a>
-      <a href="#journal">Journal</a>
-      <a href="#editions">Editions</a>
-      <a href="#about">About</a>
-    </nav>
-    <button class="cart-trigger" aria-label="Open shopping bag">BAG <b id="cartCount">0</b></button>
-    <button class="menu" aria-label="Open menu"><span></span><span></span></button>
-  </header>
+<aside class="sidebar">
+  <a class="logo" href="#home"><strong>OMER</strong><small>PHOTOS</small></a>
+  <nav>
+    <a class="active" href="#home"><span>⌂</span>Home</a>
+    <a href="#journal"><span>◫</span>Journal</a>
+    <a href="#editions"><span>▣</span>Editions</a>
+    <a href="#about"><span>♙</span>About</a>
+    <a href="#contact"><span>✉</span>Contact</a>
+  </nav>
+  <div class="socials"><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Pinterest">℘</a><button id="theme" aria-label="Toggle theme">◐</button></div>
+  <div class="rail-index"><b>01</b><span></span><em>04</em></div>
+</aside>
 
-  <aside class="side-rail"><span class="rail-label">SCROLL TO EXPLORE</span><span class="rail-line"></span><span class="rail-dot"></span></aside>
+<header class="topbar">
+  <nav>
+    <a href="#home">HOME</a><a href="#journal">JOURNAL</a><a href="#editions">EDITIONS</a><a href="#about">ABOUT</a><a href="#contact">CONTACT</a>
+  </nav>
+  <div class="top-actions"><button id="searchBtn" aria-label="Search">⌕</button><button id="bagBtn" class="bag-btn">BAG <b id="bagCount">0</b></button><button id="menuBtn" class="menu-btn"><i></i><i></i></button></div>
+</header>
 
-  <main id="top">
-    <section class="hero">
-      <div class="hero-media"><img src="assets/hero.jpg" alt="Misty mountain landscape with a lone traveler"><div class="hero-shade"></div></div>
-      <div class="hero-copy">
-        <p class="eyebrow"><i></i> CAPTURING THE IN-BETWEEN</p>
-        <h1>Stories<br><em>Through Lens</em></h1>
-        <p class="intro">A visual journal of places, people and quiet moments — now becoming a collection of tangible editions.</p>
-        <a class="explore magnetic" href="#journal"><span>ENTER THE JOURNAL</span><b>↗</b></a>
-      </div>
-      <div class="hero-count"><span>01</span><small>/ 04</small></div>
-      <div class="scroll-cue"><span></span>SCROLL</div>
-    </section>
+<main>
+<section class="hero" id="home">
+  <div class="hero-image"><img src="assets/hero.jpg" alt="Misty mountain landscape"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">CAPTURING THE IN-BETWEEN</p>
+    <h1>Stories<br><em>Through</em><br><em>Lens</em></h1>
+    <p class="hero-intro">A visual journal of places, people and quiet moments — now becoming a collection of tangible editions.</p>
+    <div class="hero-actions"><a class="pill" href="#journal">ENTER THE JOURNAL <span>→</span></a><a class="under" href="#editions">EXPLORE EDITIONS <span>↗</span></a></div>
+  </div>
+  <div class="hero-page"><strong>01</strong><span>/ 04</span></div>
+  <div class="hero-scroll"><span>♧</span>SCROLL TO EXPLORE</div>
+</section>
 
-    <section class="statement">
-      <p class="eyebrow"><i></i> PHOTOGRAPHS WITH A SECOND LIFE</p>
-      <h2>Some images belong<br>on a <em>wall.</em></h2>
-      <p>Selected frames will be released as signed prints, collectible postcards and small-run paper objects.</p>
-    </section>
-
-    <section class="journal" id="journal">
-      <div class="section-head">
-        <div><p class="eyebrow"><i></i> THE JOURNAL</p><h2>Field Notes</h2></div>
-        <span>04 / 12 STORIES</span>
-      </div>
-      <div class="journal-grid">
-        <article class="story story-large"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=88" alt="Mountain landscape"><div><small>01 · MOUNTAINS</small><h3>Where the clouds touch the earth</h3><p>Alpine silence, changing weather and the smallness of a human figure against a huge landscape.</p></div></article>
-        <article class="story"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=88" alt="Forest"><div><small>02 · FORESTS</small><h3>Under the canopy</h3></div></article>
-        <article class="story"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88" alt="Ocean"><div><small>03 · OCEANS</small><h3>Blue hour</h3></div></article>
-      </div>
-    </section>
-
-    <section class="editions" id="editions">
-      <div class="section-head">
-        <div><p class="eyebrow"><i></i> THE EDITIONS</p><h2>Own the frame.</h2></div>
-        <button class="filter-toggle" data-filter="all">All <span>⌄</span></button>
-      </div>
-      <div class="filter-bar">
-        <button class="filter active" data-filter="all">All</button>
-        <button class="filter" data-filter="Postcard">Postcards</button>
-        <button class="filter" data-filter="Fine Art Print">Fine Art Prints</button>
-      </div>
-      <div class="product-grid" id="productGrid"></div>
-    </section>
-
-    <section class="manifesto" id="about">
-      <p class="eyebrow"><i></i> THE PHILOSOPHY</p>
-      <div class="manifesto-grid">
-        <h2>Less noise.<br><em>More feeling.</em></h2>
-        <p>Photography is not about collecting places. It is about noticing them — light on an old wall, a stranger's silhouette, the few seconds before a storm. The journal preserves those fragments; the editions give them a physical life.</p>
-      </div>
-    </section>
-  </main>
-
-  <footer><span>© 2026 OMER VISUAL JOURNAL</span><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#top">BACK TO TOP ↑</a></footer>
-
-  <div class="menu-panel" aria-hidden="true">
-    <button class="close-menu" aria-label="Close menu">×</button>
-    <div><span>INDEX</span><a href="#top">Home</a><a href="#journal">Journal</a><a href="#editions">Editions</a><a href="#about">About</a></div>
+<section class="dark-strip">
+  <div class="journal-feature" id="journal">
+    <div class="section-title"><span>LATEST FROM JOURNAL</span><a href="#">VIEW ALL</a></div>
+    <article class="feature-card">
+      <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1300&q=88" alt="Forest in mist" loading="lazy">
+      <div class="feature-overlay"></div>
+      <div class="feature-copy"><small>01 / FIELD NOTE</small><h2>Into the Mist</h2><p>A morning walk through whispers of fog and pine.</p><time>MAY 18, 2026</time></div><a class="corner-arrow" href="#">↗</a>
+    </article>
   </div>
 
-  <aside class="bag" aria-hidden="true">
-    <div class="bag-head"><span>YOUR BAG</span><button class="bag-close" aria-label="Close bag">×</button></div>
-    <div id="bagItems" class="bag-items"></div>
-    <div class="bag-footer"><div><span>Subtotal</span><strong id="bagTotal">₹0</strong></div><button id="checkout" class="checkout">PROCEED TO CHECKOUT <span>→</span></button><small>Secure payment integration can be connected here later.</small></div>
-  </aside>
-
-  <div class="product-modal" aria-hidden="true">
-    <button class="product-close" aria-label="Close product">×</button>
-    <div class="product-modal-grid"><div class="product-modal-image"><img id="modalImage" alt=""></div><div class="product-modal-copy"><small id="modalType"></small><h3 id="modalTitle"></h3><p id="modalDescription"></p><div class="specs"><span id="modalEdition"></span><span id="modalDimensions"></span></div><strong id="modalPrice"></strong><button id="modalAdd" class="checkout">ADD TO BAG <span>+</span></button></div></div>
+  <div class="editions-preview" id="editions">
+    <div class="section-title"><span>PREMIUM EDITIONS</span><a href="#shop">VIEW SHOP</a></div>
+    <div class="mini-products" id="miniProducts"></div>
   </div>
+</section>
 
-  <div class="toast" id="toast"></div>
-  <script type="module" src="script.js"></script>
+<section class="benefits">
+  <div><b>◇</b><span><strong>FREE SHIPPING</strong><small>On orders over ₹2,999</small></span></div>
+  <div><b>♧</b><span><strong>SECURE PAYMENTS</strong><small>UPI, Cards and more</small></span></div>
+  <div><b>◇</b><span><strong>PACKED WITH CARE</strong><small>For safe journeys</small></span></div>
+</section>
+
+<section class="shop" id="shop">
+  <div class="shop-head"><div><p class="eyebrow dark">THE COLLECTION</p><h2>Own the frame.</h2></div><div class="filters"><button class="active" data-filter="all">ALL</button><button data-filter="Fine Art Print">PRINTS</button><button data-filter="Postcard">POSTCARDS</button></div></div>
+  <div class="products" id="products"></div>
+</section>
+
+<section class="about" id="about">
+  <p class="eyebrow dark">THE PHILOSOPHY</p>
+  <div><h2>Less noise.<br><em>More feeling.</em></h2><p>Photography is not about collecting places. It is about noticing them — light on an old wall, a stranger's silhouette, the few seconds before a storm. The journal preserves those fragments; the editions give them a physical life.</p></div>
+</section>
+
+<section class="contact" id="contact"><p class="eyebrow">STAY IN THE JOURNAL</p><h2>Occasional notes.<br><em>No noise.</em></h2><form id="newsletter"><input type="email" placeholder="Your email address" required><button>SUBSCRIBE →</button></form></section>
+</main>
+
+<footer><span>© 2026 OMER VISUAL JOURNAL</span><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#home">BACK TO TOP ↑</a></footer>
+
+<div class="drawer" id="cartDrawer"><div class="drawer-head"><span>YOUR CART <b id="drawerCount">0</b></span><button data-close="cartDrawer">×</button></div><div class="cart-lines" id="cartLines"></div><div class="drawer-total"><span>SUBTOTAL</span><strong id="subtotal">₹0</strong><button id="checkout">VIEW CART & CHECKOUT <span>→</span></button><small>Secure payment gateway can be connected through the included backend.</small></div></div>
+
+<div class="modal" id="productModal"><button data-close="productModal" class="modal-close">×</button><div class="modal-grid"><div class="modal-img"><img id="mImg" alt=""></div><div><small id="mType"></small><h2 id="mTitle"></h2><p id="mDesc"></p><div class="specs"><span id="mEdition"></span><span id="mSize"></span></div><strong id="mPrice"></strong><button id="addProduct" class="pill dark-pill">ADD TO BAG <span>+</span></button></div></div></div>
+
+<div class="search-modal" id="searchModal"><button data-close="searchModal">×</button><div><small>SEARCH THE JOURNAL</small><input id="searchInput" placeholder="Mountains, postcards, stories..." autofocus><p id="searchResults"></p></div></div>
+
+<div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#editions">Editions</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+<div class="toast" id="toast"></div>
+<script type="module" src="script.js"></script>
 </body>
 </html>

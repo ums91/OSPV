@@ -1,46 +1,26 @@
+export type EditionType = "Fine Art Print" | "Postcard";
+
 export interface Edition {
-  id: string;
-  title: string;
-  type: "Postcard" | "Fine Art Print";
-  category: string;
-  price: number;
-  currency: "INR";
-  edition: string;
-  image: string;
-  description: string;
-  dimensions: string;
-  stock: number;
+  id:string; title:string; type:EditionType; price:number;
+  edition:string; size:string; image:string; stock:number;
 }
 
-export interface CartLine {
-  id: string;
-  qty: number;
-}
+export interface OrderLine { id:string; quantity:number; }
 
-export interface CheckoutAdapter {
-  createOrder(lines: CartLine[]): Promise<{ orderId: string }>;
-  openPayment(orderId: string): Promise<void>;
+export interface PaymentGateway {
+  createOrder(lines:OrderLine[]):Promise<{orderId:string}>;
+  openCheckout(orderId:string):Promise<void>;
 }
 
 /**
- * Production integration boundary.
- * A future backend should implement this interface using a payment provider
- * such as Razorpay/Cashfree/another PCI-compliant provider. Never put
- * secret API keys in GitHub Pages client-side code.
+ * Server-side payment boundary.
+ * Never expose payment secrets or signature verification in GitHub Pages.
  */
-export class PaymentGateway implements CheckoutAdapter {
-  async createOrder(lines: CartLine[]) {
-    const response = await fetch("/api/orders", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ lines })
-    });
-    if (!response.ok) throw new Error("Order creation failed");
-    return response.json();
+export class SecurePaymentAdapter implements PaymentGateway {
+  async createOrder(lines:OrderLine[]){
+    const r=await fetch("/api/orders",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lines})});
+    if(!r.ok) throw new Error("Order creation failed");
+    return r.json();
   }
-
-  async openPayment(orderId: string) {
-    // Replace with provider SDK / hosted checkout after backend integration.
-    console.log("Open secure checkout for order:", orderId);
-  }
+  async openCheckout(orderId:string){console.log("Secure checkout:",orderId)}
 }

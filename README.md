@@ -1,117 +1,224 @@
-# OMER — Visual Journal & Editions · v2
+# OMER — Visual Journal & Editions
 
-A high-end editorial photography website prepared for a future photography / postcard commerce layer.
+A premium editorial photography journal and commerce-ready storefront.
 
-## Stack
+## What is included
 
-- **HTML5** — semantic page structure
-- **CSS3** — editorial responsive system, animation, grid, overlays, film grain
-- **JavaScript ES Modules** — application logic
-- **TypeScript source** — future-safe contracts for products, cart and payment integration
-- **JSON** — editable product catalog
-- **Web APIs** — Fetch, LocalStorage, IntersectionObserver, Intl.NumberFormat
-
-No framework is required. It runs on GitHub Pages.
-
-## Current commerce-ready features
-
-- Product / edition catalogue
-- Postcard and fine-art-print filters
+### Frontend — GitHub Pages ready
+- HTML5
+- CSS3
+- JavaScript ES Modules
+- TypeScript contracts
+- JSON catalogue
+- Responsive editorial layout
+- Photography journal
+- Premium editions
+- Product filters
 - Product detail modal
-- Persistent local shopping bag
-- Quantity tracking
-- INR formatting
-- Stock messaging
-- Checkout integration boundary
-- Clean separation between catalogue, UI and future payment logic
+- Search
+- Persistent shopping bag
+- INR pricing
+- Mobile navigation
+- Scroll progress
+- Custom cursor
+- Film grain
+- Micro-interactions
+- Newsletter UI
 
-## Important payment architecture
+### Commerce backend scaffold
+- Node.js
+- Express
+- CORS
+- dotenv
+- Razorpay server-side order creation
+- Webhook signature verification boundary
+- PostgreSQL schema
+- Inventory/order model
+- Newsletter endpoint
 
-GitHub Pages is static hosting. **Do not place payment secrets, merchant keys, order-signing logic, or payment verification in browser JavaScript.**
+### Admin architecture
+A separate authenticated admin application can be added without exposing it publicly through GitHub Pages.
 
-When you are ready to accept real payments:
+## Important: GitHub Pages + UPI
+
+GitHub Pages is static hosting. It should host the storefront only.
+
+Real UPI/card payments require a secure backend. This package therefore separates the two:
 
 ```text
 GitHub Pages
-    │
-    ├── Photography / Editions UI
-    ├── Product catalogue
-    └── Shopping bag
+     │
+     │ HTTPS API
+     ▼
+OMER Commerce API
+     │
+     ├── PostgreSQL
+     ├── Inventory
+     ├── Orders
+     └── Payment Provider
              │
-             ▼
-       Secure backend/API
-             │
-             ├── Create order
-             ├── Calculate final amount
-             ├── Verify payment signature
-             ├── Store order/customer data
-             └── Update fulfilment status
-             │
-             ▼
-     Payment provider
-       (UPI / cards / etc.)
+             └── UPI / Cards / etc.
 ```
 
-A provider such as Razorpay or Cashfree can be connected later through a secure backend. UPI can then be offered as one of the payment methods.
+The backend scaffold uses Razorpay as the example provider. It can be replaced with another provider later.
 
-## GitHub Pages deployment
+**Never commit API secrets. Never calculate the authoritative order total only in browser JavaScript. Never treat a client-side payment callback as proof of payment.**
 
-Upload the repository contents and enable:
+## Run the frontend
 
-**Settings → Pages → Deploy from a branch → main → / (root)**
+Because the site uses ES modules and Fetch:
 
-## Development
+```bash
+python -m http.server 8000
+```
 
-The production GitHub Pages site uses the checked-in JavaScript module. `src/store.ts` is the TypeScript contract/source layer for the future application architecture.
-
-If you later add a build system, compile TypeScript into `src/*.js` and keep the public site as the static deployment target.
-
-## Recommended future phases
-
-### Phase 1 — current
-Brand + journal + editions + local bag.
-
-### Phase 2
-Real checkout:
-- Secure backend
-- Razorpay/Cashfree
-- UPI
-- Order IDs
-- Payment verification
-- Email confirmations
-
-### Phase 3
-Creator commerce:
-- Admin dashboard
-- Upload new photographs
-- Edition inventory
-- Signed/numbered edition tracking
-- Shipping rates
-- Coupon codes
-- Order management
-
-### Phase 4
-Premium experience:
-- Customer accounts
-- Wishlist
-- Print-size selector
-- Limited-edition countdown
-- Certificates of authenticity
-- Automated inventory decrement
-- Analytics
-
-## Project structure
+Open:
 
 ```text
-omer-photo-blog-v2/
+http://localhost:8000
+```
+
+## Run the backend
+
+From the project root:
+
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Backend:
+
+```text
+http://localhost:8787
+```
+
+Health:
+
+```text
+http://localhost:8787/api/health
+```
+
+For local frontend-to-backend checkout, the frontend defaults to `http://localhost:8787`.
+
+For production, set:
+
+```html
+<script>
+  window.OMER_API_BASE = "https://api.yourdomain.com";
+</script>
+```
+
+before `script.js`, or replace the configuration with your deployment environment.
+
+## Adding your photographs later
+
+You can replace the demonstration images in:
+
+```text
+assets/products.json
+```
+
+Each product contains:
+
+- title
+- type
+- price
+- edition
+- size
+- image
+- stock
+
+For example:
+
+```json
+{
+  "id": "my-kashmir-print",
+  "title": "My Photograph",
+  "type": "Fine Art Print",
+  "price": 2999,
+  "edition": "Signed · Edition of 20",
+  "size": "12 × 16 in",
+  "image": "assets/photos/my-photograph.jpg",
+  "stock": 20
+}
+```
+
+Create:
+
+```text
+assets/photos/
+```
+
+and place your photographs there.
+
+## Production checklist
+
+Before taking real orders:
+
+- [ ] Replace all demonstration photographs
+- [ ] Connect PostgreSQL
+- [ ] Move product catalogue authority to the database
+- [ ] Configure payment provider
+- [ ] Configure UPI
+- [ ] Configure webhook secret
+- [ ] Verify webhooks server-side
+- [ ] Implement transactional inventory
+- [ ] Add customer shipping address
+- [ ] Add shipping calculation
+- [ ] Add order confirmation email
+- [ ] Add refund handling
+- [ ] Add authenticated admin
+- [ ] Enable HTTPS
+- [ ] Configure production CORS
+- [ ] Add rate limiting
+- [ ] Add logging/monitoring
+- [ ] Test sandbox payments
+- [ ] Test mobile UPI flow
+- [ ] Test failed/cancelled payments
+- [ ] Test duplicate webhook events
+- [ ] Test overselling/race conditions
+
+## Project
+
+```text
+omer-visual-journal-complete/
 ├── index.html
 ├── styles.css
 ├── script.js
+├── package.json
+├── .env.example
+├── .gitignore
 ├── README.md
 ├── assets/
 │   ├── hero.jpg
 │   └── products.json
-└── src/
-    ├── store.js
-    └── store.ts
+├── src/
+│   ├── store.js
+│   └── store.ts
+├── backend/
+│   ├── server.js
+│   └── README.md
+├── database/
+│   └── schema.sql
+├── admin/
+│   └── README.md
+└── docs/
+    └── COMMERCE-ROADMAP.md
 ```
+
+## Deployment recommendation
+
+Use:
+
+- **GitHub Pages / Cloudflare Pages** for the public frontend
+- **Render / Railway / Fly.io / Vercel serverless / Cloudflare Workers** for the API
+- **PostgreSQL** for orders and inventory
+- **Razorpay or Cashfree** for UPI/cards
+
+The frontend and backend should be separate deployments.
+
+## Photography
+
+The current visual/product images are placeholders. Replace them with your own photographs before publishing the commercial store.
