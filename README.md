@@ -112,6 +112,12 @@ For production, set:
 
 before `script.js`, or replace the configuration with your deployment environment.
 
+## GitHub Pages configuration
+
+The public GitHub Pages build does **not** call `localhost` for checkout. Until a production API is configured, the checkout button safely reports that secure checkout is not connected.
+
+When the backend is live, create `config.js` from `config.example.js` and load it before `script.js` in `index.html`.
+
 ## Adding your photographs later
 
 You can replace the demonstration images in:

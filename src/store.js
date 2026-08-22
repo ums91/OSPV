@@ -19,6 +19,8 @@ export class Store{
   get total(){return this._items.reduce((n,x)=>n+x.qty*x.product.price,0)}
   add(id){const x=this._items.find(x=>x.id===id);x?x.qty++:this._items.push({id,qty:1});this.save()}
   remove(id){this._items=this._items.filter(x=>x.id!==id);this.save()}
+  increment(id){const x=this._items.find(x=>x.id===id);if(x){x.qty++;this.save()}}
+  decrement(id){const x=this._items.find(x=>x.id===id);if(!x)return;if(x.qty>1){x.qty--;this.save()}else{this.remove(id)}}
   save(){localStorage.setItem("omer-cart",JSON.stringify(this._items.map(x=>({id:x.id,qty:x.qty}))))}
 }
 export function toast(message){const x=$("#toast");x.textContent=message;x.classList.add("show");clearTimeout(window.__toast);window.__toast=setTimeout(()=>x.classList.remove("show"),2200)}
