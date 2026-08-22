@@ -1,71 +1,93 @@
 
-/* OMER Editorial Redesign v2 — only controls the new editorial layer */
-
+/* OMER — layout interaction fixes
+   Works with the classes currently used by index.html.
+*/
 (() => {
-  const sections = ["home","journal","motion","editions","shop","about","contact"];
-  const hero = document.querySelector("#heroPage strong");
-  const rail = document.querySelector("#railIndex b");
-  const railFill = document.querySelector("#railIndex i");
+  const sectionIds = ["home", "journal", "motion", "editions", "about"];
+  const heroNumber = document.querySelector("#heroPage strong");
+  const railNumber = document.querySelector("#railIndex b");
+  const railFill = document.querySelector("#railIndex span i");
 
-  const update = () => {
-    const point = window.scrollY + innerHeight * .38;
+  const updateProgress = () => {
+    const marker = window.scrollY + window.innerHeight * 0.35;
     let active = 0;
-    sections.forEach((id,i) => {
-      const el = document.getElementById(id);
-      if (el && point >= el.offsetTop) active = i;
+
+    sectionIds.forEach((id, index) => {
+      const section = document.getElementById(id);
+      if (section && marker >= section.offsetTop) active = index;
     });
-    const n = String(Math.min(active + 1,5)).padStart(2,"0");
-    if (hero) hero.textContent = n;
-    if (rail) rail.textContent = n;
-    if (railFill) railFill.style.height = `${(Math.min(active,4)/4)*100}%`;
+
+    const number = String(active + 1).padStart(2, "0");
+
+    if (heroNumber) heroNumber.textContent = number;
+    if (railNumber) railNumber.textContent = number;
+
+    if (railFill) {
+      railFill.style.height =
+        `${(active / Math.max(sectionIds.length - 1, 1)) * 100}%`;
+    }
+
+    document.querySelectorAll(".sidebar nav a, .topbar nav a").forEach(link => {
+      link.classList.toggle(
+        "active",
+        link.getAttribute("href") === `#${sectionIds[active]}`
+      );
+    });
   };
 
-  addEventListener("scroll", update, {passive:true});
-  addEventListener("resize", update);
-  update();
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+  updateProgress();
 
-  document.querySelector("#heroScroll")?.addEventListener("click",()=>{
-    document.querySelector("#journal")?.scrollIntoView({behavior:"smooth"});
+  document.querySelector("#heroScroll")?.addEventListener("click", () => {
+    document.querySelector("#journal")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
   });
 
-  const stories = {
-    mist: "FIELD NOTE · KASHMIR — Into the Mist",
+  /* Story controls use the site's existing toast rather than creating
+     a second competing notification component. */
+  const storyText = {
+    mist: "FIELD NOTE — KASHMIR · Into the Mist",
     light: "OBSERVATION — Light After Rain",
     road: "FIELD NOTE — The Quiet Road"
   };
 
-  document.querySelectorAll(".editorial-story-btn").forEach(btn=>{
-    btn.addEventListener("click",()=>{
-      document.querySelector(".editorial-toast")?.remove();
-      const toast=document.createElement("div");
-      toast.className="editorial-toast";
-      toast.innerHTML=`<span>${stories[btn.dataset.story] || "OMER JOURNAL"}</span><button aria-label="Close">×</button>`;
-      document.body.appendChild(toast);
-      requestAnimationFrame(()=>toast.classList.add("show"));
-      const close=()=>{toast.classList.remove("show");setTimeout(()=>toast.remove(),300)};
-      toast.querySelector("button").onclick=close;
-      setTimeout(()=>document.body.contains(toast)&&close(),4000);
+  document.querySelectorAll(".editorial-story-btn").forEach(button => {
+    button.addEventListener("click", () => {
+      const message = storyText[button.dataset.story];
+      if (!message) return;
+
+      const toast = document.querySelector("#toast");
+      if (!toast) return;
+
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(window.__editorialStoryToast);
+      window.__editorialStoryToast = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2600);
     });
   });
 
-  const archive=document.querySelector(".editorial-archive-main");
-  const img=archive?.querySelector("img");
-  archive?.addEventListener("mousemove",e=>{
-    if(!img) return;
-    const r=archive.getBoundingClientRect();
-    const x=(e.clientX-r.left)/r.width-.5;
-    const y=(e.clientY-r.top)/r.height-.5;
-    img.style.transform=`scale(1.045) translate(${x*-10}px,${y*-10}px)`;
-  });
-  archive?.addEventListener("mouseleave",()=>{if(img)img.style.transform=""});
+  /* Smooth archive parallax without changing layout dimensions. */
+  const archive = document.querySelector(".editorial-archive-main");
+  const archiveImage = archive?.querySelector("img");
 
-  const links=[...document.querySelectorAll(".topbar nav a,.sidebar nav a")];
-  const targets=sections.map(id=>document.getElementById(id)).filter(Boolean);
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(!entry.isIntersecting)return;
-      links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")===`#${entry.target.id}`));
+  if (archive && archiveImage && matchMedia("(pointer:fine)").matches) {
+    archive.addEventListener("pointermove", event => {
+      const rect = archive.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      archiveImage.style.transform =
+        `scale(1.035) translate(${x * -8}px, ${y * -8}px)`;
     });
-  },{rootMargin:"-35% 0px -55% 0px"});
-  targets.forEach(x=>observer.observe(x));
+
+    archive.addEventListener("pointerleave", () => {
+      archiveImage.style.transform = "";
+    });
+  }
 })();
