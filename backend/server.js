@@ -17,12 +17,12 @@ app.use(cors({
 app.use(express.json());
 
 const catalog = new Map([
-  ["mountain-peak-print", { id:"mountain-peak-print", title:"Mountain Peak", price:1999, stock:8 }],
-  ["coastal-calm-postcard", { id:"coastal-calm-postcard", title:"Coastal Calm", price:199, stock:42 }],
-  ["evening-streets-print", { id:"evening-streets-print", title:"Evening Streets", price:2299, stock:6 }],
-  ["into-the-mist-print", { id:"into-the-mist-print", title:"Into the Mist", price:2499, stock:12 }],
-  ["blue-hour-postcard", { id:"blue-hour-postcard", title:"Blue Hour", price:249, stock:28 }],
-  ["quiet-road-print", { id:"quiet-road-print", title:"The Quiet Road", price:2799, stock:9 }]
+  ["mountain-lake-print", { id:"mountain-lake-print", title:"Mountain Lake", price:1999, stock:8 }],
+  ["valley-light-postcard", { id:"valley-light-postcard", title:"Valley Light", price:199, stock:42 }],
+  ["winter-lake-print", { id:"winter-lake-print", title:"Winter Lake", price:2299, stock:6 }],
+  ["mountain-stream-print", { id:"mountain-stream-print", title:"Mountain Stream", price:2499, stock:12 }],
+  ["quiet-water-postcard", { id:"quiet-water-postcard", title:"Quiet Water", price:249, stock:28 }],
+  ["summer-field-postcard", { id:"summer-field-postcard", title:"Summer Field", price:2799, stock:9 }]
 ]);
 
 function calculateLines(lines = []) {

@@ -228,3 +228,7 @@ The frontend and backend should be separate deployments.
 ## Photography
 
 The current visual/product images are placeholders. Replace them with your own photographs before publishing the commercial store.
+
+## Instagram content
+
+The demonstration photography has been replaced with a curated selection from the supplied Instagram export for `@ums91`. Images are optimized to WebP for the website, while the original export remains separate from the deployable site.
