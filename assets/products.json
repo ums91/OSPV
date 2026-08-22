@@ -1,62 +1,152 @@
 [
   {
-    "id": "mountain-lake-print",
+    "id": "mountain-lake",
     "title": "Mountain Lake",
     "type": "Fine Art Print",
-    "price": 1999,
-    "edition": "Signed \u00b7 Edition of 25",
-    "size": "12 \u00d7 16 in",
+    "price": 2499,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
     "image": "assets/instagram/01-18346022980152797.webp",
     "stock": 8
   },
   {
-    "id": "valley-light-postcard",
+    "id": "valley-light",
     "title": "Valley Light",
     "type": "Postcard",
-    "price": 199,
-    "edition": "Limited \u00b7 100 copies",
-    "size": "4 \u00d7 6 in",
+    "price": 299,
+    "edition": "Limited · 100 copies",
+    "size": "4 × 6 in",
     "image": "assets/instagram/02-18095911612535573.webp",
-    "stock": 42
+    "stock": 25
   },
   {
-    "id": "winter-lake-print",
+    "id": "winter-lake",
     "title": "Winter Lake",
     "type": "Fine Art Print",
     "price": 2299,
-    "edition": "Signed \u00b7 Edition of 20",
-    "size": "12 \u00d7 18 in",
+    "edition": "Signed · Edition of 20",
+    "size": "12 × 18 in",
     "image": "assets/instagram/03-18023495780629861.webp",
-    "stock": 6
+    "stock": 8
   },
   {
-    "id": "summer-field-postcard",
+    "id": "summer-field",
     "title": "Summer Field",
     "type": "Postcard",
-    "price": 249,
-    "edition": "Limited \u00b7 75 copies",
-    "size": "4 \u00d7 6 in",
+    "price": 299,
+    "edition": "Limited · 75 copies",
+    "size": "4 × 6 in",
     "image": "assets/instagram/04-18006758585188862.webp",
-    "stock": 28
+    "stock": 25
   },
   {
-    "id": "mountain-stream-print",
+    "id": "mountain-stream",
     "title": "Mountain Stream",
     "type": "Fine Art Print",
     "price": 2499,
-    "edition": "Signed \u00b7 Edition of 30",
-    "size": "16 \u00d7 20 in",
+    "edition": "Signed · Edition of 30",
+    "size": "16 × 20 in",
     "image": "assets/instagram/05-17919169577868859.webp",
-    "stock": 12
+    "stock": 8
   },
   {
-    "id": "quiet-water-postcard",
+    "id": "quiet-water",
     "title": "Quiet Water",
     "type": "Postcard",
     "price": 279,
-    "edition": "Limited \u00b7 100 copies",
-    "size": "4 \u00d7 6 in",
+    "edition": "Limited · 100 copies",
+    "size": "4 × 6 in",
     "image": "assets/instagram/06-17888974866154874.webp",
-    "stock": 34
+    "stock": 25
+  },
+  {
+    "id": "winter-birds",
+    "title": "Winter Birds",
+    "type": "Fine Art Print",
+    "price": 2199,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/07-17891686938141350.webp",
+    "stock": 8
+  },
+  {
+    "id": "garden-pool",
+    "title": "Garden Pool",
+    "type": "Postcard",
+    "price": 249,
+    "edition": "Limited · 75 copies",
+    "size": "4 × 6 in",
+    "image": "assets/instagram/08-18048637495653082.webp",
+    "stock": 25
+  },
+  {
+    "id": "garden-path",
+    "title": "Garden Path",
+    "type": "Fine Art Print",
+    "price": 1999,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/09-18071117389500708.webp",
+    "stock": 8
+  },
+  {
+    "id": "orchard-garden",
+    "title": "Orchard Garden",
+    "type": "Postcard",
+    "price": 249,
+    "edition": "Limited · 100 copies",
+    "size": "4 × 6 in",
+    "image": "assets/instagram/10-18028730626847376.webp",
+    "stock": 25
+  },
+  {
+    "id": "rose-study",
+    "title": "Rose Study",
+    "type": "Fine Art Print",
+    "price": 1799,
+    "edition": "Signed · Edition of 20",
+    "size": "10 × 12 in",
+    "image": "assets/instagram/11-18073600268301389.webp",
+    "stock": 8
+  },
+  {
+    "id": "river-stone",
+    "title": "River Stone",
+    "type": "Fine Art Print",
+    "price": 2399,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/12-18066812045467456.webp",
+    "stock": 8
+  },
+  {
+    "id": "cloud-valley",
+    "title": "Cloud Valley",
+    "type": "Fine Art Print",
+    "price": 2299,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 18 in",
+    "image": "assets/instagram/13-18117832828328939.webp",
+    "stock": 8
+  },
+  {
+    "id": "courtyard-morning",
+    "title": "Courtyard Morning",
+    "type": "Postcard",
+    "price": 299,
+    "edition": "Limited · 75 copies",
+    "size": "4 × 6 in",
+    "image": "assets/instagram/14-17850584337171468.webp",
+    "stock": 25
+  },
+  {
+    "id": "quiet-interior",
+    "title": "Quiet Interior",
+    "type": "Fine Art Print",
+    "price": 2699,
+    "edition": "Signed · Edition of 20",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/15-18524130307032995.webp",
+    "stock": 8
   }
 ]

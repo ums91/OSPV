@@ -1,37 +1,78 @@
 import { Store, loadProducts, $, $$, money, toast } from "./src/store.js";
 
 const API_BASE = window.OMER_API_BASE || "";
-const products = await loadProducts();
-const store = new Store(products);
+let products = [];
+let store = null;
 let current = null;
 
+const esc = value => String(value ?? "").replace(/[&<>\"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function productCard(p, i) {
+  const label = p.type === "Postcard" ? "POSTCARD" : "FINE ART PRINT";
+  return `<article class="product" data-product="${esc(p.id)}">
+    <div class="product-image">
+      <img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">
+      <span class="badge">${i < 3 ? (p.type === "Postcard" ? "LIMITED" : "SIGNED") : label}</span>
+      <div class="product-overlay">
+        <div class="product-overlay-meta">
+          <span>${esc(p.type)}</span>
+          <strong>${money(p.price)}</strong>
+        </div>
+        <div class="product-overlay-actions">
+          <button type="button" class="quick-view" data-view="${esc(p.id)}">VIEW <span>↗</span></button>
+          <button type="button" class="card-add" data-add="${esc(p.id)}">ADD TO BAG <span>+</span></button>
+        </div>
+      </div>
+    </div>
+    <div class="product-info">
+      <small>${esc(p.type)} · ${esc(p.edition)}</small>
+      <h3>${esc(p.title)}</h3>
+      <div><strong>${money(p.price)}</strong><span>${esc(p.size)}</span></div>
+    </div>
+  </article>`;
+}
+
 function renderMini(){
-  $("#miniProducts").innerHTML = products.slice(0,3).map(p=>`
-    <article class="mini" data-product="${p.id}">
-      <img src="${p.image}" alt="${p.title}" loading="lazy">
-      <div class="mini-info"><h3>${p.title}</h3><p>${p.type}</p><strong>${money(p.price)}</strong></div>
-    </article>`).join("");
+  const el=$("#miniProducts");
+  if(!el) return;
+  el.innerHTML=products.slice(0,3).map(p=>`<article class="mini" data-product="${esc(p.id)}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"><div class="mini-info"><h3>${esc(p.title)}</h3><p>${esc(p.type)}</p><strong>${money(p.price)}</strong></div></article>`).join("");
   $$(".mini").forEach(x=>x.onclick=()=>openProduct(x.dataset.product));
 }
+
 function renderProducts(filter="all"){
+  const el=$("#products");
+  if(!el) return;
   const list=filter==="all"?products:products.filter(p=>p.type===filter);
-  $("#products").innerHTML=list.map((p,i)=>`
-    <article class="product" data-product="${p.id}">
-      <div class="product-image"><img src="${p.image}" alt="${p.title}" loading="lazy">${i<3?`<span class="badge">${p.type==="Postcard"?"LIMITED":"SIGNED"}</span>`:""}</div>
-      <div class="product-info"><small>${p.type} · ${p.edition}</small><h3>${p.title}</h3><div><strong>${money(p.price)}</strong><span>${p.size}</span></div></div>
-    </article>`).join("");
-  $$(".product").forEach(x=>x.onclick=()=>openProduct(x.dataset.product));
+  el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
+
+  $$(".product").forEach(card=>{
+    card.addEventListener("click", e=>{
+      if(e.target.closest("button")) return;
+      openProduct(card.dataset.product);
+    });
+  });
+  $$("[data-view]").forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation(); openProduct(btn.dataset.view);
+  }));
+  $$("[data-add]").forEach(btn=>btn.addEventListener("click",e=>{
+    e.stopPropagation(); addToCart(btn.dataset.add);
+  }));
 }
+
 function openProduct(id){
   current=products.find(p=>p.id===id); if(!current)return;
   $("#mImg").src=current.image; $("#mImg").alt=current.title;
   $("#mType").textContent=current.type;
   $("#mTitle").textContent=current.title;
-  $("#mDesc").textContent="A carefully selected OMER edition, produced in a small run for collectors of quiet images and considered paper.";
-  $("#mEdition").textContent=current.edition; $("#mSize").textContent=current.size; $("#mPrice").textContent=money(current.price);
+  $("#mDesc").textContent="A carefully selected OMER photograph, offered as a considered paper object for collectors of quiet images.";
+  $("#mEdition").textContent=current.edition;
+  $("#mSize").textContent=current.size;
+  $("#mPrice").textContent=money(current.price);
   $("#productModal").classList.add("open");
 }
+
 function renderCart(){
+  if(!store) return;
   const items=store.items;
   $("#bagCount").textContent=store.count;
   $("#drawerCount").textContent=store.count;
@@ -39,80 +80,56 @@ function renderCart(){
   const container=$("#cartLines");
   if(!items.length){
     container.innerHTML=`<div class="cart-empty"><strong>Your bag is empty.</strong><p>Choose an edition from the collection and it will appear here.</p><a href="#shop" id="emptyShopLink">EXPLORE EDITIONS →</a></div>`;
-    $("#emptyShopLink")?.addEventListener("click",()=>$("#cartDrawer").classList.remove("open"));
-    return;
+    $("#emptyShopLink")?.addEventListener("click",()=>$("#cartDrawer").classList.remove("open")); return;
   }
-  container.innerHTML=items.map(x=>`<div class="cart-line" data-cart-line="${x.id}"><img src="${x.product.image}" alt="${x.product.title}"><div><h4>${x.product.title}</h4><small>${money(x.product.price)} · ${x.product.type}</small><div class="cart-controls"><button type="button" data-cart-minus="${x.id}" aria-label="Decrease quantity">−</button><span>${x.qty}</span><button type="button" data-cart-plus="${x.id}" aria-label="Increase quantity">+</button></div></div><button class="cart-remove" type="button" data-remove="${x.id}" aria-label="Remove ${x.product.title}">×</button></div>`).join("");
+  container.innerHTML=items.map(x=>`<div class="cart-line" data-cart-line="${esc(x.id)}"><img src="${esc(x.product.image)}" alt="${esc(x.product.title)}"><div><h4>${esc(x.product.title)}</h4><small>${money(x.product.price)} · ${esc(x.product.type)}</small><div class="cart-controls"><button type="button" data-cart-minus="${esc(x.id)}">−</button><span>${x.qty}</span><button type="button" data-cart-plus="${esc(x.id)}">+</button></div></div><button class="cart-remove" type="button" data-remove="${esc(x.id)}">×</button></div>`).join("");
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id); if(!p || !store)return;
+  store.add(id); renderCart();
+  $("#productModal")?.classList.remove("open");
+  toast("1 ITEM ADDED TO CART");
+  clearTimeout(window.__openCartAfterAdd);
+  window.__openCartAfterAdd=setTimeout(()=>{
+    renderCart(); $("#cartDrawer")?.classList.add("open");
+  },850);
 }
 
 function close(id){const el=$(id);if(el)el.classList.remove("open")}
-renderMini();renderProducts();renderCart();
 
-$$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
-$("#bagBtn").onclick=()=>{
-  clearTimeout(window.__openCartAfterAdd);
-  renderCart();
-  $("#cartDrawer").classList.add("open");
-};
-$$("[data-close]").forEach(b=>b.onclick=()=>close("#"+b.dataset.close));
-$("#addProduct").onclick=()=>{
-  if(!current)return;
-
-  store.add(current.id);
-  renderCart();
-  close("#productModal");
-
-  // Give the visitor a clear confirmation before opening the cart.
-  toast("1 ITEM ADDED TO CART");
-
-  // Then open the cart so the newly-added item is immediately visible.
-  clearTimeout(window.__openCartAfterAdd);
-  window.__openCartAfterAdd=setTimeout(()=>{
-    renderCart();
-    $("#cartDrawer").classList.add("open");
-  },850);
-};
-$("#cartLines").addEventListener("click",e=>{const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");if(plus){store.increment(plus.dataset.cartPlus);renderCart();return}if(minus){store.decrement(minus.dataset.cartMinus);renderCart();return}if(remove){store.remove(remove.dataset.remove);renderCart();toast("REMOVED FROM BAG")}});
-$("#checkout").onclick=async()=>{
-  if(!store.count){toast("YOUR CART IS EMPTY");return}
-  if(!API_BASE){ toast("SECURE CHECKOUT WILL BE CONNECTED LATER"); return; }
+async function init(){
   try{
-    const r=await fetch(`${API_BASE}/api/orders`,{
-      method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({lines:store.items.map(x=>({id:x.id,quantity:x.qty}))})
-    });
-    const data=await r.json();
-    if(!r.ok) throw new Error(data.error||"Checkout failed");
-    if(data.orderId){
-      toast("SECURE ORDER CREATED");
-      // Production: load the payment provider's hosted/SDK checkout here.
-      console.log("Payment order:",data);
-    }
-  }catch(error){toast(error.message.toUpperCase())}
-};
+    products=await loadProducts();
+    store=new Store(products);
+    renderMini(); renderProducts(); renderCart();
+  }catch(error){
+    console.error(error);
+    const el=$("#products");
+    if(el)el.innerHTML=`<div class="catalogue-error"><strong>Collection temporarily unavailable.</strong><span>Please refresh the journal.</span></div>`;
+    return;
+  }
 
-$("#searchBtn").onclick=()=>{ $("#searchModal").classList.add("open"); setTimeout(()=>$("#searchInput").focus(),100); };
-$("#searchInput").oninput=e=>{
-  const q=e.target.value.toLowerCase().trim();
-  const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));
-  $("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):"";
-};
-$("#menuBtn").onclick=()=>$("#mobileMenu").classList.add("open");
-$$(".mobile-menu a").forEach(a=>a.onclick=()=>close("#mobileMenu"));
-$("#theme").onclick=()=>document.body.classList.toggle("light");
-
-$("#newsletter").onsubmit=e=>{e.preventDefault();toast("THANK YOU — YOU'RE IN THE JOURNAL");e.target.reset()};
-
-addEventListener("scroll",()=>{
-  const max=document.documentElement.scrollHeight-innerHeight;
-  $(".progress i").style.width=`${max?scrollY/max*100:0}%`;
-});
-if(matchMedia("(pointer:fine)").matches){
-  const c=$(".cursor");
-  addEventListener("mousemove",e=>{c.style.left=e.clientX+"px";c.style.top=e.clientY+"px"});
-  document.addEventListener("mouseover",e=>{if(e.target.closest("a,button,.product,.mini"))c.classList.add("big")});
-  document.addEventListener("mouseout",e=>{if(e.target.closest("a,button,.product,.mini"))c.classList.remove("big")});
+  $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
+  $("#bagBtn").onclick=()=>{$("#cartDrawer").classList.add("open");renderCart()};
+  $$('[data-close]').forEach(b=>b.onclick=()=>close("#"+b.dataset.close));
+  $("#addProduct").onclick=()=>{if(current)addToCart(current.id)};
+  $("#cartLines").addEventListener("click",e=>{const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");if(plus){store.increment(plus.dataset.cartPlus);renderCart()}else if(minus){store.decrement(minus.dataset.cartMinus);renderCart()}else if(remove){store.remove(remove.dataset.remove);renderCart();toast("REMOVED FROM BAG")}});
+  $("#checkout").onclick=async()=>{
+    if(!store.count){toast("YOUR CART IS EMPTY");return}
+    if(!API_BASE){toast("SECURE CHECKOUT WILL BE CONNECTED LATER");return}
+    try{const r=await fetch(`${API_BASE}/api/orders`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lines:store.items.map(x=>({id:x.id,quantity:x.qty}))})});const data=await r.json();if(!r.ok)throw new Error(data.error||"Checkout failed");if(data.orderId)toast("SECURE ORDER CREATED")}catch(error){toast(error.message.toUpperCase())}
+  };
+  $("#searchBtn").onclick=()=>{$("#searchModal").classList.add("open");setTimeout(()=>$("#searchInput").focus(),100)};
+  $("#searchInput").oninput=e=>{const q=e.target.value.toLowerCase().trim();const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));$("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):""};
+  $("#menuBtn").onclick=()=>$("#mobileMenu").classList.add("open");
+  $$(".mobile-menu a").forEach(a=>a.onclick=()=>close("#mobileMenu"));
+  $("#theme").onclick=()=>document.body.classList.toggle("light");
+  $("#newsletter").onsubmit=e=>{e.preventDefault();toast("THANK YOU — YOU'RE IN THE JOURNAL");e.target.reset()};
 }
-const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.animate([{opacity:0,transform:"translateY(22px)"},{opacity:1,transform:"translateY(0)"}],{duration:700,easing:"cubic-bezier(.2,.8,.2,1)",fill:"forwards"});observer.unobserve(e.target)}}),{threshold:.12});
-$$(".feature-card,.mini,.product,.about>div,.contact form").forEach(x=>observer.observe(x));
+
+init();
+
+addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;$(".progress i").style.width=`${max?scrollY/max*100:0}%`});
+if(matchMedia("(pointer:fine)").matches){const c=$(".cursor");addEventListener("mousemove",e=>{c.style.left=e.clientX+"px";c.style.top=e.clientY+"px"})}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")["#cartDrawer","#productModal","#searchModal","#mobileMenu"].forEach(close)});
