@@ -49,9 +49,29 @@ function close(id){const el=$(id);if(el)el.classList.remove("open")}
 renderMini();renderProducts();renderCart();
 
 $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
-$("#bagBtn").onclick=()=>{renderCart();$("#cartDrawer").classList.add("open")};
+$("#bagBtn").onclick=()=>{
+  clearTimeout(window.__openCartAfterAdd);
+  renderCart();
+  $("#cartDrawer").classList.add("open");
+};
 $$("[data-close]").forEach(b=>b.onclick=()=>close("#"+b.dataset.close));
-$("#addProduct").onclick=()=>{if(!current)return;store.add(current.id);renderCart();close("#productModal");$("#cartDrawer").classList.add("open");toast(`${current.title.toUpperCase()} ADDED TO BAG`)};
+$("#addProduct").onclick=()=>{
+  if(!current)return;
+
+  store.add(current.id);
+  renderCart();
+  close("#productModal");
+
+  // Give the visitor a clear confirmation before opening the cart.
+  toast("1 ITEM ADDED TO CART");
+
+  // Then open the cart so the newly-added item is immediately visible.
+  clearTimeout(window.__openCartAfterAdd);
+  window.__openCartAfterAdd=setTimeout(()=>{
+    renderCart();
+    $("#cartDrawer").classList.add("open");
+  },850);
+};
 $("#cartLines").addEventListener("click",e=>{const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");if(plus){store.increment(plus.dataset.cartPlus);renderCart();return}if(minus){store.decrement(minus.dataset.cartMinus);renderCart();return}if(remove){store.remove(remove.dataset.remove);renderCart();toast("REMOVED FROM BAG")}});
 $("#checkout").onclick=async()=>{
   if(!store.count){toast("YOUR CART IS EMPTY");return}

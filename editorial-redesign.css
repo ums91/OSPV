@@ -1,0 +1,111 @@
+
+/* OMER Editorial Redesign v2
+   Additive layer over the EXISTING styles.css.
+   No existing application styles are removed.
+*/
+
+.editorial-journal-wrap,
+.editorial-editions-wrap,
+.editorial-philosophy-wrap{margin-left:142px}
+
+.editorial-journal-wrap{background:#111310;color:#fff;padding:105px 6vw 95px}
+.editorial-section-kicker{display:flex;justify-content:space-between;align-items:end;gap:70px;margin-bottom:48px}
+.editorial-section-kicker>div:first-child{flex:1}
+.editorial-section-kicker>div:first-child>span{font-size:8px;letter-spacing:.28em;color:#c49a64}
+.editorial-section-kicker h2{font:500 clamp(55px,6.4vw,96px)/.84 "Playfair Display",serif;letter-spacing:-.06em;margin:20px 0 0}
+.editorial-section-kicker h2 em{color:#bd955e;font-style:normal}
+.editorial-section-intro{width:min(370px,100%);color:#888}
+.editorial-section-intro>span{font-size:7px;letter-spacing:.2em;color:#c49a64}
+.editorial-section-intro p{font-size:12px;line-height:1.85;margin:14px 0 20px}
+.editorial-section-intro a{font-size:8px;letter-spacing:.16em;color:#ddd;text-decoration:none;border-bottom:1px solid #555;padding-bottom:7px}
+
+.editorial-journal-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.75fr);border:1px solid #333}
+.editorial-journal-feature{position:relative;min-height:570px;overflow:hidden;border-right:1px solid #333}
+.editorial-journal-feature>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.editorial-journal-feature:hover>img{transform:scale(1.045)}
+.editorial-feature-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 20%,rgba(0,0,0,.86))}
+.editorial-feature-number{position:absolute;top:20px;right:25px;font:500 90px/.8 "Playfair Display",serif;color:#fff2}
+.editorial-feature-copy{position:absolute;left:30px;right:30px;bottom:30px;z-index:2}
+.editorial-feature-copy small,.editorial-note-card small{font-size:7px;letter-spacing:.2em;color:#c9a06a}
+.editorial-feature-copy h3{font:500 46px/1 "Playfair Display",serif;margin:11px 0}
+.editorial-feature-copy p{font-size:12px;line-height:1.7;color:#ddd;max-width:400px}
+.editorial-story-btn{background:none;border:0;border-bottom:1px solid #777;color:#fff;padding:10px 0 7px;font-size:8px;letter-spacing:.18em;cursor:pointer}
+.editorial-story-btn b{font-size:14px;margin-left:15px}
+.editorial-notes{display:flex;flex-direction:column}
+.editorial-note-card{flex:1;display:grid;grid-template-columns:58px 1fr;gap:12px;padding:30px;border-bottom:1px solid #333}
+.editorial-note-card>span{font:500 43px/.9 "Playfair Display",serif;color:#555}
+.editorial-note-card h3{font:500 27px/1.05 "Playfair Display",serif;margin:10px 0}
+.editorial-note-card p{font-size:11px;line-height:1.7;color:#888;margin:0 0 15px}
+.editorial-journal-footer{padding:23px 30px;display:flex;justify-content:space-between;align-items:center}
+.editorial-journal-footer span{font-size:7px;letter-spacing:.2em;color:#666}
+.editorial-journal-footer a{font-size:8px;color:#c49a64;text-decoration:none}
+
+.editorial-editions-wrap{background:#f3f0ea;padding:120px 7vw 130px}
+.editorial-edition-stage{display:grid;grid-template-columns:1.25fr .75fr;gap:8vw;align-items:center}
+.editorial-artwork{position:relative;min-height:580px;display:grid;place-items:center}
+.editorial-print{position:relative;width:min(540px,84%);padding:21px;background:#fbfaf5;box-shadow:0 35px 65px #0002;transform:rotate(-2deg);z-index:2;transition:.8s cubic-bezier(.2,.8,.2,1)}
+.editorial-print img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.editorial-artwork:hover .editorial-print{transform:rotate(0) translateY(-9px)}
+.editorial-paper-shadow{position:absolute;width:62%;height:70%;background:#d5cec2;transform:rotate(5deg) translate(45px,28px)}
+.editorial-artwork>span{position:absolute;bottom:12px;left:0;color:#999;font-size:7px;letter-spacing:.22em}
+.editorial-edition-copy{max-width:430px}
+.editorial-edition-copy>small{font-size:7px;letter-spacing:.2em;color:#a57b49}
+.editorial-edition-copy h3{font:500 clamp(48px,5vw,76px)/.9 "Playfair Display",serif;letter-spacing:-.05em;margin:18px 0}
+.editorial-edition-copy>p{font-size:13px;line-height:1.9;color:#777}
+.editorial-specs{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;padding:20px 0;margin:34px 0}
+.editorial-specs span{font-size:7px;letter-spacing:.14em;color:#999;line-height:1.8}
+.editorial-specs strong{display:block;color:#222;font-size:9px}
+.editorial-edition-button{display:flex;justify-content:space-between;background:#171714;color:#fff;padding:16px 19px;text-decoration:none;font-size:8px;letter-spacing:.16em}
+.editorial-edition-button span{font-size:16px}
+
+.editorial-philosophy-wrap{background:#e8e4dc;padding:135px 7vw 145px}
+.editorial-philosophy-title{margin-bottom:65px}
+.editorial-philosophy-title h2{font:500 clamp(65px,7.6vw,115px)/.82 "Playfair Display",serif;letter-spacing:-.06em;margin:20px 0}
+.editorial-philosophy-title h2 em{font-style:normal;color:#bd955e}
+.editorial-archive{display:grid;grid-template-columns:1.3fr .7fr;gap:5vw;align-items:end}
+.editorial-archive-main{height:min(600px,54vw);position:relative;overflow:hidden;cursor:crosshair;background:#ccc}
+.editorial-archive-main>img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.editorial-archive-shade{position:absolute;inset:0;background:linear-gradient(180deg,#0003,transparent 40%,#0009)}
+.editorial-archive-top,.editorial-archive-bottom{position:absolute;left:23px;right:23px;display:flex;justify-content:space-between;color:#fff;font-size:7px;letter-spacing:.2em;z-index:2}
+.editorial-archive-top{top:20px}.editorial-archive-bottom{bottom:20px}
+.editorial-archive-side>div{aspect-ratio:4/5;overflow:hidden;background:#d4d0c7}
+.editorial-archive-side img{width:100%;height:100%;object-fit:cover;transition:.8s}
+.editorial-archive-side:hover img{transform:scale(1.045)}
+.editorial-archive-side>span{display:block;color:#888;font-size:7px;letter-spacing:.2em;margin-top:11px}
+.editorial-philosophy-copy{margin:48px 0 0 52%;max-width:480px}
+.editorial-philosophy-copy p{font-size:13px;line-height:1.9;color:#666;margin:0 0 17px}
+.editorial-philosophy-copy a{display:inline-block;margin-top:8px;color:#222;text-decoration:none;border-bottom:1px solid #aaa;padding-bottom:7px;font-size:8px;letter-spacing:.16em}
+
+.rail-index span{position:relative;overflow:hidden}
+.rail-index span i{position:absolute;left:0;top:0;width:100%;height:0;background:#bd955e;transition:height .45s}
+.hero-scroll{border:0;background:none;cursor:pointer;font:inherit}
+.editorial-toast{position:fixed;right:28px;bottom:28px;z-index:250;background:#171714;color:#fff;width:min(410px,calc(100vw - 40px));padding:18px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 20px 50px #0004;opacity:0;transform:translateY(18px);transition:.3s}
+.editorial-toast.show{opacity:1;transform:none}.editorial-toast span{font-size:9px;letter-spacing:.1em}.editorial-toast button{background:none;border:0;color:#fff;font-size:21px;cursor:pointer}
+
+@media(max-width:1100px){
+ .editorial-journal-wrap,.editorial-editions-wrap,.editorial-philosophy-wrap{margin-left:90px}
+ .editorial-journal-grid{grid-template-columns:1fr}
+ .editorial-journal-feature{border-right:0;border-bottom:1px solid #333}
+ .editorial-notes{display:grid;grid-template-columns:1fr 1fr}
+ .editorial-journal-footer{grid-column:1/-1}
+ .editorial-edition-stage{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+ .editorial-journal-wrap,.editorial-editions-wrap,.editorial-philosophy-wrap{margin-left:0}
+ .editorial-journal-wrap,.editorial-editions-wrap,.editorial-philosophy-wrap{padding-left:8vw;padding-right:8vw}
+ .editorial-section-kicker{display:block}
+ .editorial-section-intro{margin-top:28px}
+ .editorial-journal-feature{min-height:500px}
+ .editorial-notes{display:block}
+ .editorial-note-card{min-height:180px}
+ .editorial-artwork{min-height:450px}
+ .editorial-archive{grid-template-columns:1fr}
+ .editorial-archive-main{height:500px}
+ .editorial-philosophy-copy{margin-left:0;max-width:100%}
+}
+@media(max-width:460px){
+ .editorial-section-kicker h2,.editorial-philosophy-title h2{font-size:56px}
+ .editorial-feature-copy h3{font-size:36px}
+ .editorial-specs{grid-template-columns:1fr;gap:12px}
+ .editorial-archive-main{height:420px}
+}
