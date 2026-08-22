@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10100e">
+  <meta name="description" content="OMER — an editorial photography journal and collectible print shop.">
+  <title>OMER — Visual Journal & Editions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="progress"><span></span></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top"><span>OMER</span><small>VISUAL JOURNAL / EDITIONS</small></a>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="active" href="#top">Home</a>
+      <a href="#journal">Journal</a>
+      <a href="#editions">Editions</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="cart-trigger" aria-label="Open shopping bag">BAG <b id="cartCount">0</b></button>
+    <button class="menu" aria-label="Open menu"><span></span><span></span></button>
+  </header>
+
+  <aside class="side-rail"><span class="rail-label">SCROLL TO EXPLORE</span><span class="rail-line"></span><span class="rail-dot"></span></aside>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-media"><img src="assets/hero.jpg" alt="Misty mountain landscape with a lone traveler"><div class="hero-shade"></div></div>
+      <div class="hero-copy">
+        <p class="eyebrow"><i></i> CAPTURING THE IN-BETWEEN</p>
+        <h1>Stories<br><em>Through Lens</em></h1>
+        <p class="intro">A visual journal of places, people and quiet moments — now becoming a collection of tangible editions.</p>
+        <a class="explore magnetic" href="#journal"><span>ENTER THE JOURNAL</span><b>↗</b></a>
+      </div>
+      <div class="hero-count"><span>01</span><small>/ 04</small></div>
+      <div class="scroll-cue"><span></span>SCROLL</div>
+    </section>
+
+    <section class="statement">
+      <p class="eyebrow"><i></i> PHOTOGRAPHS WITH A SECOND LIFE</p>
+      <h2>Some images belong<br>on a <em>wall.</em></h2>
+      <p>Selected frames will be released as signed prints, collectible postcards and small-run paper objects.</p>
+    </section>
+
+    <section class="journal" id="journal">
+      <div class="section-head">
+        <div><p class="eyebrow"><i></i> THE JOURNAL</p><h2>Field Notes</h2></div>
+        <span>04 / 12 STORIES</span>
+      </div>
+      <div class="journal-grid">
+        <article class="story story-large"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=88" alt="Mountain landscape"><div><small>01 · MOUNTAINS</small><h3>Where the clouds touch the earth</h3><p>Alpine silence, changing weather and the smallness of a human figure against a huge landscape.</p></div></article>
+        <article class="story"><img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1000&q=88" alt="Forest"><div><small>02 · FORESTS</small><h3>Under the canopy</h3></div></article>
+        <article class="story"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=88" alt="Ocean"><div><small>03 · OCEANS</small><h3>Blue hour</h3></div></article>
+      </div>
+    </section>
+
+    <section class="editions" id="editions">
+      <div class="section-head">
+        <div><p class="eyebrow"><i></i> THE EDITIONS</p><h2>Own the frame.</h2></div>
+        <button class="filter-toggle" data-filter="all">All <span>⌄</span></button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter active" data-filter="all">All</button>
+        <button class="filter" data-filter="Postcard">Postcards</button>
+        <button class="filter" data-filter="Fine Art Print">Fine Art Prints</button>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="manifesto" id="about">
+      <p class="eyebrow"><i></i> THE PHILOSOPHY</p>
+      <div class="manifesto-grid">
+        <h2>Less noise.<br><em>More feeling.</em></h2>
+        <p>Photography is not about collecting places. It is about noticing them — light on an old wall, a stranger's silhouette, the few seconds before a storm. The journal preserves those fragments; the editions give them a physical life.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>© 2026 OMER VISUAL JOURNAL</span><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#top">BACK TO TOP ↑</a></footer>
+
+  <div class="menu-panel" aria-hidden="true">
+    <button class="close-menu" aria-label="Close menu">×</button>
+    <div><span>INDEX</span><a href="#top">Home</a><a href="#journal">Journal</a><a href="#editions">Editions</a><a href="#about">About</a></div>
+  </div>
+
+  <aside class="bag" aria-hidden="true">
+    <div class="bag-head"><span>YOUR BAG</span><button class="bag-close" aria-label="Close bag">×</button></div>
+    <div id="bagItems" class="bag-items"></div>
+    <div class="bag-footer"><div><span>Subtotal</span><strong id="bagTotal">₹0</strong></div><button id="checkout" class="checkout">PROCEED TO CHECKOUT <span>→</span></button><small>Secure payment integration can be connected here later.</small></div>
+  </aside>
+
+  <div class="product-modal" aria-hidden="true">
+    <button class="product-close" aria-label="Close product">×</button>
+    <div class="product-modal-grid"><div class="product-modal-image"><img id="modalImage" alt=""></div><div class="product-modal-copy"><small id="modalType"></small><h3 id="modalTitle"></h3><p id="modalDescription"></p><div class="specs"><span id="modalEdition"></span><span id="modalDimensions"></span></div><strong id="modalPrice"></strong><button id="modalAdd" class="checkout">ADD TO BAG <span>+</span></button></div></div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
