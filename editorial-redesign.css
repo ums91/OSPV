@@ -788,3 +788,65 @@ footer {
 @media (min-width:1200px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.product-overlay{padding-left:20px;padding-right:20px}}
 @media (max-width:720px){.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:35px 12px}.product-overlay{padding:13px 12px 12px}.product-overlay-meta{margin-bottom:9px}.product-overlay-meta strong{font-size:11px}.product-overlay-actions button{font-size:6.5px}.card-add{padding:10px 9px}.product-info h3{font-size:17px}}
 @media (max-width:460px){.products{grid-template-columns:1fr 1fr}.product-overlay{padding:12px 10px 10px}.quick-view{display:none}.card-add{width:100%;justify-content:center}.product-overlay-actions{display:block}.product-overlay-meta{margin-bottom:8px}.product-info h3{font-size:16px}}
+
+/* =========================================================
+   OMER FINAL PRECISION FIXES — CURRENT HTML STRUCTURE
+   ========================================================= */
+html,body{overflow-x:hidden}
+
+/* Philosophy: stop the title from drifting into a huge empty field. */
+.about.editorial-philosophy-wrap{padding-top:100px;padding-bottom:105px}
+.editorial-philosophy-title{display:grid;grid-template-columns:minmax(180px,.52fr) minmax(0,1fr);align-items:end;gap:5vw;margin-bottom:58px}
+.editorial-philosophy-title .eyebrow{align-self:end;margin-bottom:8px}
+.editorial-philosophy-title h2{margin:0;justify-self:end;max-width:700px;font-size:clamp(64px,7.3vw,112px);line-height:.82}
+.editorial-archive{align-items:start;gap:5vw}
+.editorial-archive-main{height:min(560px,46vw);min-height:420px}
+.editorial-archive-side{padding-top:0}
+.editorial-philosophy-copy{margin:46px 0 0 auto;max-width:470px}
+
+/* Motion: the reel belongs inside Motion, never below the footer. */
+.moving-frames{padding-top:92px;padding-bottom:100px;min-height:0;overflow:hidden}
+.motion-head{margin-bottom:42px}
+.reel-grid{display:grid;grid-template-columns:minmax(260px,380px);justify-content:start;gap:18px;min-height:0}
+.reel-card{position:relative;aspect-ratio:9/14;overflow:hidden;background:#222;cursor:pointer;isolation:isolate}
+.reel-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.reel-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 35%,rgba(0,0,0,.78));z-index:1;pointer-events:none}
+.reel-card-top{position:absolute;left:18px;right:18px;top:18px;z-index:2;display:flex;justify-content:space-between;color:#fff;font-size:7px;letter-spacing:.18em}
+.reel-info{position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:flex;align-items:center;justify-content:space-between}
+.reel-info small{font-size:7px;letter-spacing:.18em;color:#d8d8d2}
+.reel-play{width:40px;height:40px;border:1px solid rgba(255,255,255,.7);border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;transition:.25s}
+.reel-card:hover .reel-play{background:#bd955e;border-color:#bd955e}
+.reel-empty{border:1px solid #333;padding:55px;color:#777;font-size:8px;letter-spacing:.2em}
+.video-modal.open{opacity:1;pointer-events:auto}
+.video-stage{width:min(900px,86vw);display:grid;grid-template-columns:minmax(280px,500px) 1fr;gap:34px;align-items:end}
+.video-stage video{width:100%;max-height:78vh;aspect-ratio:9/16;object-fit:contain;background:#080908}
+.video-meta{display:flex;flex-direction:column;gap:18px;color:#fff;font-size:8px;letter-spacing:.16em}
+.video-meta a{color:#bd955e;text-decoration:none}
+
+/* Cart: update instantly and keep the confirmation visible above the drawer. */
+.drawer{z-index:400}
+.toast{z-index:500;bottom:auto;top:24px;right:24px;left:auto;transform:translateY(-12px);opacity:0}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* Product cards: controls are always available, not dependent on hover. */
+.product-image{overflow:hidden}
+.product-overlay{opacity:1;visibility:visible}
+.product-overlay-actions{display:flex}
+.card-add{min-width:132px}
+
+@media(max-width:900px){
+  .editorial-philosophy-title{grid-template-columns:1fr;gap:22px}
+  .editorial-philosophy-title h2{justify-self:start}
+  .editorial-archive{grid-template-columns:1fr}
+  .editorial-archive-main{height:520px}
+  .editorial-philosophy-copy{margin:42px 0 0;max-width:520px}
+  .video-stage{grid-template-columns:1fr;align-items:center;justify-items:center}
+  .video-meta{width:min(500px,100%)}
+}
+@media(max-width:720px){
+  .reel-grid{grid-template-columns:minmax(0,1fr);max-width:360px}
+  .reel-card{width:100%}
+  .toast{top:76px;right:12px;left:12px;text-align:center}
+  .product-overlay{padding:12px}
+  .card-add{min-width:0;flex:1}
+}
