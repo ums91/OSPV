@@ -48,40 +48,6 @@ function renderCart(){
 function close(id){const el=$(id);if(el)el.classList.remove("open")}
 renderMini();renderProducts();renderCart();
 
-const reelData = await (await fetch("assets/reels.json")).json();
-const reelGrid = $("#reelGrid");
-if (reelGrid) {
-  reelGrid.innerHTML = reelData.map(r => {
-    const month = (r.source.match(/reels\/(\d{4})(\d{2})/) || []).slice(1);
-    const label = month.length ? `${month[0]} · ${month[1]}` : `REEL ${String(r.id).padStart(2,"0")}`;
-    return `<article class="reel-card" data-reel="${r.id}" data-video="${r.file}" data-label="${label}">
-      <img src="${r.poster}" alt="OMER moving frame ${r.id}" loading="lazy">
-      <div class="reel-info"><small>${label}</small><span class="reel-play">▶</span></div>
-    </article>`;
-  }).join("");
-
-  $$(".reel-card").forEach(card => card.addEventListener("click", () => {
-    const video = $("#activeVideo");
-    video.pause();
-    video.removeAttribute("src");
-    video.load();
-    video.src = card.dataset.video;
-    video.poster = card.querySelector("img").src;
-    $("#videoLabel").textContent = card.dataset.label;
-    $("#videoModal").classList.add("open");
-    $("#videoModal").setAttribute("aria-hidden","false");
-    video.play().catch(()=>{});
-  }));
-}
-function closeVideoModal(){
-  const video=$("#activeVideo");
-  if(video){video.pause();video.removeAttribute("src");video.load();}
-  $("#videoModal")?.classList.remove("open");
-  $("#videoModal")?.setAttribute("aria-hidden","true");
-}
-$("#videoModal")?.addEventListener("click",e=>{if(e.target.id==="videoModal")closeVideoModal()});
-
-
 $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
 $("#bagBtn").onclick=()=>{renderCart();$("#cartDrawer").classList.add("open")};
 $$("[data-close]").forEach(b=>b.onclick=()=>close("#"+b.dataset.close));
@@ -129,4 +95,4 @@ if(matchMedia("(pointer:fine)").matches){
 }
 const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.animate([{opacity:0,transform:"translateY(22px)"},{opacity:1,transform:"translateY(0)"}],{duration:700,easing:"cubic-bezier(.2,.8,.2,1)",fill:"forwards"});observer.unobserve(e.target)}}),{threshold:.12});
 $$(".feature-card,.mini,.product,.about>div,.contact form").forEach(x=>observer.observe(x));
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu"].forEach(close);closeVideoModal()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")["#cartDrawer","#productModal","#searchModal","#mobileMenu"].forEach(close)});
