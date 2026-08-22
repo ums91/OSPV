@@ -232,3 +232,29 @@ The current visual/product images are placeholders. Replace them with your own p
 ## Instagram content
 
 The demonstration photography has been replaced with a curated selection from the supplied Instagram export for `@ums91`. Images are optimized to WebP for the website, while the original export remains separate from the deployable site.
+
+
+## Instagram Reels / Videos
+
+The site now includes a dedicated **Moving Frames** section.
+
+The supplied Instagram reel export is stored locally:
+
+```text
+assets/
+├── reels/
+├── reel-posters/
+└── reels.json
+```
+
+Videos are not loaded into memory all at once. The page displays lightweight poster frames and only assigns the MP4 source when a visitor opens a reel. This keeps the initial page considerably lighter while preserving all exported videos.
+
+Your Instagram link:
+
+```text
+https://www.instagram.com/ums91/
+```
+
+is used as the source/attribution link.
+
+For production, very large videos should ideally be transcoded into web-optimized H.264/WebM variants and served through a CDN/object-storage layer rather than from GitHub Pages.

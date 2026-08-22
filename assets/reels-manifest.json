@@ -1,0 +1,7 @@
+{
+  "instagram": "@ums91",
+  "videos": 33,
+  "video_format": "MP4",
+  "poster_format": "JPG",
+  "loading_strategy": "poster-first; video source attached only when opened"
+}
