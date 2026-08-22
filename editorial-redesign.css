@@ -850,3 +850,111 @@ html,body{overflow-x:hidden}
   .product-overlay{padding:12px}
   .card-add{min-width:0;flex:1}
 }
+
+
+/* =========================================================
+   FINAL VIDEO MODAL / MOTION POSITION FIX
+   The video modal must be a fixed overlay from its hidden state.
+   Without this, #activeVideo remains in normal document flow
+   after the footer and appears as a second video at the bottom.
+   ========================================================= */
+
+.video-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 32px !important;
+  background: rgba(10, 11, 9, .96) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  overflow: auto !important;
+  transition: opacity .3s ease, visibility .3s ease !important;
+}
+
+.video-modal.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.video-modal .video-close {
+  position: fixed !important;
+  top: 24px !important;
+  right: 30px !important;
+  z-index: 1003 !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(255,255,255,.45) !important;
+  border-radius: 50% !important;
+  background: rgba(0,0,0,.25) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  font-size: 24px !important;
+}
+
+.video-modal .video-stage {
+  position: relative !important;
+  z-index: 1001 !important;
+  width: min(1000px, 92vw) !important;
+  max-height: calc(100vh - 64px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 500px) minmax(180px, 1fr) !important;
+  align-items: center !important;
+  gap: 42px !important;
+}
+
+.video-modal .video-stage video {
+  display: block !important;
+  width: 100% !important;
+  height: min(78vh, 760px) !important;
+  max-height: 78vh !important;
+  aspect-ratio: 9 / 16 !important;
+  object-fit: contain !important;
+  background: #050605 !important;
+}
+
+.video-modal .video-meta {
+  align-self: end !important;
+}
+
+@media (max-width: 900px) {
+  .video-modal {
+    padding: 24px !important;
+  }
+
+  .video-modal .video-stage {
+    width: min(520px, 92vw) !important;
+    max-height: none !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .video-modal .video-stage video {
+    height: min(70vh, 680px) !important;
+    max-height: 70vh !important;
+  }
+
+  .video-modal .video-meta {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .video-modal {
+    padding: 70px 14px 18px !important;
+  }
+
+  .video-modal .video-stage video {
+    height: min(66vh, 620px) !important;
+  }
+
+  .video-modal .video-close {
+    top: 18px !important;
+    right: 18px !important;
+  }
+}
