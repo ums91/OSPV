@@ -1,0 +1,1100 @@
+
+/* =========================================================
+   OMER — LIVE LAYOUT FIX
+   Targets the classes that are actually present in index.html.
+   Keeps the existing visual language; fixes spacing, alignment,
+   overflow and section composition.
+   ========================================================= */
+
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 0;
+}
+
+/* ---------- Journal ---------- */
+
+.editorial-journal-wrap {
+  margin-left: 142px;
+  padding: 118px 7vw 110px;
+  background: #111310;
+  color: #fff;
+}
+
+.editorial-section-kicker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  align-items: end;
+  gap: 70px;
+  margin-bottom: 52px;
+}
+
+.editorial-section-kicker > div:first-child > span,
+.editorial-section-intro > span {
+  display: block;
+  color: #bd955e;
+  font-size: 8px;
+  line-height: 1.4;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+}
+
+.editorial-section-kicker h2 {
+  margin: 20px 0 0;
+  font: 500 clamp(58px, 6.7vw, 105px)/.84 "Playfair Display", serif;
+  letter-spacing: -.06em;
+}
+
+.editorial-section-kicker h2 em {
+  color: #bd955e;
+  font-style: normal;
+}
+
+.editorial-section-intro {
+  max-width: 390px;
+}
+
+.editorial-section-intro p {
+  margin: 16px 0 20px;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.editorial-section-intro a {
+  display: inline-block;
+  color: #c59a61;
+  text-decoration: none;
+  border-bottom: 1px solid #555;
+  padding-bottom: 7px;
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+
+/* actual journal grid */
+.editorial-journal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.62fr) minmax(300px, .78fr);
+  min-height: 555px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.editorial-journal-feature {
+  position: relative;
+  min-height: 555px;
+  overflow: hidden;
+  border-right: 1px solid #333;
+}
+
+.editorial-journal-feature > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1s cubic-bezier(.2,.8,.2,1);
+}
+
+.editorial-journal-feature:hover > img {
+  transform: scale(1.045);
+}
+
+.editorial-feature-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.03) 20%, rgba(0,0,0,.86));
+}
+
+.editorial-feature-number {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  color: rgba(255,255,255,.16);
+  font: 500 92px/.8 "Playfair Display", serif;
+}
+
+.editorial-feature-copy {
+  position: absolute;
+  left: 32px;
+  right: 32px;
+  bottom: 30px;
+  z-index: 2;
+}
+
+.editorial-feature-copy small,
+.editorial-note-card small {
+  color: #caa06b;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.editorial-feature-copy h3 {
+  margin: 11px 0 9px;
+  font: 500 46px/1 "Playfair Display", serif;
+}
+
+.editorial-feature-copy p {
+  max-width: 420px;
+  margin: 0 0 17px;
+  color: #ddd;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.editorial-story-btn {
+  padding: 10px 0 8px;
+  border: 0;
+  border-bottom: 1px solid #777;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  font-size: 8px;
+  letter-spacing: .18em;
+}
+
+.editorial-story-btn b {
+  margin-left: 18px;
+  font-size: 15px;
+}
+
+.editorial-notes {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.editorial-note-card {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 52px minmax(0,1fr);
+  gap: 15px;
+  padding: 30px;
+  border-bottom: 1px solid #333;
+}
+
+.editorial-note-card > span {
+  color: #555;
+  font: 500 44px/1 "Playfair Display", serif;
+}
+
+.editorial-note-card h3 {
+  margin: 11px 0 8px;
+  font: 500 27px/1.05 "Playfair Display", serif;
+}
+
+.editorial-note-card p {
+  margin: 0 0 15px;
+  color: #888;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.editorial-journal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 30px;
+}
+
+.editorial-journal-footer span {
+  color: #666;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.editorial-journal-footer a {
+  color: #bd955e;
+  text-decoration: none;
+  font-size: 8px;
+  letter-spacing: .12em;
+}
+
+/* ---------- Motion ---------- */
+
+.moving-frames {
+  margin-left: 142px;
+  padding: 105px 7vw 115px;
+  background: #171814;
+  color: #fff;
+  border-top: 1px solid #30312d;
+  min-width: 0;
+}
+
+.motion-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 350px);
+  align-items: end;
+  gap: 60px;
+  margin-bottom: 48px;
+}
+
+.motion-head > div {
+  min-width: 0;
+}
+
+.motion-head h2 {
+  margin: 18px 0 0;
+  font: 500 clamp(54px, 6.6vw, 96px)/.84 "Playfair Display", serif;
+  letter-spacing: -.055em;
+}
+
+.motion-head h2 em {
+  color: #bd955e;
+  font-style: normal;
+}
+
+.motion-note {
+  max-width: 350px;
+  margin: 0;
+  color: #999;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.motion-note a {
+  color: #d0a76f;
+  text-decoration: none;
+}
+
+.reel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 16px;
+  min-width: 0;
+}
+
+.reel-card {
+  position: relative;
+  aspect-ratio: 9/14;
+  min-width: 0;
+  overflow: hidden;
+  background: #292a26;
+  cursor: pointer;
+}
+
+.reel-card:nth-child(3n+1) {
+  aspect-ratio: 4/5;
+}
+
+.reel-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s, filter .5s;
+}
+
+.reel-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(transparent 42%, rgba(0,0,0,.84));
+}
+
+.reel-card:hover img {
+  transform: scale(1.05);
+}
+
+.reel-info {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 17px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.reel-info small {
+  color: #d0aa75;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.reel-play {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.65);
+  border-radius: 50%;
+  color: #fff;
+  transition: .3s;
+}
+
+.reel-card:hover .reel-play {
+  background: #bd955e;
+  border-color: #bd955e;
+}
+
+/* ---------- Editions ---------- */
+
+.editorial-editions-wrap {
+  margin-left: 142px;
+  padding: 125px 8vw 135px;
+  background: #f3f0ea;
+  color: #171714;
+}
+
+.editorial-editions-wrap .editorial-section-kicker {
+  margin-bottom: 65px;
+}
+
+.editorial-editions-wrap .editorial-section-intro p {
+  color: #777;
+}
+
+.editorial-editions-wrap .editorial-section-intro a {
+  color: #171714;
+  border-color: #aaa;
+}
+
+.editorial-edition-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.22fr) minmax(320px, .78fr);
+  gap: 8vw;
+  align-items: center;
+}
+
+.editorial-artwork {
+  position: relative;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+}
+
+.editorial-print {
+  position: relative;
+  z-index: 2;
+  width: min(560px, 84%);
+  padding: 22px;
+  background: #faf8f2;
+  box-shadow: 0 35px 60px rgba(0,0,0,.15), 0 8px 20px rgba(0,0,0,.08);
+  transform: rotate(-2deg);
+  transition: transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.editorial-print img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+
+.editorial-artwork:hover .editorial-print {
+  transform: rotate(0) translateY(-10px);
+}
+
+.editorial-paper-shadow {
+  position: absolute;
+  width: 62%;
+  height: 70%;
+  background: #d5cec2;
+  transform: rotate(5deg) translate(50px,35px);
+}
+
+.editorial-artwork > span {
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+  color: #999;
+  font-size: 7px;
+  letter-spacing: .22em;
+}
+
+.editorial-edition-copy {
+  max-width: 430px;
+}
+
+.editorial-edition-copy > small {
+  color: #a57b49;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.editorial-edition-copy h3 {
+  margin: 19px 0;
+  font: 500 clamp(48px, 5vw, 78px)/.9 "Playfair Display", serif;
+  letter-spacing: -.05em;
+}
+
+.editorial-edition-copy > p {
+  color: #777;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.editorial-specs {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  margin: 38px 0;
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.editorial-specs span {
+  color: #999;
+  font-size: 7px;
+  letter-spacing: .14em;
+  line-height: 1.8;
+}
+
+.editorial-specs strong {
+  display: block;
+  color: #222;
+  font-size: 9px;
+}
+
+.editorial-edition-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 17px 20px;
+  background: #171714;
+  color: #fff;
+  text-decoration: none;
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+
+/* ---------- Shop ---------- */
+
+.shop {
+  margin-left: 142px;
+  padding: 110px 8vw 125px;
+}
+
+.shop-head {
+  margin-bottom: 48px;
+}
+
+.products {
+  min-height: 0;
+}
+
+/* ---------- Philosophy ---------- */
+
+.about.editorial-philosophy-wrap {
+  margin-left: 142px;
+  padding: 125px 8vw 115px;
+  background: #e8e4dc;
+}
+
+.editorial-philosophy-title {
+  margin-bottom: 65px;
+}
+
+.editorial-philosophy-title h2 {
+  margin: 20px 0 0;
+  font: 500 clamp(58px, 7vw, 105px)/.84 "Playfair Display", serif;
+  letter-spacing: -.06em;
+}
+
+.editorial-philosophy-title h2 em {
+  color: #bd955e;
+  font-style: normal;
+}
+
+.editorial-archive {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr);
+  gap: 5vw;
+  align-items: end;
+}
+
+.editorial-archive-main {
+  position: relative;
+  height: min(610px, 52vw);
+  min-height: 430px;
+  overflow: hidden;
+  background: #ccc;
+  cursor: crosshair;
+}
+
+.editorial-archive-main > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s cubic-bezier(.2,.8,.2,1);
+}
+
+.editorial-archive-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.25), transparent 40%, rgba(0,0,0,.65));
+}
+
+.editorial-archive-top,
+.editorial-archive-bottom {
+  position: absolute;
+  left: 25px;
+  right: 25px;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.editorial-archive-top { top: 22px; }
+.editorial-archive-bottom { bottom: 22px; }
+
+.editorial-archive-side > div {
+  width: 100%;
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: #d5d0c7;
+}
+
+.editorial-archive-side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s;
+}
+
+.editorial-archive-side:hover img {
+  transform: scale(1.04);
+}
+
+.editorial-archive-side > span {
+  display: block;
+  margin-top: 12px;
+  color: #999;
+  font-size: 7px;
+  letter-spacing: .2em;
+}
+
+.editorial-philosophy-copy {
+  width: min(520px, 100%);
+  margin: 52px 0 0 auto;
+}
+
+.editorial-philosophy-copy p {
+  margin: 0 0 19px;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.editorial-philosophy-copy a {
+  display: inline-block;
+  margin-top: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #aaa;
+  color: #222;
+  text-decoration: none;
+  font-size: 8px;
+  letter-spacing: .16em;
+}
+
+/* ---------- Footer / video ---------- */
+
+footer {
+  min-height: 74px;
+  align-items: center;
+  overflow: hidden;
+}
+
+.video-modal {
+  z-index: 250;
+}
+
+/* ---------- Story toast: use existing toast system visually ---------- */
+
+.toast {
+  z-index: 300;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 1100px) {
+  .editorial-journal-wrap,
+  .moving-frames,
+  .editorial-editions-wrap,
+  .shop,
+  .about.editorial-philosophy-wrap {
+    margin-left: 90px;
+  }
+
+  .editorial-section-kicker {
+    grid-template-columns: minmax(0,1fr) minmax(250px,330px);
+    gap: 45px;
+  }
+
+  .editorial-journal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-journal-feature {
+    min-height: 500px;
+    border-right: 0;
+    border-bottom: 1px solid #333;
+  }
+
+  .editorial-edition-stage {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-artwork {
+    min-height: 500px;
+  }
+
+  .editorial-archive {
+    grid-template-columns: minmax(0,1.3fr) minmax(220px,.7fr);
+  }
+
+  .reel-grid {
+    grid-template-columns: repeat(3, minmax(0,1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .editorial-journal-wrap,
+  .moving-frames,
+  .editorial-editions-wrap,
+  .shop,
+  .about.editorial-philosophy-wrap {
+    margin-left: 0;
+  }
+
+  .editorial-journal-wrap,
+  .moving-frames,
+  .editorial-editions-wrap,
+  .shop,
+  .about.editorial-philosophy-wrap {
+    padding-left: 8vw;
+    padding-right: 8vw;
+  }
+
+  .editorial-section-kicker,
+  .motion-head {
+    display: block;
+  }
+
+  .editorial-section-intro,
+  .motion-note {
+    margin-top: 28px;
+  }
+
+  .editorial-journal-feature {
+    min-height: 500px;
+  }
+
+  .editorial-note-card {
+    grid-template-columns: 45px minmax(0,1fr);
+  }
+
+  .reel-grid {
+    grid-template-columns: repeat(2, minmax(0,1fr));
+  }
+
+  .editorial-artwork {
+    min-height: 430px;
+  }
+
+  .editorial-archive {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-archive-main {
+    height: 500px;
+  }
+
+  .editorial-philosophy-copy {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 460px) {
+  .editorial-section-kicker h2,
+  .editorial-philosophy-title h2 {
+    font-size: 56px;
+  }
+
+  .editorial-feature-copy h3 {
+    font-size: 36px;
+  }
+
+  .editorial-journal-feature {
+    min-height: 430px;
+  }
+
+  .reel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editorial-artwork {
+    min-height: 360px;
+  }
+
+  .editorial-print {
+    width: 88%;
+  }
+
+  .editorial-specs {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .editorial-archive-main {
+    height: 420px;
+    min-height: 0;
+  }
+}
+
+/* =========================================================
+   OMER SHOP — FULL CATALOGUE / PRODUCT ACTIONS
+   ========================================================= */
+.shop{background:#f3f0ea;min-height:760px}
+.shop-head{align-items:flex-end}
+.shop-head>div:first-child{min-width:0}
+.shop h2{max-width:900px}
+.products{grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 22px}
+.product{min-width:0;position:relative}
+.product-image{aspect-ratio:4/5;background:#d8d4cc;isolation:isolate}
+.product-image img{display:block}
+.product-overlay{position:absolute;left:0;right:0;bottom:0;padding:18px 17px 16px;background:linear-gradient(180deg,transparent,rgba(14,14,12,.9) 34%);color:#fff;z-index:2;transform:translateY(0);transition:.35s ease}
+.product-overlay-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.product-overlay-meta span{font-size:7px;letter-spacing:.17em;text-transform:uppercase;color:#ddd}
+.product-overlay-meta strong{font-size:13px;color:#fff}
+.product-overlay-actions{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.product-overlay-actions button{appearance:none;cursor:pointer;font-family:inherit;font-size:7px;letter-spacing:.15em;line-height:1;border-radius:0}
+.quick-view{padding:10px 0;border:0;border-bottom:1px solid rgba(255,255,255,.6);background:transparent;color:#fff}
+.quick-view span{font-size:12px;margin-left:7px}
+.card-add{padding:11px 13px;border:1px solid rgba(255,255,255,.65);background:rgba(255,255,255,.08);color:#fff;transition:.25s}
+.card-add:hover{background:#bd955e;border-color:#bd955e}
+.card-add span{font-size:13px;margin-left:7px}
+.product-info{position:relative;padding:15px 2px 0}
+.product-info h3{margin:8px 0 10px}
+.product-info>div{align-items:center}
+.product-info>div strong{font-size:13px}
+.product-info>div span{font-size:8px}
+.product:hover .product-image img{transform:scale(1.045)}
+.product:hover .product-overlay{background:linear-gradient(180deg,transparent,rgba(14,14,12,.94) 25%)}
+.catalogue-error{min-height:280px;grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid #d5d0c7;text-align:center;gap:10px;color:#777}
+.catalogue-error strong{font:500 30px/1.1 "Playfair Display",serif;color:#222}
+.catalogue-error span{font-size:10px;letter-spacing:.1em}
+@media (min-width:1200px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.product-overlay{padding-left:20px;padding-right:20px}}
+@media (max-width:720px){.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:35px 12px}.product-overlay{padding:13px 12px 12px}.product-overlay-meta{margin-bottom:9px}.product-overlay-meta strong{font-size:11px}.product-overlay-actions button{font-size:6.5px}.card-add{padding:10px 9px}.product-info h3{font-size:17px}}
+@media (max-width:460px){.products{grid-template-columns:1fr 1fr}.product-overlay{padding:12px 10px 10px}.quick-view{display:none}.card-add{width:100%;justify-content:center}.product-overlay-actions{display:block}.product-overlay-meta{margin-bottom:8px}.product-info h3{font-size:16px}}
+
+/* =========================================================
+   OMER FINAL PRECISION FIXES — CURRENT HTML STRUCTURE
+   ========================================================= */
+html,body{overflow-x:hidden}
+
+/* Philosophy: stop the title from drifting into a huge empty field. */
+.about.editorial-philosophy-wrap{padding-top:100px;padding-bottom:105px}
+.editorial-philosophy-title{display:grid;grid-template-columns:minmax(180px,.52fr) minmax(0,1fr);align-items:end;gap:5vw;margin-bottom:58px}
+.editorial-philosophy-title .eyebrow{align-self:end;margin-bottom:8px}
+.editorial-philosophy-title h2{margin:0;justify-self:end;max-width:700px;font-size:clamp(64px,7.3vw,112px);line-height:.82}
+.editorial-archive{align-items:start;gap:5vw}
+.editorial-archive-main{height:min(560px,46vw);min-height:420px}
+.editorial-archive-side{padding-top:0}
+.editorial-philosophy-copy{margin:46px 0 0 auto;max-width:470px}
+
+/* Motion: the reel belongs inside Motion, never below the footer. */
+.moving-frames{padding-top:92px;padding-bottom:100px;min-height:0;overflow:hidden}
+.motion-head{margin-bottom:42px}
+.reel-grid{display:grid;grid-template-columns:minmax(260px,380px);justify-content:start;gap:18px;min-height:0}
+.reel-card{position:relative;aspect-ratio:9/14;overflow:hidden;background:#222;cursor:pointer;isolation:isolate}
+.reel-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.reel-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 35%,rgba(0,0,0,.78));z-index:1;pointer-events:none}
+.reel-card-top{position:absolute;left:18px;right:18px;top:18px;z-index:2;display:flex;justify-content:space-between;color:#fff;font-size:7px;letter-spacing:.18em}
+.reel-info{position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:flex;align-items:center;justify-content:space-between}
+.reel-info small{font-size:7px;letter-spacing:.18em;color:#d8d8d2}
+.reel-play{width:40px;height:40px;border:1px solid rgba(255,255,255,.7);border-radius:50%;display:grid;place-items:center;color:#fff;font-size:11px;transition:.25s}
+.reel-card:hover .reel-play{background:#bd955e;border-color:#bd955e}
+.reel-empty{border:1px solid #333;padding:55px;color:#777;font-size:8px;letter-spacing:.2em}
+.video-modal.open{opacity:1;pointer-events:auto}
+.video-stage{width:min(900px,86vw);display:grid;grid-template-columns:minmax(280px,500px) 1fr;gap:34px;align-items:end}
+.video-stage video{width:100%;max-height:78vh;aspect-ratio:9/16;object-fit:contain;background:#080908}
+.video-meta{display:flex;flex-direction:column;gap:18px;color:#fff;font-size:8px;letter-spacing:.16em}
+.video-meta a{color:#bd955e;text-decoration:none}
+
+/* Cart: update instantly and keep the confirmation visible above the drawer. */
+.drawer{z-index:400}
+.toast{z-index:500;bottom:auto;top:24px;right:24px;left:auto;transform:translateY(-12px);opacity:0}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* Product cards: controls are always available, not dependent on hover. */
+.product-image{overflow:hidden}
+.product-overlay{opacity:1;visibility:visible}
+.product-overlay-actions{display:flex}
+.card-add{min-width:132px}
+
+@media(max-width:900px){
+  .editorial-philosophy-title{grid-template-columns:1fr;gap:22px}
+  .editorial-philosophy-title h2{justify-self:start}
+  .editorial-archive{grid-template-columns:1fr}
+  .editorial-archive-main{height:520px}
+  .editorial-philosophy-copy{margin:42px 0 0;max-width:520px}
+  .video-stage{grid-template-columns:1fr;align-items:center;justify-items:center}
+  .video-meta{width:min(500px,100%)}
+}
+@media(max-width:720px){
+  .reel-grid{grid-template-columns:minmax(0,1fr);max-width:360px}
+  .reel-card{width:100%}
+  .toast{top:76px;right:12px;left:12px;text-align:center}
+  .product-overlay{padding:12px}
+  .card-add{min-width:0;flex:1}
+}
+
+
+/* =========================================================
+   FINAL VIDEO MODAL / MOTION POSITION FIX
+   The video modal must be a fixed overlay from its hidden state.
+   Without this, #activeVideo remains in normal document flow
+   after the footer and appears as a second video at the bottom.
+   ========================================================= */
+
+.video-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 32px !important;
+  background: rgba(10, 11, 9, .96) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  overflow: auto !important;
+  transition: opacity .3s ease, visibility .3s ease !important;
+}
+
+.video-modal.open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.video-modal .video-close {
+  position: fixed !important;
+  top: 24px !important;
+  right: 30px !important;
+  z-index: 1003 !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: grid !important;
+  place-items: center !important;
+  border: 1px solid rgba(255,255,255,.45) !important;
+  border-radius: 50% !important;
+  background: rgba(0,0,0,.25) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  font-size: 24px !important;
+}
+
+.video-modal .video-stage {
+  position: relative !important;
+  z-index: 1001 !important;
+  width: min(1000px, 92vw) !important;
+  max-height: calc(100vh - 64px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(260px, 500px) minmax(180px, 1fr) !important;
+  align-items: center !important;
+  gap: 42px !important;
+}
+
+.video-modal .video-stage video {
+  display: block !important;
+  width: 100% !important;
+  height: min(78vh, 760px) !important;
+  max-height: 78vh !important;
+  aspect-ratio: 9 / 16 !important;
+  object-fit: contain !important;
+  background: #050605 !important;
+}
+
+.video-modal .video-meta {
+  align-self: end !important;
+}
+
+@media (max-width: 900px) {
+  .video-modal {
+    padding: 24px !important;
+  }
+
+  .video-modal .video-stage {
+    width: min(520px, 92vw) !important;
+    max-height: none !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .video-modal .video-stage video {
+    height: min(70vh, 680px) !important;
+    max-height: 70vh !important;
+  }
+
+  .video-modal .video-meta {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .video-modal {
+    padding: 70px 14px 18px !important;
+  }
+
+  .video-modal .video-stage video {
+    height: min(66vh, 620px) !important;
+  }
+
+  .video-modal .video-close {
+    top: 18px !important;
+    right: 18px !important;
+  }
+}
+
+/* =========================================================
+   OMER — DESKTOP JOURNAL PRECISION + NOTE IMAGERY
+   Keep the existing editorial composition, but give the two
+   secondary journal stories their own visual frames on desktop.
+   ========================================================= */
+.editorial-note-card{
+  grid-template-columns:46px minmax(0,1fr) 112px;
+  align-items:center;
+  gap:18px;
+  padding:24px;
+}
+.editorial-note-copy{min-width:0}
+.editorial-note-media{
+  display:block;
+  width:112px;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  background:#252623;
+  border:1px solid #343531;
+  position:relative;
+}
+.editorial-note-media::after{
+  content:"↗";
+  position:absolute;
+  right:9px;
+  bottom:7px;
+  width:25px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:50%;
+  color:#fff;
+  background:rgba(0,0,0,.18);
+  font-size:12px;
+  opacity:0;
+  transform:translateY(4px);
+  transition:.25s ease;
+}
+.editorial-note-media img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(.82);
+  transition:transform .7s cubic-bezier(.2,.8,.2,1),filter .4s ease;
+}
+.editorial-note-card:hover .editorial-note-media img{
+  transform:scale(1.06);
+  filter:saturate(1);
+}
+.editorial-note-card:hover .editorial-note-media::after{
+  opacity:1;
+  transform:none;
+}
+
+/* Keep the desktop journal balanced instead of letting the left feature
+   visually swallow the two secondary stories. */
+@media (min-width:1101px){
+  .editorial-journal-grid{
+    grid-template-columns:minmax(0,1.55fr) minmax(390px,.85fr);
+  }
+  .editorial-note-card h3{font-size:25px}
+  .editorial-note-card p{max-width:220px}
+}
+
+@media (max-width:1100px){
+  .editorial-note-card{
+    grid-template-columns:46px minmax(0,1fr) 112px;
+  }
+}
+
+@media (max-width:720px){
+  .editorial-note-card{
+    grid-template-columns:45px minmax(0,1fr) 92px;
+    gap:13px;
+    padding:22px 20px;
+  }
+  .editorial-note-media{width:92px}
+  .editorial-note-card h3{font-size:22px}
+}
+
+@media (max-width:460px){
+  .editorial-note-card{
+    grid-template-columns:40px minmax(0,1fr);
+    align-items:start;
+  }
+  .editorial-note-media{
+    grid-column:2;
+    width:100%;
+    max-width:170px;
+    margin-top:2px;
+  }
+}
+
+/* =========================================================
+   OMER — CART CONFIRMATION / INSTANT STATE
+   ========================================================= */
+#bagBtn.cart-updated b,
+#drawerCount.cart-updated{
+  animation:omerBagPulse .45s ease;
+}
+@keyframes omerBagPulse{
+  0%{transform:scale(1)}
+  45%{transform:scale(1.28)}
+  100%{transform:scale(1)}
+}
+.card-add.is-added,
+#addProduct.is-added{
+  background:#bd955e !important;
+  border-color:#bd955e !important;
+  color:#fff !important;
+}
+.card-add.is-added{pointer-events:none}
+#addProduct.is-added{pointer-events:none}
+
+/* The toast is a confirmation, not a delayed drawer substitute. */
+.toast{z-index:500 !important}
+
+/* Make the cart itself visually confirm that its state changed. */
+.cart-line.cart-line-new{
+  animation:omerCartLineIn .42s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes omerCartLineIn{
+  from{opacity:0;transform:translateX(16px)}
+  to{opacity:1;transform:none}
+}
+
+/* OMER Motion — three Instagram reels: preserve native 9:16 framing */
+.reel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.reel-card,
+.reel-card:nth-child(3n+1) { aspect-ratio: 9 / 16; }
+.reel-preview { object-fit: cover; }
+@media (max-width: 900px) {
+  .reel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .reel-grid { grid-template-columns: 1fr; }
+}
