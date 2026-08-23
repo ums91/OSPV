@@ -41,7 +41,7 @@ function renderProducts(filter="all"){
   el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
   $$(".product").forEach(card=>card.addEventListener("click",e=>{if(!e.target.closest("button"))openProduct(card.dataset.product)}));
   $$('[data-view]').forEach(btn=>btn.addEventListener("click",e=>{e.stopPropagation();openProduct(btn.dataset.view)}));
-  $$('[data-add]').forEach(btn=>btn.addEventListener("click",e=>{e.stopPropagation();addToCart(btn.dataset.add)}));
+  $$('[data-add]').forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();addToCart(btn.dataset.add,btn)}));
 }
 
 function openProduct(id){
@@ -53,30 +53,54 @@ function openProduct(id){
   $("#productModal").classList.add("open");
 }
 
-function renderCart(){
+function renderCart(newId=null){
   if(!store)return;
   const items=store.items;
-  $("#bagCount").textContent=store.count;
-  $("#drawerCount").textContent=store.count;
-  $("#subtotal").textContent=money(store.total);
+  const count=store.count;
+  const bag=$("#bagCount");
+  const drawerCount=$("#drawerCount");
+  const subtotal=$("#subtotal");
+  if(bag)bag.textContent=count;
+  if(drawerCount)drawerCount.textContent=count;
+  if(subtotal)subtotal.textContent=money(store.total);
   const container=$("#cartLines");
+  if(!container)return;
   if(!items.length){
     container.innerHTML=`<div class="cart-empty"><strong>Your bag is empty.</strong><p>Choose an edition from the collection and it will appear here.</p><a href="#shop" id="emptyShopLink">EXPLORE EDITIONS →</a></div>`;
     $("#emptyShopLink")?.addEventListener("click",()=>$("#cartDrawer").classList.remove("open"));
     return;
   }
-  container.innerHTML=items.map(x=>`<div class="cart-line" data-cart-line="${esc(x.id)}"><img src="${esc(x.product.image)}" alt="${esc(x.product.title)}"><div><h4>${esc(x.product.title)}</h4><small>${money(x.product.price)} · ${esc(x.product.type)}</small><div class="cart-controls"><button type="button" data-cart-minus="${esc(x.id)}" aria-label="Decrease quantity">−</button><span>${x.qty}</span><button type="button" data-cart-plus="${esc(x.id)}" aria-label="Increase quantity">+</button></div></div><button class="cart-remove" type="button" data-remove="${esc(x.id)}" aria-label="Remove ${esc(x.product.title)}">×</button></div>`).join("");
+  container.innerHTML=items.map(x=>`<div class="cart-line${newId===x.id?" cart-line-new":""}" data-cart-line="${esc(x.id)}"><img src="${esc(x.product.image)}" alt="${esc(x.product.title)}"><div><h4>${esc(x.product.title)}</h4><small>${money(x.product.price)} · ${esc(x.product.type)}</small><div class="cart-controls"><button type="button" data-cart-minus="${esc(x.id)}" aria-label="Decrease quantity">−</button><span>${x.qty}</span><button type="button" data-cart-plus="${esc(x.id)}" aria-label="Increase quantity">+</button></div></div><button class="cart-remove" type="button" data-remove="${esc(x.id)}" aria-label="Remove ${esc(x.product.title)}">×</button></div>`).join("");
 }
-
-function addToCart(id){
+function flashAddedButton(button){
+  if(!button)return;
+  const original=button.dataset.originalLabel || button.innerHTML;
+  button.dataset.originalLabel=original;
+  button.classList.add("is-added");
+  button.innerHTML="ADDED TO BAG <span>✓</span>";
+  clearTimeout(button.__addedTimer);
+  button.__addedTimer=setTimeout(()=>{
+    button.classList.remove("is-added");
+    button.innerHTML=original;
+  },1800);
+}
+function addToCart(id, sourceButton=null){
   const p=products.find(x=>x.id===id); if(!p || !store)return;
   store.add(id);
-  renderCart();                         // update count + lines immediately
+  // Commit first, then rebuild every visible cart surface in this same click.
+  renderCart(id);
+  const bag=$("#bagBtn");
+  const drawerCount=$("#drawerCount");
+  bag?.classList.remove("cart-updated");
+  drawerCount?.classList.remove("cart-updated");
+  void bag?.offsetWidth;
+  bag?.classList.add("cart-updated");
+  drawerCount?.classList.add("cart-updated");
+  flashAddedButton(sourceButton);
   $("#productModal")?.classList.remove("open");
-  $("#cartDrawer")?.classList.add("open"); // no refresh and no delay
+  $("#cartDrawer")?.classList.add("open");
   toast("1 ITEM ADDED TO CART");
 }
-
 async function loadReels(){
   const grid=$("#reelGrid"); if(!grid)return;
   try{
@@ -123,7 +147,7 @@ async function init(){
   $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
   $("#bagBtn").onclick=()=>{$("#cartDrawer").classList.add("open");renderCart()};
   $$('[data-close]').forEach(b=>b.onclick=()=>close("#"+b.dataset.close));
-  $("#addProduct").onclick=()=>{if(current)addToCart(current.id)};
+  $("#addProduct").onclick=()=>{if(current)addToCart(current.id,$("#addProduct"))};
   $("#cartLines").addEventListener("click",e=>{
     const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");
     if(plus){store.increment(plus.dataset.cartPlus);renderCart()}
