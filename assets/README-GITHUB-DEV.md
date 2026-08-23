@@ -1,34 +1,20 @@
-# OMER — SAFE GitHub.dev UPDATE
+# OMER — Persistent Navigation Safe Patch
 
-This is an incremental update, NOT a full website replacement.
+This is an incremental GitHub.dev patch. It does not replace products, photos, reels, backend, database, or `script.js`.
 
-## Replace/add only these files
-
+Files to replace at repository root:
 - `index.html`
-- `script.js`
 - `editorial-redesign.css`
+
+File to add/replace:
 - `editorial-redesign.js`
-- `assets/reels.json`
-- `assets/reels/11-18090097435380906.mp4`
-- `assets/reels/28-18153086212459390.mp4`
-- `assets/reels/29-17874418743663993.mp4`
-- `assets/reel-posters/11-18090097435380906.jpg`
-- `assets/reel-posters/28-18153086212459390.jpg`
-- `assets/reel-posters/29-17874418743663993.jpg`
 
-Do NOT replace or delete:
-- `styles.css`
-- `assets/instagram/`
-- `assets/products.json`
-- `backend/`
-- `database/`
-- `admin/`
-- `src/`
-- `package.json`
-- any other existing files
+Changes:
+- Top navigation stays visible while scrolling.
+- Cart/BAG remains visible and reachable.
+- Scrolled state becomes a subtle glass/blur bar that blends with the editorial design.
+- Active section is indicated with a restrained gold underline.
+- Section anchors receive scroll offset so headings are not hidden beneath the fixed navigation.
+- Mobile retains the compact menu + BAG controls.
 
-## GitHub.dev
-
-Extract this ZIP. Drag the extracted contents into the repository root and choose **Replace** for the matching files. New reel files will be added. Then commit and push.
-
-The update contains the current editorial/Journ​​al fixes, immediate cart update behavior, and three-reel Motion support.
+Suggested commit: `Keep navigation visible while scrolling`
