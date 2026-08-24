@@ -217,3 +217,34 @@ init();
 addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;const progress=$(".progress i");if(progress)progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
 if(matchMedia("(pointer:fine)").matches){const c=$(".cursor");addEventListener("mousemove",e=>{if(c){c.style.left=e.clientX+"px";c.style.top=e.clientY+"px"}})}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(close);$("#menuBtn")?.classList.remove("is-open");$("#menuBtn")?.setAttribute("aria-expanded","false")}});
+
+
+/* OMER — synchronize push-aside cart state with the existing cart drawer. */
+(() => {
+  const syncCartLayout = () => {
+    const cart =
+      document.querySelector(".cart.open") ||
+      document.querySelector(".cart-drawer.open") ||
+      document.querySelector("#cart.open") ||
+      document.querySelector("#cartDrawer.open");
+
+    document.body.classList.toggle("cart-open", !!cart);
+  };
+
+  const observer = new MutationObserver(syncCartLayout);
+
+  const start = () => {
+    observer.observe(document.body, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class", "aria-hidden"]
+    });
+    syncCartLayout();
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+})();

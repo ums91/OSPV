@@ -1371,3 +1371,110 @@ html.overlay-open, body.overlay-open { overflow:hidden !important; }
 @keyframes omerCartLineIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
 .bag-pulse { animation:omerBagPulse .45s ease-out; }
 @keyframes omerBagPulse { 50%{transform:scale(1.08)} }
+
+
+/* =========================================================
+   OMER — PUSH-ASIDE CART
+   Desktop: cart opens on the right and the page contracts/pushes left.
+   Mobile: retain a full-width drawer for usable touch targets.
+   ========================================================= */
+
+:root {
+  --omer-cart-width: min(430px, 34vw);
+  --omer-cart-gap: 22px;
+  --omer-cart-transition: 420ms cubic-bezier(.22,.61,.36,1);
+}
+
+/* Main document becomes narrower when cart is open instead of being hidden
+   underneath a blocking drawer. */
+body.cart-open {
+  --omer-cart-shift: var(--omer-cart-width);
+}
+
+body.cart-open > *:not(.cart):not(.cart-drawer):not(.toast):not(.video-modal):not(.modal):not(.mobile-menu) {
+  width: calc(100% - var(--omer-cart-shift));
+  max-width: calc(100% - var(--omer-cart-shift));
+  transition:
+    width var(--omer-cart-transition),
+    max-width var(--omer-cart-transition),
+    transform var(--omer-cart-transition);
+}
+
+/* Keep fixed navigation inside the visible page area. */
+body.cart-open .topbar {
+  right: var(--omer-cart-shift) !important;
+  transition: right var(--omer-cart-transition);
+}
+
+/* Sidebar remains visually stable; content area contracts naturally. */
+body.cart-open .sidebar {
+  transition: transform var(--omer-cart-transition);
+}
+
+/* Cart itself stays fixed and never participates in document flow. */
+.cart,
+.cart-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: var(--omer-cart-width) !important;
+  max-width: 100vw;
+  height: 100dvh !important;
+  z-index: 12000 !important;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-shadow: -18px 0 50px rgba(0,0,0,.18);
+  transform: translateX(100%);
+  transition: transform var(--omer-cart-transition);
+}
+
+/* Support either class/id used by the existing cart implementation. */
+body.cart-open .cart,
+body.cart-open .cart-drawer,
+.cart.open,
+.cart-drawer.open {
+  transform: translateX(0);
+}
+
+/* Never put a dark full-screen backdrop behind the desktop cart. */
+.cart-backdrop,
+.cart-overlay {
+  pointer-events: none;
+  opacity: 0;
+  background: transparent !important;
+}
+
+body.cart-open .cart-backdrop,
+body.cart-open .cart-overlay {
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --omer-cart-width: min(430px, 88vw);
+  }
+
+  /* On smaller screens there isn't enough room to preserve the catalogue
+     at a useful width, so the drawer becomes a proper mobile drawer. */
+  body.cart-open > *:not(.cart):not(.cart-drawer):not(.toast):not(.video-modal):not(.modal):not(.mobile-menu) {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body.cart-open .topbar {
+    right: 0 !important;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --omer-cart-width: 92vw;
+  }
+
+  .cart,
+  .cart-drawer {
+    width: var(--omer-cart-width) !important;
+  }
+}
