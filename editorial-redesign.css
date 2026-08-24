@@ -1478,3 +1478,147 @@ body.cart-open .cart-overlay {
     width: var(--omer-cart-width) !important;
   }
 }
+
+
+/* =========================================================
+   OMER — CORRECTED CART PUSH-ASIDE
+   The cart is #cartDrawer.drawer. Keep it at its native 430px width
+   and reserve that width from the actual page content.
+   ========================================================= */
+
+/* Undo the broad child-width rule from the previous experimental patch. */
+body.cart-open > *:not(.cart):not(.cart-drawer):not(.toast):not(.video-modal):not(.modal):not(.mobile-menu) {
+  width: auto;
+  max-width: none;
+  transform: none;
+}
+
+/* The actual cart element in index.html. */
+#cartDrawer.drawer {
+  width: min(430px, 100vw) !important;
+  max-width: min(430px, 100vw) !important;
+  right: 0 !important;
+  left: auto !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transform: translateX(105%);
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+  overflow: hidden;
+}
+
+#cartDrawer.drawer.open {
+  transform: translateX(0) !important;
+}
+
+/* Reserve the cart width in the actual page rather than placing a huge
+   white panel over the page. */
+@media (min-width: 921px) {
+  body.cart-open {
+    --omer-cart-width: min(430px, 34vw);
+  }
+
+  body.cart-open main,
+  body.cart-open footer {
+    margin-right: var(--omer-cart-width) !important;
+    transition: margin-right .45s cubic-bezier(.22,.61,.36,1);
+  }
+
+  body.cart-open .topbar {
+    right: var(--omer-cart-width) !important;
+    transition: right .45s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #cartDrawer.drawer {
+    width: var(--omer-cart-width) !important;
+    max-width: var(--omer-cart-width) !important;
+  }
+}
+
+/* Keep the fixed sidebar independent from the shrinking content area. */
+body.cart-open .sidebar {
+  width: 142px;
+}
+
+/* Make the drawer feel like a deliberate editorial panel, not a blocking
+   modal: clean header, controlled line spacing and a stable footer. */
+#cartDrawer .drawer-head {
+  flex: 0 0 auto;
+  min-height: 76px;
+  padding: 24px 28px;
+  align-items: center;
+}
+
+#cartDrawer .cart-lines {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 28px;
+}
+
+#cartDrawer .drawer-total {
+  flex: 0 0 auto;
+  background: #f4f0e8;
+  padding: 22px 28px 24px;
+}
+
+#cartDrawer .cart-line {
+  grid-template-columns: 82px minmax(0,1fr) auto;
+  gap: 16px;
+  align-items: start;
+}
+
+#cartDrawer .cart-line img {
+  width: 82px;
+  height: 104px;
+}
+
+#cartDrawer .cart-line h4 {
+  margin-top: 1px;
+}
+
+#cartDrawer .cart-remove {
+  padding: 4px;
+}
+
+/* Don't dim the catalogue on desktop. */
+@media (min-width: 921px) {
+  body.cart-open::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+/* Tablet/phone: don't squeeze the catalogue into an unusable width. */
+@media (max-width: 920px) {
+  body.cart-open main,
+  body.cart-open footer {
+    margin-right: 0 !important;
+  }
+
+  body.cart-open .topbar {
+    right: 0 !important;
+  }
+
+  #cartDrawer.drawer {
+    width: min(430px, 92vw) !important;
+    max-width: 92vw !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #cartDrawer.drawer {
+    width: 94vw !important;
+    max-width: 94vw !important;
+  }
+
+  #cartDrawer .cart-lines {
+    padding: 20px;
+  }
+
+  #cartDrawer .drawer-total {
+    padding: 18px 20px 20px;
+  }
+}
