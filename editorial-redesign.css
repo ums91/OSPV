@@ -1866,3 +1866,13 @@ body.cart-open .sidebar {
     height: 42vh !important;
   }
 }
+
+
+/* OMER — complete product photograph + concise photo caption */
+#productModal .modal-img{box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#dedbd3!important}
+#productModal .modal-img img{box-sizing:border-box!important;object-fit:contain!important;object-position:center!important;background:#dedbd3!important}
+#productModal #mDesc{max-width:42ch!important;margin:0 0 30px!important;color:#66645e!important;font-size:13px!important;line-height:1.8!important}
+#productModal #mDesc::before{content:"ABOUT THE PHOTOGRAPH";display:block;margin-bottom:10px;color:#a8793f;font-size:8px;line-height:1.4;letter-spacing:.24em;text-transform:uppercase}
+@media(min-width:921px){#productModal .modal-img{height:min(58vh,610px)!important;min-height:390px!important;padding:18px!important}#productModal .modal-img img{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important}}
+@media(max-width:920px){#productModal .modal-img{height:56vh!important;min-height:300px!important;padding:14px!important}#productModal .modal-img img{width:100%!important;height:100%!important}}
+@media(max-width:600px){#productModal .modal-img{height:50vh!important;min-height:260px!important;padding:10px!important}#productModal #mDesc{font-size:12px!important;line-height:1.7!important}}

@@ -7,6 +7,24 @@ let current = null;
 
 const esc = value => String(value ?? "").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
+/* Concise editorial descriptions for the product viewer. */
+const photoDescriptions={
+"mountain-lake":"A clear alpine lake beneath snow-covered mountains, opening into a quiet summer shoreline.",
+"valley-light":"Soft light settles across the valley, bringing out layered slopes and the stillness between the mountains.",
+"winter-lake":"A winter shoreline framed by snow and muted water, almost completely still.",
+"summer-field":"A sunlit field beneath wide summer skies, with a lone tree holding the centre of the frame.",
+"mountain-stream":"A mountain stream cutting through a green valley, surrounded by high slopes and clear alpine light.",
+"quiet-water":"Dark winter water carrying small reflections and distant birds, creating a restrained monochrome moment.",
+"winter-birds":"Snow-covered trees and a quiet lake form a pale winter scene softened by mist.",
+"garden-pool":"A secluded pool surrounded by garden greens, capturing a small pocket of calm.",
+"garden-path":"A quiet path through garden foliage, layered with shade, leaves and light.",
+"orchard-garden":"An orchard-like garden caught in gentle light, where foliage and seasonal colour meet.",
+"rose-study":"A close study of a rose, focused on delicate form, texture and changing light across the petals.",
+"river-stone":"Water moving around weathered stones, balancing texture and motion in a small piece of the landscape.",
+"cloud-valley":"A broad valley disappearing beneath shifting cloud, with the landscape emerging softly through changing light.",
+"courtyard-morning":"Morning light entering a quiet courtyard, revealing simple architectural details and calm.",
+"quiet-interior":"A restrained interior built around soft light, still surfaces and the atmosphere of an unoccupied room."
+};
 function productCard(p,i){
   const label=p.type==="Postcard"?"POSTCARD":"FINE ART PRINT";
   return `<article class="product" data-product="${esc(p.id)}">
@@ -57,7 +75,7 @@ function openProduct(id){
   $("#mImg").alt=current.title;
   $("#mType").textContent=current.type;
   $("#mTitle").textContent=current.title;
-  $("#mDesc").textContent="A carefully selected OMER photograph, offered as a considered paper object for collectors of quiet images.";
+  $("#mDesc").textContent=photoDescriptions[current.id] || "A quiet OMER photograph selected for its atmosphere, light and sense of place.";
   $("#mEdition").textContent=current.edition;
   $("#mSize").textContent=current.size;
   $("#mPrice").textContent=money(current.price);
