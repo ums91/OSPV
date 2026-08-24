@@ -129,3 +129,23 @@
   addEventListener('resize', update, { passive: true });
   update();
 })();
+
+
+/* Final mobile-menu synchronization safety layer */
+(() => {
+  const menu=document.querySelector("#mobileMenu");
+  const btn=document.querySelector("#menuBtn");
+  if(!menu||!btn)return;
+  const sync=()=>{
+    const open=menu.classList.contains("open");
+    btn.setAttribute("aria-expanded",String(open));
+    btn.classList.toggle("is-open",open);
+  };
+  btn.addEventListener("click",sync,true);
+  menu.querySelectorAll("a,[data-close]").forEach(el=>el.addEventListener("click",()=>{
+    menu.classList.remove("open"); sync();
+  }));
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){menu.classList.remove("open");sync();}
+  });
+})();

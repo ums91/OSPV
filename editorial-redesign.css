@@ -1324,3 +1324,50 @@ body.overlay-open{overflow:hidden!important}
   /* The menu is a compact utility on desktop; full-screen treatment is primarily mobile. */
   #mobileMenu{display:none!important}
 }
+
+
+/* OMER — final interaction stability */
+html.overlay-open, body.overlay-open { overflow:hidden !important; }
+
+.modal, .video-modal, .mobile-menu {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:10000 !important;
+}
+.modal { overflow-y:auto; overscroll-behavior:contain; }
+
+.modal > button, .modal-close, .video-modal [data-close],
+.mobile-menu [data-close] {
+  position:fixed !important;
+  top:22px; right:24px; z-index:10003 !important;
+  width:44px; height:44px;
+  display:grid; place-items:center;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:50%;
+  background:rgba(15,16,14,.78);
+  color:#fff;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  cursor:pointer;
+}
+
+.video-modal { display:none !important; align-items:center; justify-content:center; background:rgba(8,9,8,.92); }
+.video-modal.open { display:flex !important; }
+.video-modal video { max-width:min(92vw,620px); max-height:88vh; width:auto; height:auto; object-fit:contain; }
+
+.mobile-menu { display:none !important; overflow-y:auto; }
+.mobile-menu.open { display:block !important; }
+#menuBtn { position:relative; z-index:10004; }
+
+.reel-grid { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+@media (max-width:900px){.reel-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
+@media (max-width:600px){
+  .reel-grid{grid-template-columns:1fr !important}
+  .modal > button,.modal-close,.video-modal [data-close],.mobile-menu [data-close]{top:14px;right:14px}
+}
+
+.card-add.is-added { opacity:.9; border-color:#bd955e; }
+.cart-line-new { animation:omerCartLineIn .35s ease-out both; }
+@keyframes omerCartLineIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+.bag-pulse { animation:omerBagPulse .45s ease-out; }
+@keyframes omerBagPulse { 50%{transform:scale(1.08)} }
