@@ -1622,3 +1622,247 @@ body.cart-open .sidebar {
     padding: 18px 20px 20px;
   }
 }
+
+
+/* =========================================================
+   OMER — PRODUCT VIEW PUSH-ASIDE
+   "VIEW ↗" now opens an editorial side panel, matching the
+   cart interaction instead of covering the photograph catalogue.
+   ========================================================= */
+
+@media (min-width: 921px) {
+  body.product-view-open {
+    --omer-product-width: min(560px, 42vw);
+  }
+
+  body.product-view-open main,
+  body.product-view-open footer {
+    margin-right: var(--omer-product-width) !important;
+    transition: margin-right .45s cubic-bezier(.22,.61,.36,1);
+  }
+
+  body.product-view-open .topbar {
+    right: var(--omer-product-width) !important;
+    transition: right .45s cubic-bezier(.22,.61,.36,1);
+  }
+
+  #productModal.modal {
+    position: fixed !important;
+    inset: 0 0 0 auto !important;
+    z-index: 11500 !important;
+    width: var(--omer-product-width) !important;
+    max-width: var(--omer-product-width) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 0 !important;
+    display: block !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    place-items: unset !important;
+    background: #f4f0e8 !important;
+    color: #151515 !important;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(105%);
+    transition:
+      transform .45s cubic-bezier(.22,.61,.36,1),
+      opacity .25s ease,
+      visibility 0s linear .45s;
+  }
+
+  #productModal.modal.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition:
+      transform .45s cubic-bezier(.22,.61,.36,1),
+      opacity .25s ease;
+  }
+
+  #productModal .modal-close {
+    position: sticky !important;
+    float: right;
+    top: 20px !important;
+    right: 20px !important;
+    margin: 20px 20px -66px 0 !important;
+    z-index: 20 !important;
+    width: 44px !important;
+    height: 44px !important;
+    border: 1px solid rgba(20,20,20,.22) !important;
+    background: rgba(244,240,232,.88) !important;
+    color: #151515 !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+  }
+
+  #productModal .modal-grid {
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 0 36px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+
+  #productModal .modal-img {
+    width: 100% !important;
+    height: min(52vh, 560px) !important;
+    flex: 0 0 auto !important;
+    overflow: hidden !important;
+    background: #dedbd3 !important;
+  }
+
+  #productModal .modal-img img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #productModal .modal-grid > div:last-child {
+    padding: 42px 38px 34px !important;
+  }
+
+  #productModal #mType {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 10px;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #a8793f;
+  }
+
+  #productModal #mTitle {
+    margin: 0 0 18px !important;
+    font-size: clamp(34px, 3vw, 52px) !important;
+    line-height: .98 !important;
+    letter-spacing: -.035em;
+    color: #151515 !important;
+  }
+
+  #productModal #mDesc {
+    max-width: 42ch;
+    margin: 0 0 28px !important;
+    color: #686762 !important;
+    line-height: 1.7 !important;
+  }
+
+  #productModal .specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    padding: 18px 0;
+    margin-bottom: 24px;
+    border-top: 1px solid rgba(20,20,20,.13);
+    border-bottom: 1px solid rgba(20,20,20,.13);
+    color: #77736c;
+  }
+
+  #productModal #mPrice {
+    display: block;
+    margin-bottom: 22px;
+    color: #151515 !important;
+    font-size: 22px;
+  }
+
+  #productModal #addProduct {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 56px;
+    color: #fff !important;
+  }
+
+  /* Keep the catalogue fully visible; no backdrop on desktop. */
+  body.product-view-open::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+/* Smaller screens: the panel still behaves like a drawer, but uses the
+   available width rather than squeezing the catalogue into a sliver. */
+@media (max-width: 920px) {
+  body.product-view-open main,
+  body.product-view-open footer {
+    margin-right: 0 !important;
+  }
+
+  body.product-view-open .topbar {
+    right: 0 !important;
+  }
+
+  #productModal.modal {
+    position: fixed !important;
+    inset: 0 0 0 auto !important;
+    width: min(560px, 92vw) !important;
+    max-width: 92vw !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    padding: 0 !important;
+    display: block !important;
+    overflow-y: auto !important;
+    background: #f4f0e8 !important;
+    transform: translateX(105%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  #productModal.modal.open {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  #productModal .modal-grid {
+    width: 100% !important;
+    min-height: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+
+  #productModal .modal-img {
+    width: 100% !important;
+    height: 48vh !important;
+    flex: 0 0 auto !important;
+  }
+
+  #productModal .modal-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  #productModal .modal-grid > div:last-child {
+    padding: 32px 24px 28px !important;
+  }
+
+  #productModal .modal-close {
+    position: sticky !important;
+    float: right;
+    top: 14px !important;
+    right: 14px !important;
+    margin: 14px 14px -58px 0 !important;
+    z-index: 20 !important;
+    color: #151515 !important;
+    background: rgba(244,240,232,.9) !important;
+    border-color: rgba(20,20,20,.2) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #productModal.modal {
+    width: 94vw !important;
+    max-width: 94vw !important;
+  }
+
+  #productModal .modal-img {
+    height: 42vh !important;
+  }
+}

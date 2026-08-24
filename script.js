@@ -41,9 +41,14 @@ function renderProducts(filter="all"){
 }
 
 function syncOverlayLock(){
-  const anyOpen=["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].some(id=>$(id)?.classList.contains("open"));
-  document.documentElement.classList.toggle("overlay-open",anyOpen);
-  document.body.classList.toggle("overlay-open",anyOpen);
+  // Product view and cart are side panels on desktop, so they must not lock
+  // the page like a full-screen modal. Search/menu/video still do.
+  const anyOverlay=["#searchModal","#mobileMenu","#videoModal"].some(id=>$(id)?.classList.contains("open"));
+  document.documentElement.classList.toggle("overlay-open",anyOverlay);
+  document.body.classList.toggle("overlay-open",anyOverlay);
+
+  const productOpen=$("#productModal")?.classList.contains("open");
+  document.body.classList.toggle("product-view-open",!!productOpen);
 }
 
 function openProduct(id){
@@ -56,6 +61,9 @@ function openProduct(id){
   $("#mEdition").textContent=current.edition;
   $("#mSize").textContent=current.size;
   $("#mPrice").textContent=money(current.price);
+  // Viewing an edition uses the same push-aside pattern as the bag.
+  // Never stack the bag and product panel on top of each other.
+  close("#cartDrawer");
   const modal=$("#productModal");
   modal.classList.add("open");
   modal.setAttribute("aria-hidden","false");
@@ -146,6 +154,9 @@ function close(id){
   el.classList.remove("open");el.setAttribute("aria-hidden","true");
   if(id==="#videoModal"){
     const v=$("#activeVideo");if(v){v.pause();v.removeAttribute("src");v.load()}
+  }
+  if(id==="#productModal"){
+    document.body.classList.remove("product-view-open");
   }
   syncOverlayLock();
 }
