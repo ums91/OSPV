@@ -1180,3 +1180,147 @@ main>section{scroll-margin-top:92px}
   main>section{scroll-margin-top:74px}
 }
 @media(prefers-reduced-motion:reduce){.topbar,.topbar nav a::after,.top-actions button{transition:none}}
+
+/* =========================================================
+   OMER — INTERACTION / OVERLAY RELIABILITY PATCH
+   Ensures product/search/menu/video overlays are fixed above the
+   persistent navigation and never require scrolling back to close.
+   ========================================================= */
+html.overlay-open,
+body.overlay-open{overflow:hidden!important}
+
+/* Product image / quick-view modal */
+#productModal.modal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:1100!important;
+  width:100vw!important;
+  height:100vh!important;
+  max-height:100vh!important;
+  overflow:auto!important;
+  overscroll-behavior:contain;
+  display:grid!important;
+  place-items:center!important;
+  padding:76px 28px 40px!important;
+  background:rgba(15,16,14,.96)!important;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+#productModal.modal.open{opacity:1;visibility:visible;pointer-events:auto}
+#productModal .modal-grid{
+  width:min(980px,92vw)!important;
+  max-height:calc(100vh - 116px)!important;
+  overflow:auto!important;
+  scrollbar-width:thin;
+}
+#productModal .modal-close{
+  position:fixed!important;
+  top:20px!important;
+  right:24px!important;
+  z-index:1110!important;
+  width:46px!important;
+  height:46px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  border-radius:50%!important;
+  background:rgba(12,13,11,.55)!important;
+  color:#fff!important;
+  font-size:25px!important;
+  line-height:1!important;
+  cursor:pointer!important;
+}
+#productModal .modal-close:hover{background:#bd955e;border-color:#bd955e;transform:rotate(90deg)}
+
+/* Search overlay */
+#searchModal.search-modal{
+  z-index:1120!important;
+  width:100vw!important;
+  height:100vh!important;
+  overflow:auto!important;
+}
+#searchModal>button{
+  position:fixed!important;
+  top:20px!important;
+  right:24px!important;
+  z-index:1130!important;
+  width:46px!important;
+  height:46px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  border-radius:50%!important;
+  background:rgba(12,13,11,.55)!important;
+  color:#fff!important;
+}
+#searchModal>button:hover{background:#bd955e;border-color:#bd955e}
+
+/* Mobile menu: above the persistent header and independently closable. */
+#mobileMenu.mobile-menu{
+  z-index:1300!important;
+  width:100vw!important;
+  height:100vh!important;
+  display:flex!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  padding:92px 10vw 48px!important;
+  overflow:auto!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+}
+#mobileMenu.mobile-menu.open{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
+#mobileMenu>button{
+  position:fixed!important;
+  top:18px!important;
+  right:18px!important;
+  z-index:1310!important;
+  width:48px!important;
+  height:48px!important;
+  display:grid!important;
+  place-items:center!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  border-radius:50%!important;
+  background:rgba(0,0,0,.25)!important;
+  color:#fff!important;
+  font-size:28px!important;
+  line-height:1!important;
+}
+#mobileMenu>button:hover{background:#bd955e;border-color:#bd955e}
+#mobileMenu a{position:relative;z-index:1301}
+
+/* The menu button itself becomes a clear X while the full-screen menu is open. */
+#menuBtn{position:relative;z-index:1315}
+#menuBtn.is-open{background:#bd955e!important}
+#menuBtn.is-open i:first-child{transform:translateY(3px) rotate(45deg)}
+#menuBtn.is-open i:last-child{transform:translateY(-3px) rotate(-45deg)}
+#menuBtn i{transition:transform .2s ease}
+
+/* Persistent header stays below open overlays but above the normal page. */
+.topbar{z-index:180!important}
+
+/* Cart always sits above navigation and confirms its state immediately. */
+#cartDrawer.drawer{z-index:1150!important}
+#toast.toast{z-index:1400!important}
+
+/* Make every close control touch-friendly and visible on small screens. */
+.modal-close,
+.search-modal>button,
+.mobile-menu>button,
+.video-modal .video-close{
+  -webkit-tap-highlight-color:transparent;
+}
+
+@media(max-width:720px){
+  #productModal.modal{padding:74px 14px 24px!important;place-items:start center!important}
+  #productModal .modal-grid{width:min(560px,94vw)!important;max-height:calc(100vh - 100px)!important;margin-top:0!important}
+  #productModal .modal-close,#searchModal>button{top:14px!important;right:14px!important;width:44px!important;height:44px!important}
+  #mobileMenu>button{top:14px!important;right:14px!important;width:46px!important;height:46px!important}
+  #mobileMenu a{font-size:clamp(40px,12vw,64px)!important}
+}
+
+@media(min-width:721px){
+  /* The menu is a compact utility on desktop; full-screen treatment is primarily mobile. */
+  #mobileMenu{display:none!important}
+}

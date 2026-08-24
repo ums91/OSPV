@@ -45,8 +45,8 @@
   </nav>
   <div class="top-actions">
     <button id="searchBtn" aria-label="Search">⌕</button>
-    <button id="bagBtn" class="bag-btn">BAG <b id="bagCount">0</b></button>
-    <button id="menuBtn" class="menu-btn"><i></i><i></i></button>
+    <button id="bagBtn" class="bag-btn" aria-label="Open shopping bag" aria-expanded="false">BAG <b id="bagCount">0</b></button>
+    <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i></i><i></i></button>
   </div>
 </header>
 
@@ -175,9 +175,9 @@
 
 <footer><span>© 2026 OMER VISUAL JOURNAL</span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer">@UMS91 INSTAGRAM ↗</a><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#home">BACK TO TOP ↑</a></footer>
 
-<div class="drawer" id="cartDrawer"><div class="drawer-head"><span>YOUR CART <b id="drawerCount">0</b></span><button data-close="cartDrawer">×</button></div><div class="cart-lines" id="cartLines" aria-live="polite"></div><div class="drawer-total"><span>SUBTOTAL</span><strong id="subtotal">₹0</strong><button id="checkout">VIEW CART & CHECKOUT <span>→</span></button><small>Secure payment gateway can be connected through the included backend.</small></div></div>
-<div class="modal" id="productModal"><button data-close="productModal" class="modal-close">×</button><div class="modal-grid"><div class="modal-img"><img id="mImg" alt=""></div><div><small id="mType"></small><h2 id="mTitle"></h2><p id="mDesc"></p><div class="specs"><span id="mEdition"></span><span id="mSize"></span></div><strong id="mPrice"></strong><button id="addProduct" class="pill dark-pill">ADD TO BAG <span>+</span></button></div></div></div>
-<div class="search-modal" id="searchModal"><button data-close="searchModal">×</button><div><small>SEARCH THE JOURNAL</small><input id="searchInput" placeholder="Mountains, postcards, stories..." autofocus><p id="searchResults"></p></div></div>
+<div class="drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-head"><span>YOUR CART <b id="drawerCount">0</b></span><button data-close="cartDrawer">×</button></div><div class="cart-lines" id="cartLines" aria-live="polite"></div><div class="drawer-total"><span>SUBTOTAL</span><strong id="subtotal">₹0</strong><button id="checkout">VIEW CART & CHECKOUT <span>→</span></button><small>Secure payment gateway can be connected through the included backend.</small></div></div>
+<div class="modal" id="productModal" aria-hidden="true"><button data-close="productModal" class="modal-close">×</button><div class="modal-grid"><div class="modal-img"><img id="mImg" alt=""></div><div><small id="mType"></small><h2 id="mTitle"></h2><p id="mDesc"></p><div class="specs"><span id="mEdition"></span><span id="mSize"></span></div><strong id="mPrice"></strong><button id="addProduct" class="pill dark-pill">ADD TO BAG <span>+</span></button></div></div></div>
+<div class="search-modal" id="searchModal" aria-hidden="true"><button data-close="searchModal">×</button><div><small>SEARCH THE JOURNAL</small><input id="searchInput" placeholder="Mountains, postcards, stories..." autofocus><p id="searchResults"></p></div></div>
 <div class="video-modal" id="videoModal" aria-hidden="true"><button class="video-close" data-close="videoModal" aria-label="Close video">×</button><div class="video-stage"><video id="activeVideo" controls playsinline></video><div class="video-meta"><span id="videoLabel"></span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener">@UMS91 ↗</a></div></div></div>
 <div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#motion">Motion</a><a href="#editions">Editions</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></div>
 <div class="toast" id="toast"></div>
