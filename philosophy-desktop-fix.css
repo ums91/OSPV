@@ -1,0 +1,33 @@
+/* OMER — DESKTOP PHILOSOPHY KICKER ALIGNMENT
+   Mobile remains unchanged. On desktop, "05 — THE PHILOSOPHY"
+   is aligned to the top of the main heading instead of sitting
+   at the bottom of the grid and appearing disconnected. */
+
+@media (min-width: 901px) {
+  .about.editorial-philosophy-wrap .editorial-philosophy-title {
+    grid-template-columns: minmax(150px, .72fr) minmax(0, 1.28fr) !important;
+    align-items: start !important;
+    gap: 5vw !important;
+    margin-bottom: 58px !important;
+  }
+
+  .about.editorial-philosophy-wrap .editorial-philosophy-title .eyebrow {
+    align-self: start !important;
+    margin: 7px 0 0 !important;
+    white-space: nowrap;
+  }
+
+  .about.editorial-philosophy-wrap .editorial-philosophy-title h2 {
+    justify-self: end !important;
+    align-self: start !important;
+    margin: 0 !important;
+    max-width: 700px !important;
+  }
+}
+
+/* Prevent the desktop kicker from being pushed around by long headings. */
+@media (min-width: 1200px) {
+  .about.editorial-philosophy-wrap .editorial-philosophy-title {
+    grid-template-columns: minmax(180px, .8fr) minmax(0, 1.2fr) !important;
+  }
+}
