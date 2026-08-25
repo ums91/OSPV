@@ -1,0 +1,76 @@
+
+/* OMER — UPI CHECKOUT + PRIVATE ORDER STATUS */
+
+.commerce-panel,
+.order-success-panel{
+  position:fixed; inset:0; z-index:14000;
+  background:#f3f0e8; color:#10110f;
+  transform:translateX(105%);
+  transition:transform .48s cubic-bezier(.22,.61,.36,1);
+  overflow:auto;
+  overscroll-behavior:contain;
+}
+.commerce-panel.open,.order-success-panel.open{transform:translateX(0)}
+.commerce-head{
+  position:sticky; top:0; z-index:2;
+  display:flex; justify-content:space-between; align-items:flex-start;
+  padding:30px clamp(24px,5vw,72px);
+  background:rgba(243,240,232,.94); backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(16,17,15,.12);
+}
+.commerce-head h2{margin:7px 0 0;font-family:"Playfair Display",serif;font-size:clamp(2rem,4vw,4.4rem);font-weight:500;line-height:.95}
+.commerce-close{border:0;background:transparent;font-size:32px;line-height:1;cursor:pointer;padding:4px 8px}
+.commerce-body{max-width:1120px;margin:0 auto;padding:42px clamp(24px,5vw,72px) 80px}
+.commerce-step{display:grid;grid-template-columns:52px minmax(0,1fr);gap:20px;padding:34px 0;border-bottom:1px solid rgba(16,17,15,.14)}
+.commerce-step-no{font-size:.72rem;letter-spacing:.14em;opacity:.55}
+.commerce-step h3{margin:0 0 22px;font-size:.72rem;letter-spacing:.16em}
+.commerce-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.commerce-form-grid label,.status-lookup label{display:flex;flex-direction:column;gap:8px;font-size:.66rem;letter-spacing:.12em}
+.commerce-form-grid .full{grid-column:1/-1}
+.commerce-form-grid input,.commerce-form-grid textarea,.status-lookup input{
+  width:100%;box-sizing:border-box;border:0;border-bottom:1px solid rgba(16,17,15,.3);
+  background:transparent;padding:10px 0;font:inherit;letter-spacing:normal;outline:none;color:inherit;
+}
+.commerce-form-grid input:focus,.commerce-form-grid textarea:focus,.status-lookup input:focus{border-bottom-color:#10110f}
+#checkoutLines{display:grid;gap:12px}
+.checkout-line{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:center}
+.checkout-line img{width:64px;height:78px;object-fit:cover;background:#e6e1d7}
+.checkout-line h4{margin:0 0 5px;font-size:.9rem;font-weight:500}
+.checkout-line small{opacity:.62}
+.commerce-total{display:flex;justify-content:space-between;border-top:1px solid rgba(16,17,15,.2);margin-top:22px;padding-top:18px}
+.commerce-total strong{font-size:1.2rem}
+.commerce-note{max-width:640px;line-height:1.65;opacity:.72}
+.upi-card{margin:28px 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;padding:28px;background:#fff;border:1px solid rgba(16,17,15,.1);max-width:430px}
+.upi-card img{width:min(280px,72vw);height:auto;display:block}
+.upi-card p{margin:0;font-size:.78rem;line-height:1.55;opacity:.72}
+.commerce-submit{margin-top:4px}
+.commerce-message{min-height:1.4em;margin:16px 0 0;font-size:.78rem;line-height:1.5}
+.status-lookup{max-width:620px}
+.status-lookup>p{line-height:1.65;opacity:.72;margin-bottom:28px}
+.status-lookup label{margin:18px 0}
+.status-lookup .pill{margin-top:8px}
+.order-result{margin-top:40px;padding:30px;background:#fff;border:1px solid rgba(16,17,15,.1)}
+.order-result h3{font-family:"Playfair Display",serif;font-size:2rem;font-weight:500;margin:0 0 20px}
+.order-status-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(16,17,15,.1);gap:20px}
+.order-status-row span:first-child{opacity:.58;font-size:.7rem;letter-spacing:.1em}
+.order-status-row strong{text-align:right}
+.order-result-items{margin-top:24px;display:grid;gap:10px}
+.order-result-item{display:flex;justify-content:space-between;gap:20px}
+.order-success-panel{display:grid;place-items:center;padding:30px}
+.order-success-inner{position:relative;width:min(680px,100%);padding:60px 0}
+.order-success-inner h2{font-family:"Playfair Display",serif;font-size:clamp(3rem,7vw,6.5rem);font-weight:500;line-height:.9;margin:20px 0 30px}
+.order-success-inner p{max-width:520px;line-height:1.7;opacity:.72}
+.order-success-inner .commerce-close{position:absolute;right:0;top:0}
+.success-order-id{margin:26px 0;font-size:.72rem;letter-spacing:.14em}
+.order-success-inner .under{display:block;margin-top:22px;border:0;background:none;padding:0;cursor:pointer}
+
+@media (max-width:900px){
+  .commerce-head{padding:22px 20px}
+  .commerce-body{padding:28px 20px 60px}
+  .commerce-step{grid-template-columns:1fr;gap:12px;padding:26px 0}
+  .commerce-form-grid{grid-template-columns:1fr}
+  .commerce-form-grid .full{grid-column:auto}
+  .checkout-line{grid-template-columns:58px 1fr auto}
+  .checkout-line img{width:58px;height:72px}
+  .order-success-inner{padding:40px 4px}
+}

@@ -3,6 +3,9 @@ import { Store, loadProducts, $, $$, money, toast } from "./src/store.js";
 const API_BASE = window.OMER_API_BASE || "";
 let products = [];
 let store = null;
+window.store = null;
+window.renderCart = renderCart;
+window.close = close;
 let current = null;
 
 const esc = value => String(value ?? "").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -166,7 +169,7 @@ function close(id){
 async function init(){
   try{
     products=await loadProducts();
-    store=new Store(products);
+    store=new Store(products); window.store=store;
     renderMini();renderProducts();renderCart();loadReels();
   }catch(error){
     console.error(error);
@@ -192,11 +195,8 @@ async function init(){
     addToCart(btn.dataset.add,btn);
     setTimeout(()=>delete btn.dataset.busy,350);
   });
-  $("#checkout").onclick=async()=>{
-    if(!store.count){toast("YOUR CART IS EMPTY");return}
-    if(!API_BASE){toast("SECURE CHECKOUT WILL BE CONNECTED LATER");return}
-    try{const r=await fetch(`${API_BASE}/api/orders`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lines:store.items.map(x=>({id:x.id,quantity:x.qty}))})});const data=await r.json();if(!r.ok)throw new Error(data.error||"Checkout failed");if(data.orderId)toast("SECURE ORDER CREATED")}catch(error){toast(error.message.toUpperCase())}
-  };
+  // Checkout is handled by checkout.js through the private UPI order service.
+  // Keep this listener absent here so there is only one checkout flow.
   $("#searchBtn").onclick=()=>{const modal=$("#searchModal");modal.classList.add("open");modal.setAttribute("aria-hidden","false");syncOverlayLock();setTimeout(()=>$("#searchInput")?.focus(),100)};
   $("#searchInput").oninput=e=>{const q=e.target.value.toLowerCase().trim();const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));$("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):""};
   $("#menuBtn").onclick=()=>{
