@@ -43,11 +43,12 @@
     <a href="#motion">MOTION</a>
     <a href="#editions">EDITIONS</a>
     <a href="#about">ABOUT</a>
-    <a href="#contact">CONTACT</a><a href="#" data-open-order-status>ORDER STATUS</a><a href="#" data-open-order-status>ORDER STATUS</a>
+    <a href="#contact">CONTACT</a>
   </nav>
   <div class="top-actions">
     <button id="searchBtn" aria-label="Search">⌕</button>
-    <button id="bagBtn" class="bag-btn" aria-label="Open shopping bag" aria-expanded="false">BAG <b id="bagCount">0</b></button>
+    <button id="orderStatusBtn" class="order-status-btn" type="button" aria-label="Open order status">ORDER STATUS</button>
+    <button id="orderBtn" class="order-btn" type="button" aria-label="Open order checkout">ORDER</button><button id="bagBtn" class="bag-btn" aria-label="Open shopping bag" aria-expanded="false">BAG <b id="bagCount">0</b></button>
     <button id="menuBtn" class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i></i><i></i></button>
   </div>
 </header>
@@ -227,9 +228,9 @@
   </div>
   <div class="commerce-body">
     <section class="status-lookup">
-      <p>Use the private order link from your confirmation email, or enter your order number and private access token.</p>
+      <p>Use the private order link from your confirmation email, or enter the order number and the email address used at checkout.</p>
       <label>ORDER NUMBER<input id="statusOrderId" placeholder="OSPV-2026-0001" autocomplete="off"></label>
-      <label>ACCESS TOKEN<input id="statusToken" placeholder="Private access token" autocomplete="off"></label>
+      <label>EMAIL ADDRESS<input id="statusEmail" type="email" placeholder="you@example.com" autocomplete="email"></label>
       <button id="lookupOrder" class="pill dark-pill" type="button">VIEW ORDER <span>→</span></button>
       <p id="statusMessage" class="commerce-message" aria-live="polite"></p>
     </section>
@@ -253,7 +254,7 @@
 <div class="modal" id="productModal" aria-hidden="true"><button data-close="productModal" class="modal-close">×</button><div class="modal-grid"><div class="modal-img"><img id="mImg" alt=""></div><div><small id="mType"></small><h2 id="mTitle"></h2><p id="mDesc"></p><div class="specs"><span id="mEdition"></span><span id="mSize"></span></div><strong id="mPrice"></strong><button id="addProduct" class="pill dark-pill">ADD TO BAG <span>+</span></button></div></div></div>
 <div class="search-modal" id="searchModal" aria-hidden="true"><button data-close="searchModal">×</button><div><small>SEARCH THE JOURNAL</small><input id="searchInput" placeholder="Mountains, postcards, stories..." autofocus><p id="searchResults"></p></div></div>
 <div class="video-modal" id="videoModal" aria-hidden="true"><button class="video-close" data-close="videoModal" aria-label="Close video">×</button><div class="video-stage"><video id="activeVideo" controls playsinline></video><div class="video-meta"><span id="videoLabel"></span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener">@UMS91 ↗</a></div></div></div>
-<div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#motion">Motion</a><a href="#editions">Editions</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+<div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#motion">Motion</a><a href="#editions">Editions</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#" data-open-order>Order</a><a href="#" data-open-order-status>Order Status</a></div>
 <div class="toast" id="toast"></div>
 
 <script type="module" src="script.js?v=20260823-final"></script>

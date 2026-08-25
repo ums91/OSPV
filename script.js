@@ -3,9 +3,6 @@ import { Store, loadProducts, $, $$, money, toast } from "./src/store.js";
 const API_BASE = window.OMER_API_BASE || "";
 let products = [];
 let store = null;
-window.store = null;
-window.renderCart = renderCart;
-window.close = close;
 let current = null;
 
 const esc = value => String(value ?? "").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -169,13 +166,17 @@ function close(id){
 async function init(){
   try{
     products=await loadProducts();
-    store=new Store(products); window.store=store;
+    store=new Store(products);
     renderMini();renderProducts();renderCart();loadReels();
   }catch(error){
     console.error(error);
     const el=$("#products");if(el)el.innerHTML=`<div class="catalogue-error"><strong>Collection temporarily unavailable.</strong><span>Please refresh the journal.</span></div>`;
     return;
   }
+  window.store=store;
+  window.renderCart=renderCart;
+  window.OMER_CLOSE=close;
+  window.OMER_TOAST=toast;
   $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
   $("#bagBtn").onclick=()=>{const drawer=$("#cartDrawer");drawer.classList.toggle("open");drawer.setAttribute("aria-hidden",String(!drawer.classList.contains("open")));renderCart();syncOverlayLock()};
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
@@ -195,8 +196,6 @@ async function init(){
     addToCart(btn.dataset.add,btn);
     setTimeout(()=>delete btn.dataset.busy,350);
   });
-  // Checkout is handled by checkout.js through the private UPI order service.
-  // Keep this listener absent here so there is only one checkout flow.
   $("#searchBtn").onclick=()=>{const modal=$("#searchModal");modal.classList.add("open");modal.setAttribute("aria-hidden","false");syncOverlayLock();setTimeout(()=>$("#searchInput")?.focus(),100)};
   $("#searchInput").oninput=e=>{const q=e.target.value.toLowerCase().trim();const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));$("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):""};
   $("#menuBtn").onclick=()=>{

@@ -74,3 +74,23 @@
   .checkout-line img{width:58px;height:72px}
   .order-success-inner{padding:40px 4px}
 }
+
+
+/* OMER — dedicated ORDER / ORDER STATUS controls */
+.top-actions .order-btn,
+.top-actions .bag-btn {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.top-actions .order-btn { letter-spacing: .08em; font-size: .68rem; }
+.top-actions .order-btn:hover { opacity: .62; }
+@media (max-width: 900px) {
+  .top-actions .order-btn { display: none; }
+}
+
+.order-status-btn{border:0;background:none;color:inherit;padding:8px 10px;font:inherit;font-size:.68rem;letter-spacing:.14em;cursor:pointer;white-space:nowrap}
+.order-status-btn:hover{opacity:.58}
+@media (max-width:900px){.order-status-btn{display:none}}
