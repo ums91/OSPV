@@ -148,5 +148,45 @@
     "size": "12 × 16 in",
     "image": "assets/instagram/15-18524130307032995.webp",
     "stock": 8
+  },
+    {
+    "id": "courtyard-blue-sky",
+    "title": "Courtyard Blue Sky",
+    "type": "Fine Art Print",
+    "price": 2299,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/16-courtyard-blue-sky.jpeg",
+    "stock": 8
+  },
+  {
+    "id": "lake-ridge",
+    "title": "Lake & Ridge",
+    "type": "Fine Art Print",
+    "price": 2499,
+    "edition": "Signed · Edition of 25",
+    "size": "16 × 20 in",
+    "image": "assets/instagram/17-lake-ridge.jpeg",
+    "stock": 8
+  },
+  {
+    "id": "winter-water",
+    "title": "Winter Water",
+    "type": "Fine Art Print",
+    "price": 2299,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/18-winter-water.jpeg",
+    "stock": 8
+  },
+  {
+    "id": "snow-lake",
+    "title": "Snow Lake",
+    "type": "Fine Art Print",
+    "price": 2499,
+    "edition": "Signed · Edition of 25",
+    "size": "16 × 20 in",
+    "image": "assets/instagram/19-snow-lake.jpeg",
+    "stock": 8
   }
 ]
