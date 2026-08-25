@@ -1,0 +1,48 @@
+/* OMER — 2026-08 Own-a-frame / editions refinement patch
+   Append this file after editorial-redesign.css in index.html, or merge these rules
+   at the end of editorial-redesign.css. */
+
+/* PC: keep the photograph itself bright while the editorial controls remain usable. */
+@media (pointer:fine){
+  .cursor.cursor-photo{
+    mix-blend-mode:normal!important;
+    border-color:#fff!important;
+    opacity:.9;
+  }
+  .product-image:hover img,
+  .product:hover .product-image img{
+    filter:none!important;
+    opacity:1!important;
+  }
+  .product-image:hover::before,
+  .product-image:hover::after{
+    filter:none!important;
+  }
+}
+
+/* If the existing overlay uses a dark wash, reduce it rather than dimming the photo. */
+.product-image .product-overlay{
+  background:linear-gradient(180deg,transparent 38%,rgba(16,17,15,.72) 100%)!important;
+}
+
+/* Give the four new photographs a clean, subtle hover treatment. */
+.product-image:hover img{transform:scale(1.025)!important}
+.product-overlay{transition:opacity .25s ease,background .25s ease}
+.product-image:hover .product-overlay{background:linear-gradient(180deg,transparent 34%,rgba(16,17,15,.68) 100%)!important}
+
+/* Mobile editions: prevent the page from being clipped by the section/container. */
+@media(max-width:900px){
+  .editorial-editions-wrap,
+  .editorial-editions-wrap .editorial-artwork,
+  .editorial-editions-wrap .editorial-print{
+    overflow:visible!important;
+  }
+}
+@media(max-width:600px){
+  .editorial-editions-wrap .editorial-edition-stage{
+    overflow:visible!important;
+  }
+  .editorial-editions-wrap .editorial-artwork{
+    width:100%!important;
+  }
+}
