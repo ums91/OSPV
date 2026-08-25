@@ -1,48 +1,70 @@
-/* OMER — 2026-08 Own-a-frame / editions refinement patch
-   Append this file after editorial-redesign.css in index.html, or merge these rules
-   at the end of editorial-redesign.css. */
+/* OMER — PRODUCT PHOTO HOVER BRIGHTNESS FIX
+   Apply after editorial-redesign.css.
+   Fixes the dark wash appearing on every shop photograph during hover.
+   No image/assets changes are required. */
 
-/* PC: keep the photograph itself bright while the editorial controls remain usable. */
-@media (pointer:fine){
-  .cursor.cursor-photo{
-    mix-blend-mode:normal!important;
-    border-color:#fff!important;
-    opacity:.9;
+/* Keep the photograph itself at full brightness. */
+.product-image,
+.product-image img {
+  isolation: isolate;
+}
+
+.product-image img {
+  filter: none !important;
+  opacity: 1 !important;
+  transition: transform .35s ease !important;
+}
+
+/* Controls remain readable without putting a heavy black wash over the photo. */
+.product-image .product-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(14,14,12,0) 28%,
+    rgba(14,14,12,.16) 52%,
+    rgba(14,14,12,.46) 100%
+  ) !important;
+  transition: opacity .25s ease, background .25s ease !important;
+}
+
+/* Same treatment while hovering/focusing any product. */
+.product:hover .product-image .product-overlay,
+.product:focus-within .product-image .product-overlay,
+.product-image:focus-within .product-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(14,14,12,0) 25%,
+    rgba(14,14,12,.14) 50%,
+    rgba(14,14,12,.48) 100%
+  ) !important;
+}
+
+/* Do not darken or invert photographs with the custom cursor. */
+@media (pointer:fine) {
+  .cursor.cursor-photo {
+    mix-blend-mode: normal !important;
+    filter: none !important;
   }
+
   .product-image:hover img,
-  .product:hover .product-image img{
-    filter:none!important;
-    opacity:1!important;
-  }
-  .product-image:hover::before,
-  .product-image:hover::after{
-    filter:none!important;
+  .product:hover .product-image img {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: scale(1.025) !important;
   }
 }
 
-/* If the existing overlay uses a dark wash, reduce it rather than dimming the photo. */
-.product-image .product-overlay{
-  background:linear-gradient(180deg,transparent 38%,rgba(16,17,15,.72) 100%)!important;
-}
-
-/* Give the four new photographs a clean, subtle hover treatment. */
-.product-image:hover img{transform:scale(1.025)!important}
-.product-overlay{transition:opacity .25s ease,background .25s ease}
-.product-image:hover .product-overlay{background:linear-gradient(180deg,transparent 34%,rgba(16,17,15,.68) 100%)!important}
-
-/* Mobile editions: prevent the page from being clipped by the section/container. */
-@media(max-width:900px){
-  .editorial-editions-wrap,
-  .editorial-editions-wrap .editorial-artwork,
-  .editorial-editions-wrap .editorial-print{
-    overflow:visible!important;
+/* Mobile: controls stay readable, but the image is never covered by a heavy wash. */
+@media (max-width:560px) {
+  .product-image .product-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(14,14,12,0) 38%,
+      rgba(14,14,12,.42) 100%
+    ) !important;
   }
-}
-@media(max-width:600px){
-  .editorial-editions-wrap .editorial-edition-stage{
-    overflow:visible!important;
-  }
-  .editorial-editions-wrap .editorial-artwork{
-    width:100%!important;
+
+  .product-image img {
+    filter: none !important;
+    opacity: 1 !important;
   }
 }
