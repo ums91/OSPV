@@ -5,29 +5,20 @@
   const $ = (s,r=document)=>r.querySelector(s);
   const money = n => new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0);
 
-  function ensureSuccessPanel(){
-    let el=$("#orderSuccess");
-    if(el)return el;
-    el=document.createElement("div");
-    el.className="order-success-panel";
-    el.id="orderSuccess";
-    el.setAttribute("aria-hidden","true");
-    el.innerHTML=`<div class="order-success-inner"><button class="commerce-close" type="button" data-close-success aria-label="Close">×</button><span class="eyebrow dark">ORDER RECEIVED</span><h2>Thank you for<br><em>collecting a frame.</em></h2><p id="successCopy">Your order has been submitted and is awaiting payment verification.</p><div class="success-order-id" id="successOrderId"></div><button id="successOrderLink" class="pill dark-pill" type="button">VIEW ORDER STATUS <span>→</span></button><button id="successBack" class="under" type="button">BACK TO JOURNAL <span>↗</span></button></div>`;
-    document.body.appendChild(el);
-    el.querySelector("[data-close-success]")?.addEventListener("click",()=>panel("#orderSuccess",false));
-    el.querySelector("#successBack")?.addEventListener("click",()=>{panel("#orderSuccess",false);document.querySelector("#journal")?.scrollIntoView({behavior:"smooth",block:"start"});});
-    return el;
-  }
-
   function panel(id, open=true){
     const el=$(id); if(!el)return;
     el.classList.toggle("open",open);
     el.setAttribute("aria-hidden",String(!open));
+    el.style.visibility=open?"visible":"hidden";
+    el.style.pointerEvents=open?"auto":"none";
     if(open) document.body.classList.add("commerce-open");
     else if(!document.querySelector(".commerce-panel.open,.order-success-panel.open")) document.body.classList.remove("commerce-open");
   }
 
   function openCheckout(){
+    document.querySelector("#orderStatusPanel")?.classList.remove("open");
+    document.querySelector("#orderSuccess")?.classList.remove("open");
+    document.querySelector("#cartDrawer")?.classList.remove("open");
     if(!window.store?.count){
       window.toast?.("YOUR BAG IS EMPTY");
       return;
@@ -38,6 +29,11 @@
   }
 
   function openOrderStatus(){
+    document.querySelector("#cartDrawer")?.classList.remove("open");
+    document.querySelector("#bagBtn")?.setAttribute("aria-expanded","false");
+    document.querySelector("#cartDrawer")?.setAttribute("aria-hidden","true");
+    panel("#checkoutPanel",false);
+    panel("#orderSuccess",false);
     panel("#orderStatusPanel",true);
     setTimeout(()=>$("#statusOrderId")?.focus(),180);
   }
@@ -88,7 +84,6 @@
       if(typeof window.renderCart==="function")window.renderCart();
       panel("#checkoutPanel",false);
 
-      ensureSuccessPanel();
       $("#successOrderId").textContent=data.orderId;
       const link=new URL(SITE);
       link.searchParams.set("orderId",data.orderId);
@@ -183,7 +178,13 @@
     $("#submitUpiOrder")?.addEventListener("click",createOrder);
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
-    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"]').forEach(b=>b.addEventListener("click",()=>panel("#"+b.dataset.close,false)));
+    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>panel("#"+b.dataset.close,false)));
+    $("#successBack")?.addEventListener("click",()=>{
+      panel("#orderSuccess",false);
+      const journal=document.querySelector("#journal");
+      if(journal)journal.scrollIntoView({behavior:"smooth",block:"start"});
+      else window.location.hash="journal";
+    });
     ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)panel(id,false)}));
     document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>panel(id,false));}});
     loadOrderLink();

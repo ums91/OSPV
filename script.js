@@ -115,31 +115,60 @@ function confirmCart(button){
   [bag,count].forEach(el=>{if(!el)return;el.classList.remove("bag-pulse");void el.offsetWidth;el.classList.add("bag-pulse")});
   toast("1 ITEM ADDED TO CART");
 }
-function closeCommercePanelsForBag(){
+function closeCommerceForBag(){
   ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
     const el=$(id);
     if(el){el.classList.remove("open");el.setAttribute("aria-hidden","true");}
   });
   document.body.classList.remove("commerce-open");
+  const url=new URL(window.location.href);
+  let changed=false;
+  ["orderId","token"].forEach(key=>{if(url.searchParams.has(key)){url.searchParams.delete(key);changed=true;}});
+  if(changed)window.history.replaceState({},document.title,url.pathname+url.search+url.hash);
 }
 function openBagDrawer(){
-  closeCommercePanelsForBag();
+  // BAG is always a shopping-bag action. It must never open Order Status.
+  const status=$("#orderStatusPanel");
+  const checkout=$("#checkoutPanel");
+  const success=$("#orderSuccess");
+  [status,checkout,success].forEach(el=>{
+    if(el){el.classList.remove("open");el.setAttribute("aria-hidden","true");}
+  });
+  document.body.classList.remove("commerce-open");
+
+  // Remove stale private-order parameters so a previous order link cannot
+  // re-open Order Status during the current shopping session.
+  try{
+    const url=new URL(window.location.href);
+    let changed=false;
+    ["orderId","token"].forEach(key=>{
+      if(url.searchParams.has(key)){url.searchParams.delete(key);changed=true;}
+    });
+    if(changed)window.history.replaceState({},document.title,url.pathname+url.search+url.hash);
+  }catch(_){}
+
   const drawer=$("#cartDrawer");
-  if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");}
+  if(!drawer)return;
+  drawer.classList.add("open");
+  drawer.setAttribute("aria-hidden","false");
+  const bag=$("#bagBtn");
+  if(bag)bag.setAttribute("aria-expanded","true");
   renderCart();
   syncOverlayLock();
 }
 function addToCart(id,button=null){
+  closeCommerceForBag();
   if(!store){toast("CART IS STILL LOADING");return false;}
   const p=products.find(x=>String(x.id)===String(id));
   if(!p){toast("EDITION NOT FOUND");return false;}
   try{
-    closeCommercePanelsForBag();
     const added=store.add(id);
     renderCart(added.id);
     $("#productModal")?.classList.remove("open");
     $("#productModal")?.setAttribute("aria-hidden","true");
-    openBagDrawer();
+    const drawer=$("#cartDrawer");
+    if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false")}
+    syncOverlayLock();
     confirmCart(button);
     return true;
   }catch(error){
@@ -190,24 +219,35 @@ async function init(){
   window.renderCart=renderCart;
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
+  // Single commerce event delegation. BAG and ADD TO BAG are intentionally
+  // handled here and nowhere else in the checkout system.
+  document.addEventListener("click",e=>{
+    const bag=e.target.closest?.("#bagBtn");
+    if(bag){
+      e.preventDefault();
+      e.stopPropagation();
+      openBagDrawer();
+      return;
+    }
+    const add=e.target.closest?.("[data-add],#addProduct");
+    if(add){
+      e.preventDefault();
+      e.stopPropagation();
+      if(add.dataset.busy==="1")return;
+      add.dataset.busy="1";
+      const id=add.dataset.add || current?.id;
+      if(id)addToCart(id,add);
+      setTimeout(()=>delete add.dataset.busy,350);
+    }
+  });
+
   $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
-  $("#bagBtn").onclick=e=>{e.preventDefault();e.stopPropagation();openBagDrawer()};
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
-  $("#addProduct").onclick=()=>{if(current)addToCart(current.id,$("#addProduct"))};
   $("#cartLines").addEventListener("click",e=>{
     const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");
     if(plus){store.increment(plus.dataset.cartPlus);renderCart()}
     else if(minus){store.decrement(minus.dataset.cartMinus);renderCart()}
     else if(remove){store.remove(remove.dataset.remove);renderCart();toast("REMOVED FROM BAG")}
-  });
-  $("#products")?.addEventListener("click",e=>{
-    const btn=e.target.closest("[data-add]");
-    if(!btn)return;
-    e.preventDefault();e.stopPropagation();
-    if(btn.dataset.busy==="1")return;
-    btn.dataset.busy="1";
-    addToCart(btn.dataset.add,btn);
-    setTimeout(()=>delete btn.dataset.busy,350);
   });
   $("#searchBtn").onclick=()=>{const modal=$("#searchModal");modal.classList.add("open");modal.setAttribute("aria-hidden","false");syncOverlayLock();setTimeout(()=>$("#searchInput")?.focus(),100)};
   $("#searchInput").oninput=e=>{const q=e.target.value.toLowerCase().trim();const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));$("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):""};
