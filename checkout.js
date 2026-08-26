@@ -78,7 +78,12 @@
       const link=new URL(SITE);
       link.searchParams.set("orderId",data.orderId);
       link.searchParams.set("token",data.token || "");
-      $("#successOrderLink").href=data.orderUrl || link.toString();
+      const statusLink=data.orderUrl || link.toString();
+      const successLink=$("#successOrderLink");
+      if(successLink){
+        successLink.dataset.statusUrl=statusLink;
+        successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
+      }
       panel("#orderSuccess",true);
     }catch(err){
       console.error(err);
@@ -113,18 +118,27 @@
     }catch(err){showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);}
   }
 
-  function loadOrderLink(){
-    const params=new URLSearchParams(location.search);
-    const orderId=params.get("orderId");
-    const token=params.get("token");
-    if(!orderId||!token)return;
-    const statusPanel=$("#orderStatusPanel");
-    if(!statusPanel)return;
-    panel("#orderStatusPanel",true);
+  function openOrderStatusFromPrivateLink(url){
+    try{
+      const u=new URL(url,location.href);
+      const orderId=u.searchParams.get("orderId");
+      const token=u.searchParams.get("token");
+      if(!orderId||!token){ openOrderStatus(); return; }
+      panel("#orderSuccess",false);
+      panel("#orderStatusPanel",true);
+      loadPrivateOrder(orderId,token);
+    }catch(err){
+      console.error(err);
+      openOrderStatus();
+    }
+  }
+
+  function loadPrivateOrder(orderId,token){
     $("#statusOrderId").value=orderId;
     $("#statusEmail").value="";
     const msg=$("#statusMessage");
     const result=$("#orderResult");
+    result.hidden=true;
     showMessage(msg,"Loading your private order…");
     fetch(API+"?action=getOrder&orderId="+encodeURIComponent(orderId)+"&token="+encodeURIComponent(token),{cache:"no-store"})
       .then(r=>r.json())
@@ -138,6 +152,16 @@
       .catch(err=>showMessage(msg,(err.message||"Unable to load order.").toUpperCase(),true));
   }
 
+  function loadOrderLink(){
+    const params=new URLSearchParams(location.search);
+    const orderId=params.get("orderId");
+    const token=params.get("token");
+    if(!orderId||!token)return;
+    panel("#orderStatusPanel",true);
+    loadPrivateOrder(orderId,token);
+    history.replaceState({},document.title,location.pathname+location.hash);
+  }
+
   function bind(){
     document.querySelectorAll("[data-open-order-status]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openOrderStatus();}));
     $("#checkout")?.addEventListener("click",e=>{e.preventDefault();openCheckout();});
@@ -145,8 +169,14 @@
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
     document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>panel("#"+b.dataset.close,false)));
-    $("#successBack")?.addEventListener("click",()=>panel("#orderSuccess",false));
+    $("#successBack")?.addEventListener("click",()=>{
+      panel("#orderSuccess",false);
+      const journal=document.querySelector("#journal");
+      if(journal)journal.scrollIntoView({behavior:"smooth",block:"start"});
+      else window.location.hash="journal";
+    });
     ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)panel(id,false)}));
+    document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>panel(id,false));}});
     loadOrderLink();
   }
 

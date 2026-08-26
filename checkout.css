@@ -125,3 +125,9 @@
   .upi-card img{width:min(330px,100%);}
   #cartDrawer .drawer-total{padding-bottom:max(24px,env(safe-area-inset-bottom));}
 }
+
+/* Order success actions: links behave as in-panel navigation, not external windows. */
+#successOrderLink{display:flex;align-items:center;justify-content:space-between;width:100%;box-sizing:border-box;text-align:left;cursor:pointer;}
+#successOrderLink:focus-visible,.order-success-inner .under:focus-visible,.commerce-close:focus-visible{outline:2px solid #10110f;outline-offset:4px;}
+.order-success-inner .under{color:#10110f;font:inherit;letter-spacing:.12em;font-size:.68rem;}
+@media (max-width:600px){.order-success-panel{padding:22px 20px;}.order-success-inner{padding:44px 0 30px;}.order-success-inner h2{font-size:clamp(3.1rem,15vw,5rem);}.order-success-inner p{font-size:.9rem;}.order-success-inner .commerce-close{right:-4px;top:0;font-size:30px;}}
