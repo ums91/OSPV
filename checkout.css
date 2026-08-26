@@ -133,12 +133,24 @@
 @media (max-width:600px){.order-success-panel{padding:22px 20px;}.order-success-inner{padding:44px 0 30px;}.order-success-inner h2{font-size:clamp(3.1rem,15vw,5rem);}.order-success-inner p{font-size:.9rem;}.order-success-inner .commerce-close{right:-4px;top:0;font-size:30px;}}
 
 
-/* OSPV commerce final: prevent adjacent top actions from overlapping. */
-.top-actions{display:flex;align-items:center;gap:18px;position:absolute;z-index:300;}
-.top-actions .order-status-btn,.top-actions .bag-btn{position:relative;z-index:2;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;min-height:38px;pointer-events:auto;}
-.top-actions .bag-btn{z-index:4;min-width:58px;}
-.top-actions .order-status-btn{z-index:3;min-width:104px;}
-@media(max-width:900px){.top-actions{gap:12px}.top-actions .order-status-btn{display:none}.top-actions .bag-btn{z-index:4;min-width:58px;}}
-/* Hidden commerce panels must not intercept clicks even if a stale class is present. */
-.commerce-panel[aria-hidden="true"],.order-success-panel[aria-hidden="true"]{visibility:hidden!important;pointer-events:none!important;}
-.commerce-panel.open[aria-hidden="false"],.order-success-panel.open[aria-hidden="false"]{visibility:visible!important;pointer-events:auto!important;}
+/* QR presentation: keep the complete code visible and comfortably scannable. */
+.upi-card{
+  width:min(100%,420px);
+  max-width:420px;
+  box-sizing:border-box;
+  overflow:visible;
+}
+.upi-card img{
+  display:block;
+  width:min(260px,78vw);
+  max-width:100%;
+  height:auto;
+  max-height:260px;
+  object-fit:contain;
+  object-position:center;
+  margin:0 auto;
+}
+@media (max-width:640px){
+  .upi-card{width:100%;padding:18px;}
+  .upi-card img{width:min(235px,72vw);max-height:235px;}
+}

@@ -9,16 +9,11 @@
     const el=$(id); if(!el)return;
     el.classList.toggle("open",open);
     el.setAttribute("aria-hidden",String(!open));
-    el.style.visibility=open?"visible":"hidden";
-    el.style.pointerEvents=open?"auto":"none";
     if(open) document.body.classList.add("commerce-open");
     else if(!document.querySelector(".commerce-panel.open,.order-success-panel.open")) document.body.classList.remove("commerce-open");
   }
 
   function openCheckout(){
-    document.querySelector("#orderStatusPanel")?.classList.remove("open");
-    document.querySelector("#orderSuccess")?.classList.remove("open");
-    document.querySelector("#cartDrawer")?.classList.remove("open");
     if(!window.store?.count){
       window.toast?.("YOUR BAG IS EMPTY");
       return;
@@ -30,7 +25,6 @@
 
   function openOrderStatus(){
     document.querySelector("#cartDrawer")?.classList.remove("open");
-    document.querySelector("#bagBtn")?.setAttribute("aria-expanded","false");
     document.querySelector("#cartDrawer")?.setAttribute("aria-hidden","true");
     panel("#checkoutPanel",false);
     panel("#orderSuccess",false);
@@ -56,6 +50,23 @@
     el.classList.toggle("is-error",!!isError);
   }
 
+  async function postJson(payload){
+    const response=await fetch(API,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(payload),
+      cache:"no-store"
+    });
+    const text=await response.text();
+    let data;
+    try{ data=JSON.parse(text); }
+    catch(e){
+      throw new Error("The order service returned an invalid response. Please try again in a moment.");
+    }
+    if(!data.success) throw new Error(data.error||"Unable to load order.");
+    return data;
+  }
+
   async function createOrder(){
     const name=$("#checkoutName")?.value.trim();
     const email=$("#checkoutEmail")?.value.trim();
@@ -72,12 +83,10 @@
     showMessage(msg,"Submitting your order for payment verification…");
 
     try{
-      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
+      const data=await postJson({
         action:"createOrder",customerName:name,email,phone,address,
         items:window.store.items.map(x=>({id:x.id,quantity:x.qty}))
-      })});
-      const data=await response.json();
-      if(!data.success)throw new Error(data.error||"Unable to create order.");
+      });
 
       window.store._items=[];
       window.store.save();
@@ -113,9 +122,7 @@
     showMessage(msg,"Checking order…");
     result.hidden=true;
     try{
-      const r=await fetch(API+"?action=getOrder&orderId="+encodeURIComponent(orderId)+"&email="+encodeURIComponent(email),{cache:"no-store"});
-      const data=await r.json();
-      if(!data.success)throw new Error(data.error||"Order not found.");
+      const data=await postJson({action:"getOrder",orderId:orderId,email:email});
       const o=data.order;
       const items=Array.isArray(o.items)?o.items:[];
       result.innerHTML=`<h3>Order ${o.orderId}</h3>
@@ -150,10 +157,8 @@
     const result=$("#orderResult");
     result.hidden=true;
     showMessage(msg,"Loading your private order…");
-    fetch(API+"?action=getOrder&orderId="+encodeURIComponent(orderId)+"&token="+encodeURIComponent(token),{cache:"no-store"})
-      .then(r=>r.json())
+    postJson({action:"getOrder",orderId:orderId,token:token})
       .then(data=>{
-        if(!data.success)throw new Error(data.error||"Unable to load order.");
         const o=data.order, items=Array.isArray(o.items)?o.items:[];
         result.innerHTML=`<h3>Order ${o.orderId}</h3><div class="order-status-row"><span>PAYMENT</span><strong>${o.paymentStatus}</strong></div><div class="order-status-row"><span>ORDER</span><strong>${o.orderStatus}</strong></div><div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${i.title} × ${i.quantity}</span><strong>${money(i.price*i.quantity)}</strong></div>`).join("")}</div><div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
         result.hidden=false;
