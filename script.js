@@ -260,7 +260,40 @@ async function init(){
   };
   $$(".mobile-menu a").forEach(a=>a.onclick=()=>{close("#mobileMenu");$("#menuBtn").setAttribute("aria-expanded","false");$("#menuBtn").classList.remove("is-open")});
   $("#theme").onclick=()=>document.body.classList.toggle("light");
-  $("#newsletter").onsubmit=e=>{e.preventDefault();toast("THANK YOU — YOU'RE IN THE JOURNAL");e.target.reset()};
+  const newsletterForm=$("#newsletter");
+  if(newsletterForm){
+    newsletterForm.onsubmit=async e=>{
+      e.preventDefault();
+      const email=String(new FormData(newsletterForm).get("email")||"").trim().toLowerCase();
+      const message=$("#newsletterMessage");
+      if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        if(message){message.textContent="PLEASE ENTER A VALID EMAIL ADDRESS.";message.classList.add("is-error");}
+        return;
+      }
+      const button=newsletterForm.querySelector("button");
+      const original=button?.textContent||"SUBSCRIBE →";
+      if(button){button.disabled=true;button.textContent="SUBSCRIBING…";}
+      if(message){message.textContent="";message.classList.remove("is-error");}
+      try{
+        const response=await fetch("https://script.google.com/macros/s/AKfycbynmk_BVUqp9xgoLns34S1RlIP6YzeRgoz_bjWqlLUNLorQhQhUeZonGLYWxF44DUeq/exec",{
+          method:"POST",
+          headers:{"Content-Type":"text/plain;charset=utf-8"},
+          body:JSON.stringify({action:"subscribe",email}),
+          cache:"no-store"
+        });
+        const text=await response.text();
+        let data; try{data=JSON.parse(text)}catch(_){throw new Error("Subscription service returned an invalid response.")}
+        if(!data.success)throw new Error(data.error||"Unable to subscribe.");
+        if(message)message.textContent=data.message||"YOU’RE IN THE JOURNAL — WATCH FOR NEW PHOTOGRAPHS AND EDITION RELEASES.";
+        newsletterForm.reset();
+      }catch(error){
+        console.error("UMS91 newsletter subscription failed:",error);
+        if(message){message.textContent="WE COULDN’T COMPLETE THE SUBSCRIPTION. PLEASE TRY AGAIN.";message.classList.add("is-error");}
+      }finally{
+        if(button){button.disabled=false;button.textContent=original;}
+      }
+    };
+  }
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
 init();
