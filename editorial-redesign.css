@@ -1876,3 +1876,157 @@ body.cart-open .sidebar {
 @media(min-width:921px){#productModal .modal-img{height:min(58vh,610px)!important;min-height:390px!important;padding:18px!important}#productModal .modal-img img{width:100%!important;height:100%!important;min-width:0!important;min-height:0!important}}
 @media(max-width:920px){#productModal .modal-img{height:56vh!important;min-height:300px!important;padding:14px!important}#productModal .modal-img img{width:100%!important;height:100%!important}}
 @media(max-width:600px){#productModal .modal-img{height:50vh!important;min-height:260px!important;padding:10px!important}#productModal #mDesc{font-size:12px!important;line-height:1.7!important}}
+
+/* =========================================================
+   UMS91 — MOBILE HEADER + COMPACT MENU FINAL
+   Appended after all existing editorial rules so the mobile
+   presentation is not overridden by earlier !important rules.
+   ========================================================= */
+.mobile-brand{display:none;text-decoration:none;color:#151513}
+
+@media (max-width:720px){
+  .topbar{
+    left:0!important;
+    right:0!important;
+    height:70px!important;
+    padding:0 16px!important;
+    justify-content:flex-end!important;
+    background:rgba(243,240,234,.88)!important;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+  }
+
+  .mobile-brand{
+    display:flex!important;
+    position:absolute!important;
+    left:18px!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    z-index:2!important;
+    color:#151513!important;
+  }
+  .mobile-brand strong{
+    display:block!important;
+    margin:0!important;
+    font-family:"DM Sans",sans-serif!important;
+    font-size:15px!important;
+    font-weight:500!important;
+    line-height:1!important;
+    letter-spacing:.25em!important;
+  }
+  .mobile-brand small{
+    display:block!important;
+    margin-top:5px!important;
+    font-family:"DM Sans",sans-serif!important;
+    font-size:6px!important;
+    font-weight:500!important;
+    line-height:1!important;
+    letter-spacing:.27em!important;
+    color:#77736c!important;
+  }
+
+  .top-actions{
+    position:relative!important;
+    right:auto!important;
+    z-index:3!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:15px!important;
+    margin-left:auto!important;
+  }
+  .top-actions #searchBtn{font-size:15px!important}
+  .top-actions .bag-btn{font-size:9px!important;letter-spacing:.12em!important}
+  .top-actions .menu-btn{width:42px!important;height:42px!important}
+
+  /* Override the earlier full-screen mobile-menu rules. */
+  #mobileMenu.mobile-menu,
+  #mobileMenu.mobile-menu.open{
+    position:fixed!important;
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+    left:auto!important;
+    width:min(78vw,310px)!important;
+    max-width:310px!important;
+    height:100dvh!important;
+    min-height:100dvh!important;
+    box-sizing:border-box!important;
+    padding:82px 24px 28px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:flex-start!important;
+    gap:12px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    background:#171814!important;
+    color:#fff!important;
+    z-index:1300!important;
+  }
+
+  #mobileMenu.mobile-menu:not(.open){
+    opacity:0!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+    transform:translateX(102%)!important;
+  }
+  #mobileMenu.mobile-menu.open{
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+    transform:translateX(0)!important;
+  }
+
+  #mobileMenu a,
+  #mobileMenu.mobile-menu a{
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    color:#fff!important;
+    font:500 29px/1.04 "Playfair Display",serif!important;
+    letter-spacing:-.025em!important;
+    text-decoration:none!important;
+    white-space:nowrap!important;
+  }
+  #mobileMenu a:active{opacity:.65!important}
+
+  #mobileMenu>button{
+    position:absolute!important;
+    top:17px!important;
+    right:16px!important;
+    width:42px!important;
+    height:42px!important;
+    margin:0!important;
+    padding:0!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(255,255,255,.42)!important;
+    border-radius:50%!important;
+    background:transparent!important;
+    color:#fff!important;
+    font-size:25px!important;
+    line-height:1!important;
+    z-index:1310!important;
+  }
+}
+
+@media (max-width:380px){
+  .mobile-brand{left:16px!important}
+  .mobile-brand strong{font-size:14px!important}
+  .mobile-brand small{font-size:5.5px!important}
+  .top-actions{gap:12px!important}
+  #mobileMenu.mobile-menu,
+  #mobileMenu.mobile-menu.open{
+    width:80vw!important;
+    max-width:290px!important;
+    padding-left:21px!important;
+    padding-right:21px!important;
+    gap:11px!important;
+  }
+  #mobileMenu a,
+  #mobileMenu.mobile-menu a{font-size:27px!important}
+}
