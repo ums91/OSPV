@@ -250,7 +250,28 @@ async function init(){
     else if(remove){store.remove(remove.dataset.remove);renderCart();toast("REMOVED FROM BAG")}
   });
   $("#searchBtn").onclick=()=>{const modal=$("#searchModal");modal.classList.add("open");modal.setAttribute("aria-hidden","false");syncOverlayLock();setTimeout(()=>$("#searchInput")?.focus(),100)};
-  $("#searchInput").oninput=e=>{const q=e.target.value.toLowerCase().trim();const hits=products.filter(p=>(p.title+" "+p.type).toLowerCase().includes(q));$("#searchResults").textContent=q?(hits.length?hits.map(x=>x.title).join(" · "):"No editions found."):""};
+  const renderSearchResults=()=>{
+    const input=$("#searchInput"), results=$("#searchResults");
+    if(!input||!results)return;
+    const q=input.value.toLowerCase().trim();
+    if(!q){results.innerHTML="";return;}
+    const terms=q.split(/\s+/).filter(Boolean);
+    const hits=products.filter(p=>{
+      const haystack=[p.title,p.type,p.edition,p.description,photoDescriptions[p.id]||""].join(" ").toLowerCase();
+      return terms.every(term=>haystack.includes(term));
+    });
+    if(!hits.length){results.innerHTML='<span class="search-no-results">No photographs found.</span>';return;}
+    results.innerHTML=hits.map(p=>`<button type="button" class="search-result" data-search-product="${esc(p.id)}"><span><strong>${esc(p.title)}</strong><small>${esc(p.type)}${p.edition?" · "+esc(p.edition):""}</small></span><b>↗</b></button>`).join("");
+  };
+  $("#searchInput").oninput=renderSearchResults;
+  $("#searchResults")?.addEventListener("click",e=>{
+    const result=e.target.closest?.("[data-search-product]");
+    if(!result)return;
+    e.preventDefault();
+    const id=result.dataset.searchProduct;
+    close("#searchModal");
+    openProduct(id);
+  });
   $("#menuBtn").onclick=()=>{
     const menu=$("#mobileMenu"),open=!menu.classList.contains("open");
     if(open){menu.classList.add("open");menu.setAttribute("aria-hidden","false")}else close("#mobileMenu");
@@ -274,17 +295,38 @@ async function init(){
       const original=button?.textContent||"SUBSCRIBE →";
       if(button){button.disabled=true;button.textContent="SUBSCRIBING…";}
       if(message){message.textContent="";message.classList.remove("is-error");}
+      const subscribeUrl="https://script.google.com/macros/s/AKfycbynmk_BVUqp9xgoLns34S1RlIP6YzeRgoz_bjWqlLUNLorQhQhUeZonGLYWxF44DUeq/exec";
+      const sendSubscription=async()=>{
+        const controller=new AbortController();
+        const timeout=setTimeout(()=>controller.abort(),12000);
+        try{
+          const response=await fetch(subscribeUrl,{
+            method:"POST",
+            headers:{"Content-Type":"text/plain;charset=utf-8"},
+            body:JSON.stringify({action:"subscribe",email}),
+            cache:"no-store",
+            signal:controller.signal
+          });
+          const text=await response.text();
+          let data;
+          try{data=JSON.parse(text)}catch(_){throw new Error("Subscription service returned an invalid response.")}
+          if(!data.success)throw new Error(data.error||"Unable to subscribe.");
+          return data;
+        }finally{clearTimeout(timeout)}
+      };
       try{
-        const response=await fetch("https://script.google.com/macros/s/AKfycbynmk_BVUqp9xgoLns34S1RlIP6YzeRgoz_bjWqlLUNLorQhQhUeZonGLYWxF44DUeq/exec",{
-          method:"POST",
-          headers:{"Content-Type":"text/plain;charset=utf-8"},
-          body:JSON.stringify({action:"subscribe",email}),
-          cache:"no-store"
-        });
-        const text=await response.text();
-        let data; try{data=JSON.parse(text)}catch(_){throw new Error("Subscription service returned an invalid response.")}
-        if(!data.success)throw new Error(data.error||"Unable to subscribe.");
-        if(message)message.textContent=data.message||"YOU’RE IN THE JOURNAL — WATCH FOR NEW PHOTOGRAPHS AND EDITION RELEASES.";
+        let data;
+        try{
+          data=await sendSubscription();
+        }catch(firstError){
+          // Apps Script can complete the Sheet/email operation before its browser
+          // response reaches the page. A single retry is safe because the server
+          // treats an existing email as already subscribed.
+          console.warn("UMS91 subscription response delayed; retrying once.",firstError);
+          await new Promise(resolve=>setTimeout(resolve,900));
+          data=await sendSubscription();
+        }
+        if(message){message.textContent=data.message||"YOU’RE IN THE JOURNAL — WATCH FOR NEW PHOTOGRAPHS AND EDITION RELEASES.";message.classList.remove("is-error");}
         newsletterForm.reset();
       }catch(error){
         console.error("UMS91 newsletter subscription failed:",error);
