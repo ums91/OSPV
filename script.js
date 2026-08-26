@@ -115,36 +115,31 @@ function confirmCart(button){
   [bag,count].forEach(el=>{if(!el)return;el.classList.remove("bag-pulse");void el.offsetWidth;el.classList.add("bag-pulse")});
   toast("1 ITEM ADDED TO CART");
 }
+function closeCommercePanelsForBag(){
+  ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
+    const el=$(id);
+    if(el){el.classList.remove("open");el.setAttribute("aria-hidden","true");}
+  });
+  document.body.classList.remove("commerce-open");
+}
+function openBagDrawer(){
+  closeCommercePanelsForBag();
+  const drawer=$("#cartDrawer");
+  if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");}
+  renderCart();
+  syncOverlayLock();
+}
 function addToCart(id,button=null){
   if(!store){toast("CART IS STILL LOADING");return false;}
   const p=products.find(x=>String(x.id)===String(id));
   if(!p){toast("EDITION NOT FOUND");return false;}
   try{
-    /*
-     * ADD TO BAG is a shopping action only.
-     * Explicitly close every commerce panel first so a stale/previous
-     * checkout or success state can never remain visible over the bag.
-     */
-    ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
-      const panel=$(id);
-      if(panel){
-        panel.classList.remove("open");
-        panel.setAttribute("aria-hidden","true");
-      }
-    });
-    document.body.classList.remove("commerce-open");
-
+    closeCommercePanelsForBag();
     const added=store.add(id);
     renderCart(added.id);
     $("#productModal")?.classList.remove("open");
     $("#productModal")?.setAttribute("aria-hidden","true");
-
-    const drawer=$("#cartDrawer");
-    if(drawer){
-      drawer.classList.add("open");
-      drawer.setAttribute("aria-hidden","false");
-    }
-    syncOverlayLock();
+    openBagDrawer();
     confirmCart(button);
     return true;
   }catch(error){
@@ -196,26 +191,7 @@ async function init(){
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
   $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
-  $("#bagBtn").onclick=()=>{
-    const drawer=$("#cartDrawer");
-    const willOpen=!drawer.classList.contains("open");
-
-    if(willOpen){
-      ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
-        const panel=$(id);
-        if(panel){
-          panel.classList.remove("open");
-          panel.setAttribute("aria-hidden","true");
-        }
-      });
-      document.body.classList.remove("commerce-open");
-    }
-
-    drawer.classList.toggle("open");
-    drawer.setAttribute("aria-hidden",String(!drawer.classList.contains("open")));
-    renderCart();
-    syncOverlayLock();
-  };
+  $("#bagBtn").onclick=e=>{e.preventDefault();e.stopPropagation();openBagDrawer()};
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#addProduct").onclick=()=>{if(current)addToCart(current.id,$("#addProduct"))};
   $("#cartLines").addEventListener("click",e=>{
