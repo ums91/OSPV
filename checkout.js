@@ -9,11 +9,16 @@
     const el=$(id); if(!el)return;
     el.classList.toggle("open",open);
     el.setAttribute("aria-hidden",String(!open));
+    el.style.visibility=open?"visible":"hidden";
+    el.style.pointerEvents=open?"auto":"none";
     if(open) document.body.classList.add("commerce-open");
     else if(!document.querySelector(".commerce-panel.open,.order-success-panel.open")) document.body.classList.remove("commerce-open");
   }
 
   function openCheckout(){
+    document.querySelector("#orderStatusPanel")?.classList.remove("open");
+    document.querySelector("#orderSuccess")?.classList.remove("open");
+    document.querySelector("#cartDrawer")?.classList.remove("open");
     if(!window.store?.count){
       window.toast?.("YOUR BAG IS EMPTY");
       return;
@@ -25,6 +30,7 @@
 
   function openOrderStatus(){
     document.querySelector("#cartDrawer")?.classList.remove("open");
+    document.querySelector("#bagBtn")?.setAttribute("aria-expanded","false");
     document.querySelector("#cartDrawer")?.setAttribute("aria-hidden","true");
     panel("#checkoutPanel",false);
     panel("#orderSuccess",false);
@@ -83,10 +89,12 @@
     showMessage(msg,"Submitting your order for payment verification…");
 
     try{
-      const data=await postJson({
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
         action:"createOrder",customerName:name,email,phone,address,
         items:window.store.items.map(x=>({id:x.id,quantity:x.qty}))
-      });
+      })});
+      const data=await response.json();
+      if(!data.success)throw new Error(data.error||"Unable to create order.");
 
       window.store._items=[];
       window.store.save();
