@@ -94,3 +94,34 @@
 .order-status-btn{border:0;background:none;color:inherit;padding:8px 10px;font:inherit;font-size:.68rem;letter-spacing:.14em;cursor:pointer;white-space:nowrap}
 .order-status-btn:hover{opacity:.58}
 @media (max-width:900px){.order-status-btn{display:none}}
+
+/* OSPV — FINAL COMMERCE REFINEMENT */
+.commerce-panel{z-index:14000!important;}
+#cartDrawer{z-index:13000!important;}
+
+/* The bag is a bag. It never looks or behaves like a submitted order. */
+#cartDrawer .drawer-total>div{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+#cartDrawer .drawer-total>div strong{font-size:1rem;}
+#cartDrawer #checkout{background:#171714;color:#fff;}
+#cartDrawer .drawer-total small{line-height:1.55;}
+
+/* Full QR: never crop, constrain by width and available viewport height. */
+.upi-card{width:min(100%,520px);max-width:520px;box-sizing:border-box;margin:28px 0;padding:24px;overflow:visible;}
+.upi-card img{display:block;width:min(360px,100%);max-width:100%;height:auto;max-height:none;object-fit:contain;object-position:center;margin:0 auto;}
+
+.commerce-payment{align-items:start;}
+.commerce-submit{min-width:220px;}
+.commerce-message.is-error{color:#8a2f2f;}
+
+/* Desktop checkout reads as a clean editorial sheet rather than a narrow modal. */
+@media (min-width:901px){
+  #checkoutPanel .commerce-body{max-width:980px;}
+  #checkoutPanel .commerce-payment .commerce-note{max-width:620px;}
+}
+
+@media (max-width:900px){
+  #checkoutPanel .commerce-body{padding-bottom:90px;}
+  .upi-card{width:100%;padding:18px;margin:22px 0;}
+  .upi-card img{width:min(330px,100%);}
+  #cartDrawer .drawer-total{padding-bottom:max(24px,env(safe-area-inset-bottom));}
+}
