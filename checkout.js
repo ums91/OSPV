@@ -126,11 +126,20 @@
     const email=$("#statusEmail")?.value.trim();
     const msg=$("#statusMessage");
     const result=$("#orderResult");
-    if(!orderId||!email){showMessage(msg,"Enter your order number and the email used at checkout.",true);return;}
+    if(!orderId||!email){showMessage(msg,"ENTER YOUR ORDER NUMBER AND THE EMAIL USED AT CHECKOUT.",true);return;}
+    if(!/^OSPV-\d{4}-\d{4}$/i.test(orderId)){
+      showMessage(msg,"PLEASE ENTER THE CORRECT ORDER NUMBER (FOR EXAMPLE, OSPV-2026-0001).",true);
+      return;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showMessage(msg,"PLEASE ENTER A VALID EMAIL ADDRESS.",true);
+      return;
+    }
     showMessage(msg,"Checking order…");
     result.hidden=true;
     try{
       const data=await postJson({action:"getOrder",orderId:orderId,email:email});
+      if(!data.order) throw new Error("ORDER DETAILS COULD NOT BE LOADED. PLEASE TRY AGAIN.");
       const o=data.order;
       const items=Array.isArray(o.items)?o.items:[];
       result.innerHTML=`<h3>Order ${o.orderId}</h3>
@@ -140,7 +149,9 @@
         <div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
       result.hidden=false;
       showMessage(msg,"");
-    }catch(err){showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);}
+    }catch(err){
+      showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);
+    }
   }
 
   function openOrderStatusFromPrivateLink(url){
@@ -167,6 +178,7 @@
     showMessage(msg,"Loading your private order…");
     postJson({action:"getOrder",orderId:orderId,token:token})
       .then(data=>{
+        if(!data.order) throw new Error("ORDER DETAILS COULD NOT BE LOADED. PLEASE TRY AGAIN.");
         const o=data.order, items=Array.isArray(o.items)?o.items:[];
         result.innerHTML=`<h3>Order ${o.orderId}</h3><div class="order-status-row"><span>PAYMENT</span><strong>${o.paymentStatus}</strong></div><div class="order-status-row"><span>ORDER</span><strong>${o.orderStatus}</strong></div><div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${i.title} × ${i.quantity}</span><strong>${money(i.price*i.quantity)}</strong></div>`).join("")}</div><div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
         result.hidden=false;
