@@ -18,6 +18,12 @@
       window.toast?.("YOUR BAG IS EMPTY");
       return;
     }
+
+    // Checkout is entered only from the Bag.
+    panel("#cartDrawer",false);
+    panel("#orderStatusPanel",false);
+    panel("#orderSuccess",false);
+
     renderCheckout();
     panel("#checkoutPanel",true);
     setTimeout(()=>$("#checkoutName")?.focus(),180);
@@ -82,8 +88,16 @@
       const successLink=$("#successOrderLink");
       if(successLink){
         successLink.dataset.statusUrl=statusLink;
-        successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
+        successLink.onclick=(event)=>{
+          event.preventDefault();
+          openOrderStatusFromPrivateLink(statusLink);
+        };
       }
+
+      // Success screen is reachable only after createOrder returned success.
+      panel("#cartDrawer",false);
+      panel("#checkoutPanel",false);
+      panel("#orderStatusPanel",false);
       panel("#orderSuccess",true);
     }catch(err){
       console.error(err);
@@ -169,8 +183,12 @@
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
     document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>panel("#"+b.dataset.close,false)));
-    $("#successBack")?.addEventListener("click",()=>{
+    $("#successBack")?.addEventListener("click",(event)=>{
+      event.preventDefault();
       panel("#orderSuccess",false);
+      panel("#checkoutPanel",false);
+      panel("#orderStatusPanel",false);
+      panel("#cartDrawer",false);
       const journal=document.querySelector("#journal");
       if(journal)journal.scrollIntoView({behavior:"smooth",block:"start"});
       else window.location.hash="journal";

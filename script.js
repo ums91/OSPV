@@ -120,12 +120,30 @@ function addToCart(id,button=null){
   const p=products.find(x=>String(x.id)===String(id));
   if(!p){toast("EDITION NOT FOUND");return false;}
   try{
+    /*
+     * ADD TO BAG is a shopping action only.
+     * Explicitly close every commerce panel first so a stale/previous
+     * checkout or success state can never remain visible over the bag.
+     */
+    ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
+      const panel=$(id);
+      if(panel){
+        panel.classList.remove("open");
+        panel.setAttribute("aria-hidden","true");
+      }
+    });
+    document.body.classList.remove("commerce-open");
+
     const added=store.add(id);
     renderCart(added.id);
     $("#productModal")?.classList.remove("open");
     $("#productModal")?.setAttribute("aria-hidden","true");
+
     const drawer=$("#cartDrawer");
-    if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false")}
+    if(drawer){
+      drawer.classList.add("open");
+      drawer.setAttribute("aria-hidden","false");
+    }
     syncOverlayLock();
     confirmCart(button);
     return true;
@@ -178,7 +196,26 @@ async function init(){
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
   $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
-  $("#bagBtn").onclick=()=>{const drawer=$("#cartDrawer");drawer.classList.toggle("open");drawer.setAttribute("aria-hidden",String(!drawer.classList.contains("open")));renderCart();syncOverlayLock()};
+  $("#bagBtn").onclick=()=>{
+    const drawer=$("#cartDrawer");
+    const willOpen=!drawer.classList.contains("open");
+
+    if(willOpen){
+      ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
+        const panel=$(id);
+        if(panel){
+          panel.classList.remove("open");
+          panel.setAttribute("aria-hidden","true");
+        }
+      });
+      document.body.classList.remove("commerce-open");
+    }
+
+    drawer.classList.toggle("open");
+    drawer.setAttribute("aria-hidden",String(!drawer.classList.contains("open")));
+    renderCart();
+    syncOverlayLock();
+  };
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#addProduct").onclick=()=>{if(current)addToCart(current.id,$("#addProduct"))};
   $("#cartLines").addEventListener("click",e=>{
