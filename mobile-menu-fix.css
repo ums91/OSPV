@@ -1,0 +1,85 @@
+/*
+ * UMS91 Visual Journal — Mobile Menu Refinement
+ * Cumulative-safe override: does not replace existing menu logic.
+ *
+ * Load this AFTER styles.css / checkout.css.
+ */
+
+@media (max-width: 720px) {
+  .mobile-menu.open {
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: min(82vw, 340px);
+    height: 100dvh;
+    min-height: 100dvh;
+    box-sizing: border-box;
+    padding: 88px 28px 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 18px;
+
+    background: #171814;
+    color: #fff;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 240;
+
+    box-shadow: -24px 0 60px rgba(0,0,0,.32);
+  }
+
+  .mobile-menu a {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font: 500 clamp(31px, 8.5vw, 36px)/1.02 "Playfair Display", serif;
+    letter-spacing: -.025em;
+    color: #fff;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .mobile-menu a:active {
+    opacity: .65;
+  }
+
+  .mobile-menu > button {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid rgba(255,255,255,.42);
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 28px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-menu.open {
+    width: 86vw;
+    padding-left: 24px;
+    padding-right: 24px;
+    gap: 15px;
+  }
+
+  .mobile-menu a {
+    font-size: 30px;
+  }
+}
