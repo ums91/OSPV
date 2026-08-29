@@ -54,6 +54,18 @@
   function esc(v){
     return String(v ?? "").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
+  function displayShippingDate(v){
+    if(!v) return "";
+    const d = new Date(v);
+    if(Number.isNaN(d.getTime())) return String(v);
+    return new Intl.DateTimeFormat("en-GB",{
+      day:"numeric",
+      month:"long",
+      year:"numeric",
+      timeZone:"Asia/Kolkata"
+    }).format(d);
+  }
+
   function renderOrderResult(o){
     const items=Array.isArray(o.items)?o.items:[];
     const s=o.shipping||{};
@@ -65,8 +77,8 @@
         <div class="shipping-card-head"><span>SHIPPING</span><strong>${delivered?"DELIVERED":"ON THE WAY"}</strong></div>
         ${s.carrier?`<div class="shipping-row"><span>CARRIER</span><strong>${esc(s.carrier)}</strong></div>`:""}
         ${s.trackingNumber?`<div class="shipping-row"><span>TRACKING</span><strong>${esc(s.trackingNumber)}</strong></div>`:""}
-        ${s.shippedDate?`<div class="shipping-row"><span>SHIPPED</span><strong>${esc(s.shippedDate)}</strong></div>`:""}
-        ${s.deliveredDate?`<div class="shipping-row"><span>DELIVERED</span><strong>${esc(s.deliveredDate)}</strong></div>`:""}
+        ${s.shippedDate?`<div class="shipping-row"><span>SHIPPED</span><strong>${esc(displayShippingDate(s.shippedDate))}</strong></div>`:""}
+        ${s.deliveredDate?`<div class="shipping-row"><span>DELIVERED</span><strong>${esc(displayShippingDate(s.deliveredDate))}</strong></div>`:""}
         ${s.note?`<p class="shipping-note">${esc(s.note)}</p>`:""}
         ${tracking}
       </div>` : "";
