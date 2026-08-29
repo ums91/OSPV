@@ -1,269 +1,277 @@
-/* UMS91 — FINAL ABOUT / PHILOSOPHY ART-DIRECTION
-   Loaded after the existing editorial stylesheet.
-   Purpose: clean the Philosophy composition without changing commerce,
-   search, subscription, menus, or the rest of the journal.
+/* UMS91 — FINAL PHILOSOPHY ART-DIRECTION v2
+   Clean editorial composition.
+   No commerce/search/subscription/order rules are touched.
 */
 
-/* Desktop: give the About section a deliberate, balanced art-book grid. */
-@media (min-width: 901px){
-  .about.editorial-philosophy-wrap{
-    padding: 96px 7vw 118px !important;
-    overflow: hidden;
+/* Remove any previous experimental contact-sheet/strip decoration. */
+.editorial-archive-contact-sheet,
+.editorial-archive-side::after {
+  display: none !important;
+}
+
+/* ---------------- Desktop ---------------- */
+@media (min-width: 901px) {
+  .about.editorial-philosophy-wrap {
+    padding: 104px 7vw 125px !important;
+    overflow: hidden !important;
   }
 
-  .editorial-philosophy-title{
-    display:grid !important;
-    grid-template-columns:minmax(240px,.72fr) minmax(420px,1fr) !important;
-    align-items:end !important;
-    column-gap:6vw !important;
-    margin-bottom:54px !important;
+  /* Small section marker on the left, title on the right. */
+  .editorial-philosophy-title {
+    display: grid !important;
+    grid-template-columns: minmax(180px, .42fr) minmax(520px, 1fr) !important;
+    align-items: end !important;
+    column-gap: 6vw !important;
+    margin: 0 0 52px !important;
   }
 
-  .editorial-philosophy-title .eyebrow{
-    margin:0 0 9px !important;
-    align-self:end !important;
+  .editorial-philosophy-title .eyebrow {
+    margin: 0 0 12px !important;
+    align-self: end !important;
   }
 
-  .editorial-philosophy-title h2{
-    margin:0 !important;
-    max-width:650px !important;
-    justify-self:end !important;
-    font-size:clamp(68px,6.4vw,102px) !important;
-    line-height:.82 !important;
-    letter-spacing:-.065em !important;
+  .editorial-philosophy-title h2 {
+    margin: 0 !important;
+    justify-self: end !important;
+    width: min(680px, 100%) !important;
+    font-size: clamp(70px, 6.5vw, 104px) !important;
+    line-height: .84 !important;
+    letter-spacing: -.065em !important;
   }
 
-  .editorial-archive{
-    grid-template-columns:minmax(0,1.68fr) minmax(260px,.62fr) !important;
-    gap:5.2vw !important;
-    align-items:start !important;
+  /* Two photographs only: one dominant, one supporting.
+     They share the same top edge and visual rhythm. */
+  .editorial-archive {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.72fr) minmax(260px, .68fr) !important;
+    gap: 4.5vw !important;
+    align-items: start !important;
   }
 
-  .editorial-archive-main{
-    height:min(530px,42vw) !important;
-    min-height:430px !important;
+  .editorial-archive-main {
+    height: min(555px, 43vw) !important;
+    min-height: 410px !important;
   }
 
-  .editorial-archive-side{
-    position:relative !important;
-    align-self:start !important;
+  .editorial-archive-side {
+    display: block !important;
+    align-self: start !important;
   }
 
-  .editorial-archive-side > div{
-    aspect-ratio: 1.45 / 1 !important;
+  .editorial-archive-side > div {
+    width: 100% !important;
+    aspect-ratio: 4 / 5 !important;
+    overflow: hidden !important;
   }
 
-  .editorial-archive-side > span{
-    margin-top:10px !important;
-    line-height:1.5 !important;
+  .editorial-archive-side > span {
+    display: block !important;
+    margin-top: 12px !important;
+    max-width: 28ch !important;
+    color: #969189 !important;
+    font-size: 7px !important;
+    line-height: 1.7 !important;
+    letter-spacing: .19em !important;
   }
 
-  /* One quiet archive strip replaces the previous multi-image/contact-sheet
-     idea. It fills the vertical rhythm without making the section busy. */
-  .editorial-archive-side::after{
-    content:"";
-    display:block;
-    width:100%;
-    aspect-ratio:2.5 / 1;
-    margin-top:28px;
-    background:
-      linear-gradient(180deg,rgba(16,17,15,.02),rgba(16,17,15,.12)),
-      url("assets/instagram/06-17888974866154874.webp") center/cover no-repeat;
-    opacity:.86;
-    filter:saturate(.72) contrast(.96);
-    box-shadow:inset 0 0 0 1px rgba(17,18,15,.08);
+  /* A quiet rule connects the image pair to the written statement. */
+  .editorial-archive::after {
+    content: "";
+    grid-column: 1 / -1;
+    height: 1px;
+    margin-top: 4px;
+    background: rgba(25,25,22,.14);
   }
 
-  .editorial-philosophy-copy{
-    width:min(1040px,100%) !important;
-    margin:58px 0 0 auto !important;
-    display:grid !important;
-    grid-template-columns:minmax(0,1.35fr) minmax(240px,.65fr) !important;
-    column-gap:6vw !important;
-    align-items:start !important;
+  /* Quote is a separate editorial block BELOW the photographs.
+     This is the key fix: no narrow vertical quote beside the images. */
+  .editorial-philosophy-copy {
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 58px 0 0 auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, .32fr) !important;
+    column-gap: 7vw !important;
+    align-items: start !important;
   }
 
-  .editorial-philosophy-copy p:first-of-type{
-    max-width:760px !important;
-    margin:0 !important;
-    padding:0 !important;
-    font:400 clamp(25px,2.25vw,36px)/1.32 "Playfair Display",serif !important;
-    letter-spacing:-.022em !important;
-    color:#30302d !important;
+  .editorial-philosophy-copy p:first-of-type {
+    position: relative !important;
+    max-width: 900px !important;
+    margin: 0 !important;
+    padding: 0 0 0 58px !important;
+    color: #292925 !important;
+    font-family: "Playfair Display", Georgia, serif !important;
+    font-size: clamp(30px, 3.05vw, 43px) !important;
+    font-weight: 400 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.028em !important;
   }
 
-  .editorial-philosophy-copy p:first-of-type::before{
-    left:-50px !important;
-    top:-22px !important;
-    font-size:68px !important;
-    color:#bd955e !important;
-    opacity:.52 !important;
+  .editorial-philosophy-copy p:first-of-type::before {
+    content: "“" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: -10px !important;
+    color: #bd955e !important;
+    font: 400 72px/.7 "Playfair Display", Georgia, serif !important;
+    opacity: .62 !important;
   }
 
-  .editorial-philosophy-copy p:nth-of-type(2){
-    max-width:310px !important;
-    margin:5px 0 22px auto !important;
-    color:#77736c !important;
-    font-size:12px !important;
-    line-height:1.85 !important;
+  .editorial-philosophy-copy p:nth-of-type(2) {
+    max-width: 31ch !important;
+    margin: 5px 0 22px !important;
+    color: #77736c !important;
+    font-size: 12px !important;
+    line-height: 1.85 !important;
   }
 
-  .editorial-philosophy-copy a{
-    grid-column:2;
-    justify-self:start;
-    margin:0 !important;
+  .editorial-philosophy-copy a {
+    grid-column: 2 !important;
+    justify-self: start !important;
+    margin: 0 !important;
+    color: #262621 !important;
+  }
+
+  /* Keep the persistent page number elegant rather than competing
+     with the philosophy content. */
+  #heroPage {
+    right: 5% !important;
+    bottom: 86px !important;
   }
 }
 
-/* Tablet: collapse before the composition becomes cramped. */
-@media (min-width:721px) and (max-width:900px){
-  .about.editorial-philosophy-wrap{
-    padding-top:82px !important;
-    padding-bottom:90px !important;
+/* ---------------- Tablet ---------------- */
+@media (min-width: 721px) and (max-width: 900px) {
+  .about.editorial-philosophy-wrap {
+    padding: 84px 7vw 100px !important;
   }
 
-  .editorial-philosophy-title{
-    display:grid !important;
-    grid-template-columns:1fr 1.4fr !important;
-    gap:32px !important;
-    align-items:end !important;
+  .editorial-philosophy-title {
+    display: grid !important;
+    grid-template-columns: 1fr 1.5fr !important;
+    gap: 32px !important;
+    align-items: end !important;
+    margin-bottom: 42px !important;
   }
 
-  .editorial-philosophy-title h2{
-    font-size:clamp(58px,8vw,82px) !important;
+  .editorial-philosophy-title h2 {
+    font-size: clamp(58px, 8vw, 82px) !important;
+    line-height: .86 !important;
   }
 
-  .editorial-archive{
-    grid-template-columns:1fr 260px !important;
-    gap:32px !important;
+  .editorial-archive {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.55fr) minmax(190px, .65fr) !important;
+    gap: 28px !important;
+    align-items: start !important;
   }
 
-  .editorial-archive-main{
-    height:470px !important;
+  .editorial-archive-main {
+    height: 470px !important;
+    min-height: 0 !important;
   }
 
-  .editorial-archive-side > div{
-    aspect-ratio:1.25 / 1 !important;
+  .editorial-archive-side > div {
+    aspect-ratio: 4 / 5 !important;
   }
 
-  .editorial-archive-side::after{
-    content:"";
-    display:block;
-    width:100%;
-    aspect-ratio:2.3 / 1;
-    margin-top:22px;
-    background:url("assets/instagram/06-17888974866154874.webp") center/cover no-repeat;
-    opacity:.82;
+  .editorial-philosophy-copy {
+    width: 100% !important;
+    margin-top: 46px !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 220px !important;
+    gap: 34px !important;
   }
 
-  .editorial-philosophy-copy{
-    width:100% !important;
-    margin-top:48px !important;
-    display:grid !important;
-    grid-template-columns:minmax(0,1.4fr) minmax(210px,.6fr) !important;
-    gap:38px !important;
+  .editorial-philosophy-copy p:first-of-type {
+    max-width: 650px !important;
+    padding-left: 45px !important;
+    font-size: clamp(25px, 3.2vw, 34px) !important;
+    line-height: 1.25 !important;
   }
 
-  .editorial-philosophy-copy p:first-of-type{
-    font-size:clamp(22px,3.2vw,30px) !important;
-    line-height:1.38 !important;
-  }
-}
-
-/* Mobile: no cramped quote, no tiny decorative collage. */
-@media (max-width:720px){
-  .about.editorial-philosophy-wrap{
-    padding-top:72px !important;
-    padding-bottom:82px !important;
+  .editorial-philosophy-copy p:first-of-type::before {
+    font-size: 60px !important;
   }
 
-  .editorial-philosophy-title{
-    margin-bottom:38px !important;
+  .editorial-philosophy-copy p:nth-of-type(2) {
+    font-size: 11px !important;
   }
 
-  .editorial-philosophy-title h2{
-    font-size:clamp(54px,15vw,78px) !important;
-    line-height:.86 !important;
-  }
-
-  .editorial-archive{
-    gap:24px !important;
-  }
-
-  .editorial-archive-main{
-    height:min(500px,92vw) !important;
-    min-height:360px !important;
-  }
-
-  .editorial-archive-side > div{
-    aspect-ratio:1.45 / 1 !important;
-  }
-
-  .editorial-archive-side::after{
-    content:"";
-    display:block;
-    width:100%;
-    aspect-ratio:2.2 / 1;
-    margin-top:22px;
-    background:url("assets/instagram/06-17888974866154874.webp") center/cover no-repeat;
-    opacity:.82;
-  }
-
-  .editorial-philosophy-copy{
-    width:100% !important;
-    margin:42px 0 0 !important;
-    display:block !important;
-  }
-
-  .editorial-philosophy-copy p:first-of-type{
-    max-width:none !important;
-    margin:0 0 28px !important;
-    padding:0 !important;
-    font-size:clamp(22px,6.2vw,30px) !important;
-    line-height:1.38 !important;
-    letter-spacing:-.018em !important;
-  }
-
-  .editorial-philosophy-copy p:first-of-type::before{
-    position:static !important;
-    display:block !important;
-    height:34px !important;
-    margin:0 0 2px !important;
-    font-size:54px !important;
-    line-height:.8 !important;
-  }
-
-  .editorial-philosophy-copy p:nth-of-type(2){
-    max-width:34ch !important;
-    margin:0 0 22px !important;
-    font-size:12px !important;
-    line-height:1.8 !important;
-  }
-
-  .editorial-philosophy-copy a{
-    margin:0 !important;
+  .editorial-philosophy-copy a {
+    grid-column: 2 !important;
   }
 }
 
-/* Persistent 01 / 05 page marker: full over Hero, faded afterwards.
-   The companion JS controls the opacity state. */
-#heroPage{
-  position:fixed !important;
-  top:auto !important;
-  left:auto !important;
-  right:5% !important;
-  bottom:86px !important;
-  z-index:40 !important;
-  visibility:visible !important;
-  transition:opacity .45s ease !important;
-}
+/* ---------------- Mobile ---------------- */
+@media (max-width: 720px) {
+  .about.editorial-philosophy-wrap {
+    padding: 72px 8vw 88px !important;
+  }
 
-@media(max-width:720px){
-  #heroPage{
-    right:8vw !important;
-    bottom:25px !important;
+  .editorial-philosophy-title {
+    margin-bottom: 34px !important;
+  }
+
+  .editorial-philosophy-title h2 {
+    font-size: clamp(54px, 15vw, 78px) !important;
+    line-height: .86 !important;
+  }
+
+  .editorial-archive {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 26px !important;
+  }
+
+  .editorial-archive-main {
+    height: min(520px, 92vw) !important;
+    min-height: 360px !important;
+  }
+
+  .editorial-archive-side > div {
+    aspect-ratio: 4 / 5 !important;
+  }
+
+  .editorial-philosophy-copy {
+    width: 100% !important;
+    margin: 42px 0 0 !important;
+    display: block !important;
+  }
+
+  .editorial-philosophy-copy p:first-of-type {
+    position: relative !important;
+    max-width: none !important;
+    margin: 0 0 32px !important;
+    padding: 42px 0 0 !important;
+    font-size: clamp(25px, 7vw, 34px) !important;
+    line-height: 1.24 !important;
+    letter-spacing: -.02em !important;
+  }
+
+  .editorial-philosophy-copy p:first-of-type::before {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    font-size: 58px !important;
+    line-height: .7 !important;
+  }
+
+  .editorial-philosophy-copy p:nth-of-type(2) {
+    max-width: 34ch !important;
+    margin: 0 0 22px !important;
+    font-size: 12px !important;
+    line-height: 1.8 !important;
+  }
+
+  .editorial-philosophy-copy a {
+    display: inline-block !important;
+    margin: 0 !important;
+  }
+
+  #heroPage {
+    right: 8vw !important;
+    bottom: 25px !important;
   }
 }
-
-/* If an older cumulative patch injected a contact sheet, remove it from the visual composition. */
-.editorial-archive-contact-sheet{display:none !important;}
