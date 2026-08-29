@@ -1,8 +1,8 @@
 /* OMER — Editions magazine/page flip */
 (() => {
   const frames = [
-    {src:"assets/instagram/07-17891686938141350.webp",alt:"Into the Mist — Kashmir",label:"FRAME 01"},
-    {src:"assets/instagram/06-17888974866154874.webp",alt:"Light After Rain",label:"FRAME 02"},
+    {src:"assets/instagram/01-18346022980152797.webp",alt:"Mountain Lake — Kashmir",label:"FRAME 01"},
+    {src:"assets/instagram/05-17919169577868859.webp",alt:"Mountain Stream — Kashmir",label:"FRAME 02"},
     {src:"assets/instagram/02-18095911612535573.webp",alt:"The Quiet Road",label:"FRAME 03"},
     {src:"assets/instagram/03-18023495780629861.webp",alt:"Field Archive — Kashmir",label:"FRAME 04"},
     {src:"assets/instagram/04-18006758585188862.webp",alt:"Another moment from the archive",label:"FRAME 05"}
