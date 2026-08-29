@@ -1,7 +1,7 @@
 /* OMER — Editions magazine/page flip */
 (() => {
   const frames = [
-    {src:"assets/instagram/01-18346022980152797.webp",alt:"Mountain Lake — Kashmir",label:"FRAME 01"},
+    {src:"assets/instagram/15-18524130307032995.webp",alt:"Kashmir archive photograph",label:"FRAME 01"},
     {src:"assets/instagram/05-17919169577868859.webp",alt:"Mountain Stream — Kashmir",label:"FRAME 02"},
     {src:"assets/instagram/02-18095911612535573.webp",alt:"The Quiet Road",label:"FRAME 03"},
     {src:"assets/instagram/03-18023495780629861.webp",alt:"Field Archive — Kashmir",label:"FRAME 04"},
