@@ -2236,3 +2236,180 @@ body.cart-open .sidebar {
   .editorial-journal-footer a::after,
   .under::after{transition:none;}
 }
+
+/* UMS91 — subtle compass mark beside archive coordinates */
+.editorial-archive-bottom > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.editorial-archive-bottom > span:last-child::before {
+  content: "✦";
+  width: 17px;
+  height: 17px;
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 8px;
+  line-height: 1;
+  opacity: .72;
+  transform: rotate(45deg);
+  flex: 0 0 17px;
+}
+
+@media (max-width: 720px) {
+  .editorial-archive-bottom > span:last-child {
+    gap: 7px;
+  }
+
+  .editorial-archive-bottom > span:last-child::before {
+    width: 15px;
+    height: 15px;
+    flex-basis: 15px;
+    font-size: 7px;
+  }
+}
+
+/* =========================================================
+   UMS91 — EDITORIAL INTERACTION CORRECTIONS
+   ========================================================= */
+
+/* Philosophy quote: use a wider, calmer editorial measure. The previous
+   treatment made the quote too narrow and caused awkward line wrapping. */
+.editorial-philosophy-copy {
+  width: min(760px, 100%);
+  margin: 58px 0 0 auto;
+}
+
+.editorial-philosophy-copy p:first-of-type {
+  position: relative;
+  max-width: 760px;
+  padding-left: 0;
+  margin-bottom: 30px;
+  font: 400 clamp(22px, 2.15vw, 34px)/1.42 "Playfair Display", serif;
+  letter-spacing: -.018em;
+  color: #33322f;
+}
+
+.editorial-philosophy-copy p:first-of-type::before {
+  content: "“";
+  position: absolute;
+  left: -48px;
+  top: -26px;
+  font: 500 72px/1 "Playfair Display", serif;
+  color: var(--ums91-gold);
+  opacity: .55;
+}
+
+.editorial-philosophy-copy p:nth-of-type(2) {
+  max-width: 410px;
+  margin-left: auto;
+  color: #77736c;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* Fixed left rail changes tone with the editorial section underneath it. */
+.sidebar {
+  transition: background-color .5s ease, color .5s ease, border-color .5s ease;
+}
+
+.sidebar.sidebar-light {
+  background: #f3f0ea;
+  color: #171714;
+  border-right: 1px solid rgba(20,20,17,.08);
+}
+
+.sidebar.sidebar-light .logo,
+.sidebar.sidebar-light nav a,
+.sidebar.sidebar-light .socials a,
+.sidebar.sidebar-light .socials button {
+  color: #171714;
+}
+
+.sidebar.sidebar-light .logo small,
+.sidebar.sidebar-light nav a span,
+.sidebar.sidebar-light .rail-index em {
+  color: #77736c;
+}
+
+.sidebar.sidebar-light nav a.active,
+.sidebar.sidebar-light nav a.active span,
+.sidebar.sidebar-light .social-icon:hover {
+  color: var(--ums91-gold);
+}
+
+.sidebar.sidebar-light .rail-index span {
+  background: rgba(23,23,20,.20);
+}
+
+.sidebar.sidebar-dark {
+  background: #10110f;
+  color: #fff;
+  border-right-color: transparent;
+}
+
+.sidebar.sidebar-dark .logo,
+.sidebar.sidebar-dark nav a,
+.sidebar.sidebar-dark .socials a,
+.sidebar.sidebar-dark .socials button {
+  color: #fff;
+}
+
+.sidebar.sidebar-dark .logo small,
+.sidebar.sidebar-dark nav a span,
+.sidebar.sidebar-dark .rail-index em {
+  color: #aaa;
+}
+
+.sidebar.sidebar-dark nav a.active,
+.sidebar.sidebar-dark nav a.active span,
+.sidebar.sidebar-dark .social-icon:hover {
+  color: var(--ums91-gold);
+}
+
+.sidebar.sidebar-dark .rail-index span {
+  background: #555;
+}
+
+@media (max-width: 900px) {
+  .editorial-philosophy-copy {
+    width: min(650px, 100%);
+    margin: 48px 0 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .editorial-philosophy-copy {
+    width: 100%;
+    margin: 42px 0 0;
+  }
+
+  .editorial-philosophy-copy p:first-of-type {
+    max-width: 100%;
+    padding-left: 0;
+    font-size: clamp(21px, 6vw, 28px);
+    line-height: 1.42;
+  }
+
+  .editorial-philosophy-copy p:first-of-type::before {
+    position: static;
+    display: block;
+    height: 32px;
+    margin-bottom: 2px;
+    font-size: 54px;
+    line-height: .8;
+  }
+
+  .editorial-philosophy-copy p:nth-of-type(2) {
+    max-width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar { transition: none; }
+}
