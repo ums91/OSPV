@@ -2030,3 +2030,209 @@ body.cart-open .sidebar {
   #mobileMenu a,
   #mobileMenu.mobile-menu a{font-size:27px!important}
 }
+
+/* =========================================================
+   UMS91 — EDITORIAL POLISH / ART-DIRECTION PASS
+   Tasteful upgrades inspired by the supplied design review.
+   Intentionally restrained: no new gradients over photographs,
+   no oversized decorative gimmicks, and no commerce behaviour changes.
+   ========================================================= */
+
+:root{
+  --ums91-gold:#bd955e;
+  --ums91-ink:#11120f;
+  --ums91-paper:#f3f0ea;
+  --ums91-muted:#77736c;
+}
+
+.editorial-section-kicker > div:first-child > span,
+.editorial-section-intro > span,
+.editorial-philosophy-title .eyebrow,
+.shop-head .eyebrow{
+  letter-spacing:.32em;
+  font-weight:500;
+}
+
+.editorial-section-kicker > div:first-child{position:relative;}
+.editorial-section-kicker > div:first-child::before{
+  position:absolute;
+  left:-2px;
+  top:-30px;
+  font:500 clamp(72px,8vw,118px)/.8 "Playfair Display",serif;
+  color:rgba(189,149,94,.075);
+  letter-spacing:-.07em;
+  pointer-events:none;
+  z-index:0;
+}
+.editorial-journal-wrap .editorial-section-kicker > div:first-child::before{content:"01";}
+.editorial-editions-wrap .editorial-section-kicker > div:first-child::before{content:"03";}
+.editorial-section-kicker > div:first-child > span,
+.editorial-section-kicker > div:first-child > h2{position:relative;z-index:1;}
+
+.editorial-journal-feature,
+.editorial-note-media,
+.editorial-archive-main,
+.editorial-archive-side > div,
+.product-image{isolation:isolate;}
+
+/* Viewfinder corners. No dark overlay is introduced. */
+.editorial-journal-feature::after,
+.editorial-note-media::before,
+.editorial-archive-main::after,
+.editorial-archive-side > div::after,
+.product-image::after{
+  content:"";
+  position:absolute;
+  inset:13px;
+  z-index:6;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .35s ease,inset .35s ease;
+  background:
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) top left / 18px 1px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) top left / 1px 18px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) top right / 18px 1px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) top right / 1px 18px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) bottom left / 18px 1px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) bottom left / 1px 18px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) bottom right / 18px 1px no-repeat,
+    linear-gradient(var(--ums91-gold),var(--ums91-gold)) bottom right / 1px 18px no-repeat;
+}
+.editorial-journal-feature:hover::after,
+.editorial-note-card:hover .editorial-note-media::before,
+.editorial-archive-main:hover::after,
+.editorial-archive-side > div:hover::after,
+.product:hover .product-image::after,
+.product:focus-within .product-image::after{
+  opacity:.95;
+  inset:17px;
+}
+
+.editorial-journal-feature > img,
+.editorial-note-media img,
+.editorial-archive-main img,
+.editorial-archive-side img,
+.product-image img{
+  transition:transform .8s cubic-bezier(.2,.8,.2,1),filter .5s ease;
+}
+.editorial-journal-feature:hover > img,
+.editorial-note-card:hover .editorial-note-media img,
+.editorial-archive-main:hover img,
+.editorial-archive-side:hover img,
+.product:hover .product-image img{filter:none;}
+
+/* Featured edition: museum-style mat treatment. */
+.editorial-print{
+  padding:30px 30px 42px;
+  box-shadow:
+    0 35px 60px rgba(0,0,0,.14),
+    0 8px 20px rgba(0,0,0,.07),
+    inset 0 0 0 1px rgba(17,18,15,.035);
+}
+.editorial-print::before,
+.editorial-print::after{
+  content:"";
+  position:absolute;
+  width:15px;
+  height:15px;
+  border-color:var(--ums91-gold);
+  border-style:solid;
+  opacity:.72;
+  pointer-events:none;
+}
+.editorial-print::before{top:10px;left:10px;border-width:1px 0 0 1px;}
+.editorial-print::after{right:10px;bottom:10px;border-width:0 1px 1px 0;}
+
+/* Philosophy pull quote. */
+.editorial-philosophy-copy p:first-of-type{
+  position:relative;
+  padding:7px 0 7px 34px;
+  color:#4f4c47;
+  font-size:15px;
+  line-height:1.82;
+}
+.editorial-philosophy-copy p:first-of-type::before{
+  content:"“";
+  position:absolute;
+  left:-4px;
+  top:-18px;
+  font:500 72px/1 "Playfair Display",serif;
+  color:var(--ums91-gold);
+  opacity:.52;
+}
+.editorial-philosophy-copy p:nth-of-type(2){max-width:420px;color:#77736c;}
+
+/* Quiet, editorial link motion. */
+.editorial-section-intro a,
+.editorial-philosophy-copy a,
+.editorial-edition-button,
+.editorial-journal-footer a,
+.under{position:relative;transition:color .25s ease,border-color .25s ease;}
+.editorial-section-intro a::after,
+.editorial-philosophy-copy a::after,
+.editorial-edition-button::after,
+.editorial-journal-footer a::after,
+.under::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:0;
+  height:1px;
+  background:var(--ums91-gold);
+  transition:width .35s ease;
+}
+.editorial-section-intro a:hover::after,
+.editorial-philosophy-copy a:hover::after,
+.editorial-edition-button:hover::after,
+.editorial-journal-footer a:hover::after,
+.under:hover::after{width:100%;}
+
+/* Product cards: subtle gallery depth, without a darkening hover. */
+.product-image{box-shadow:0 0 0 1px rgba(17,18,15,.055);}
+.product:hover .product-image{box-shadow:0 10px 30px rgba(17,18,15,.09);}
+.product-info h3{transition:transform .35s cubic-bezier(.2,.8,.2,1);}
+.product:hover .product-info h3{transform:translateX(3px);}
+
+.editorial-note-card{transition:background .35s ease;}
+.editorial-note-card:hover{background:rgba(255,255,255,.018);}
+
+.newsletter-note{
+  max-width:510px;
+  color:#aaa;
+  font-size:12px;
+  line-height:1.8;
+  margin:0 0 28px;
+}
+#newsletter{transition:border-color .3s ease;}
+#newsletter:focus-within{border-bottom-color:var(--ums91-gold);}
+#newsletter button{transition:color .25s ease,transform .25s ease;}
+#newsletter button:hover{color:var(--ums91-gold);transform:translateX(3px);}
+
+@media(max-width:720px){
+  .editorial-section-kicker > div:first-child::before{top:-20px;font-size:72px;}
+  .editorial-philosophy-copy p:first-of-type{padding-left:27px;font-size:14px;}
+  .editorial-philosophy-copy p:first-of-type::before{left:-5px;top:-14px;font-size:58px;}
+  .editorial-print{padding:20px 20px 30px;}
+  .editorial-journal-feature::after,
+  .editorial-note-media::before,
+  .editorial-archive-main::after,
+  .editorial-archive-side > div::after,
+  .product-image::after{display:none;}
+  .product:hover .product-image{box-shadow:0 0 0 1px rgba(17,18,15,.055);}
+  .product:hover .product-info h3{transform:none;}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .editorial-journal-feature::after,
+  .editorial-note-media::before,
+  .editorial-archive-main::after,
+  .editorial-archive-side > div::after,
+  .product-image::after,
+  .product-info h3,
+  .editorial-section-intro a::after,
+  .editorial-philosophy-copy a::after,
+  .editorial-edition-button::after,
+  .editorial-journal-footer a::after,
+  .under::after{transition:none;}
+}
