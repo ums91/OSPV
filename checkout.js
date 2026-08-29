@@ -50,6 +50,40 @@
     total.textContent=money(window.store.total);
   }
 
+
+  function esc(v){
+    return String(v ?? "").replace(/[&<>\"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function renderOrderResult(o){
+    const items=Array.isArray(o.items)?o.items:[];
+    const s=o.shipping||{};
+    const shipped=o.orderStatus==="SHIPPED"||o.orderStatus==="DELIVERED";
+    const delivered=o.orderStatus==="DELIVERED";
+    const tracking=s.trackingUrl ? `<a class="shipping-track" href="${esc(s.trackingUrl)}" target="_blank" rel="noopener noreferrer">TRACK SHIPMENT ↗</a>` : "";
+    const shippingBlock=shipped ? `
+      <div class="shipping-card">
+        <div class="shipping-card-head"><span>SHIPPING</span><strong>${delivered?"DELIVERED":"ON THE WAY"}</strong></div>
+        ${s.carrier?`<div class="shipping-row"><span>CARRIER</span><strong>${esc(s.carrier)}</strong></div>`:""}
+        ${s.trackingNumber?`<div class="shipping-row"><span>TRACKING</span><strong>${esc(s.trackingNumber)}</strong></div>`:""}
+        ${s.shippedDate?`<div class="shipping-row"><span>SHIPPED</span><strong>${esc(s.shippedDate)}</strong></div>`:""}
+        ${s.deliveredDate?`<div class="shipping-row"><span>DELIVERED</span><strong>${esc(s.deliveredDate)}</strong></div>`:""}
+        ${s.note?`<p class="shipping-note">${esc(s.note)}</p>`:""}
+        ${tracking}
+      </div>` : "";
+    return `<h3>Order ${esc(o.orderId)}</h3>
+      <div class="order-progress" aria-label="Order progress">
+        <span class="is-done">ORDER</span>
+        <span class="${o.orderStatus==="PROCESSING"||shipped||delivered?"is-done":""}">PROCESSING</span>
+        <span class="${shipped?"is-done":""}">SHIPPED</span>
+        <span class="${delivered?"is-done":""}">DELIVERED</span>
+      </div>
+      <div class="order-status-row"><span>PAYMENT</span><strong>${esc(o.paymentStatus)}</strong></div>
+      <div class="order-status-row"><span>ORDER</span><strong>${esc(o.orderStatus)}</strong></div>
+      ${shippingBlock}
+      <div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${esc(i.title)} × ${Number(i.quantity)||1}</span><strong>${money(i.price*(Number(i.quantity)||1))}</strong></div>`).join("")}</div>
+      <div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
+  }
+
   function showMessage(el,text,isError=false){
     if(!el)return;
     el.textContent=text;
@@ -132,12 +166,7 @@
     try{
       const data=await postJson({action:"getOrder",orderId:orderId,email:email});
       const o=data.order;
-      const items=Array.isArray(o.items)?o.items:[];
-      result.innerHTML=`<h3>Order ${o.orderId}</h3>
-        <div class="order-status-row"><span>PAYMENT</span><strong>${o.paymentStatus}</strong></div>
-        <div class="order-status-row"><span>ORDER</span><strong>${o.orderStatus}</strong></div>
-        <div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${i.title} × ${i.quantity}</span><strong>${money(i.price*i.quantity)}</strong></div>`).join("")}</div>
-        <div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
+      result.innerHTML=renderOrderResult(o);
       result.hidden=false;
       showMessage(msg,"");
     }catch(err){showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);}
@@ -167,8 +196,8 @@
     showMessage(msg,"Loading your private order…");
     postJson({action:"getOrder",orderId:orderId,token:token})
       .then(data=>{
-        const o=data.order, items=Array.isArray(o.items)?o.items:[];
-        result.innerHTML=`<h3>Order ${o.orderId}</h3><div class="order-status-row"><span>PAYMENT</span><strong>${o.paymentStatus}</strong></div><div class="order-status-row"><span>ORDER</span><strong>${o.orderStatus}</strong></div><div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${i.title} × ${i.quantity}</span><strong>${money(i.price*i.quantity)}</strong></div>`).join("")}</div><div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
+        const o=data.order;
+        result.innerHTML=renderOrderResult(o);
         result.hidden=false;
         showMessage(msg,"");
       })
