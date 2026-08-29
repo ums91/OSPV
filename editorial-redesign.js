@@ -191,114 +191,257 @@
 })();
 
 /*
- * About / Philosophy — archival contact sheet.
+ * About / Philosophy — restrained archive fragment.
  *
- * The original right-hand archive image ends well before the philosophy
- * section ends, leaving a large unused area. This fills that area with a
- * restrained contact-sheet / field-index treatment using existing UMS91
- * archive photographs. No new assets or HTML edits are required.
+ * Keep the About section photographic and quiet: one additional archival
+ * frame is used beneath the existing right-hand image instead of a grid
+ * of small thumbnails. This removes the clutter and fills the unused area
+ * with a single coherent visual.
  */
 (() => {
   const side = document.querySelector(".editorial-archive-side");
-  if (!side || side.querySelector(".editorial-archive-contact-sheet")) return;
+  if (!side || side.querySelector(".editorial-archive-fragment")) return;
 
-  const sheet = document.createElement("div");
-  sheet.className = "editorial-archive-contact-sheet";
-
-  sheet.innerHTML = `
-    <div class="archive-sheet-head">
-      <span>FIELD INDEX / 014</span>
-      <span>KASHMIR · WINTER</span>
+  const fragment = document.createElement("div");
+  fragment.className = "editorial-archive-fragment";
+  fragment.innerHTML = `
+    <div class="archive-fragment-image">
+      <img src="assets/instagram/06-17888974866154874.webp"
+           alt="UMS91 archive frame after rain"
+           loading="lazy">
+      <span>FRAME 015 · AFTER RAIN</span>
     </div>
-    <div class="archive-sheet-grid">
-      <div><img src="assets/instagram/07-17891686938141350.webp" alt="UMS91 archive frame 014" loading="lazy"><span>014</span></div>
-      <div><img src="assets/instagram/06-17888974866154874.webp" alt="UMS91 archive frame 015" loading="lazy"><span>015</span></div>
-      <div><img src="assets/instagram/02-18095911612535573.webp" alt="UMS91 archive frame 016" loading="lazy"><span>016</span></div>
-      <div><img src="assets/instagram/03-18023495780629861.webp" alt="UMS91 archive frame 017" loading="lazy"><span>017</span></div>
-    </div>
-    <div class="archive-sheet-foot">
+    <div class="archive-fragment-meta">
+      <span>FIELD ARCHIVE / 015</span>
       <span>34°02'N · 74°50'E</span>
-      <span>ARCHIVE / 2026</span>
     </div>
   `;
+  side.appendChild(fragment);
 
-  side.appendChild(sheet);
-
-  if (!document.getElementById("ums91ArchiveSheetStyles")) {
+  if (!document.getElementById("ums91AboutRefinementStyles")) {
     const style = document.createElement("style");
-    style.id = "ums91ArchiveSheetStyles";
+    style.id = "ums91AboutRefinementStyles";
     style.textContent = `
-      .editorial-archive-side{
-        min-width:0;
+      /* ---------- About / Philosophy refinement ---------- */
+      .about.editorial-philosophy-wrap{
+        padding-top:100px;
+        padding-bottom:120px;
       }
 
-      .editorial-archive-contact-sheet{
-        margin-top:34px;
-        padding-top:16px;
-        border-top:1px solid rgba(23,23,20,.14);
-      }
-
-      .archive-sheet-head,
-      .archive-sheet-foot{
-        display:flex;
-        justify-content:space-between;
-        gap:16px;
-        color:#8b877f;
-        font-size:7px;
-        line-height:1.4;
-        letter-spacing:.19em;
-        text-transform:uppercase;
-      }
-
-      .archive-sheet-grid{
+      .editorial-philosophy-title{
         display:grid;
-        grid-template-columns:repeat(4,minmax(0,1fr));
-        gap:7px;
-        margin:12px 0 13px;
+        grid-template-columns:minmax(220px,.65fr) minmax(0,1.35fr);
+        align-items:end;
+        gap:6vw;
+        margin-bottom:58px;
       }
 
-      .archive-sheet-grid > div{
-        position:relative;
-        aspect-ratio:1/1;
+      .editorial-philosophy-title .eyebrow{
+        margin:0 0 10px;
+      }
+
+      .editorial-philosophy-title h2{
+        margin:0;
+        max-width:760px;
+        justify-self:start;
+        font-size:clamp(62px,7vw,108px);
+        line-height:.84;
+      }
+
+      .editorial-archive{
+        display:grid;
+        grid-template-columns:minmax(0,1.55fr) minmax(280px,.55fr);
+        gap:5vw;
+        align-items:start;
+      }
+
+      .editorial-archive-main{
+        height:min(560px,43vw);
+        min-height:420px;
+      }
+
+      .editorial-archive-side{
+        padding-top:0;
+      }
+
+      .editorial-archive-side > div:first-child{
+        width:100%;
+        aspect-ratio:4/5;
         overflow:hidden;
-        background:#d5d0c7;
       }
 
-      .archive-sheet-grid img{
+      .editorial-archive-side > div:first-child img{
         display:block;
         width:100%;
         height:100%;
         object-fit:cover;
-        filter:grayscale(.15) saturate(.7);
-        transition:transform .55s cubic-bezier(.2,.8,.2,1);
       }
 
-      .archive-sheet-grid > div:hover img{
-        transform:scale(1.06);
+      .editorial-archive-fragment{
+        margin-top:28px;
       }
 
-      .archive-sheet-grid span{
+      .archive-fragment-image{
+        position:relative;
+        aspect-ratio:16/9;
+        overflow:hidden;
+        background:#d5d0c7;
+      }
+
+      .archive-fragment-image img{
+        display:block;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        filter:saturate(.72) contrast(.96);
+        transition:transform .7s cubic-bezier(.2,.8,.2,1);
+      }
+
+      .archive-fragment-image:hover img{
+        transform:scale(1.035);
+      }
+
+      .archive-fragment-image span{
         position:absolute;
-        left:6px;
-        bottom:5px;
+        left:12px;
+        bottom:10px;
         color:#fff;
-        font-size:6px;
-        letter-spacing:.12em;
-        text-shadow:0 1px 5px rgba(0,0,0,.5);
+        font-size:7px;
+        letter-spacing:.18em;
+        text-shadow:0 1px 7px rgba(0,0,0,.45);
       }
 
-      .archive-sheet-foot{
-        color:#aaa69e;
+      .archive-fragment-meta{
+        display:flex;
+        justify-content:space-between;
+        gap:14px;
+        margin-top:10px;
+        color:#999;
+        font-size:7px;
+        letter-spacing:.17em;
+        text-transform:uppercase;
+      }
+
+      .editorial-philosophy-copy{
+        width:min(980px,100%);
+        margin:58px 0 0 auto;
+        display:grid;
+        grid-template-columns:minmax(0,1.7fr) minmax(220px,.55fr);
+        gap:7vw;
+        align-items:start;
+      }
+
+      .editorial-philosophy-copy p:first-of-type{
+        position:relative;
+        max-width:850px;
+        padding:0;
+        margin:0;
+        font:400 clamp(24px,2.2vw,34px)/1.38 "Playfair Display",serif;
+        letter-spacing:-.018em;
+        color:#33322f;
+      }
+
+      .editorial-philosophy-copy p:first-of-type::before{
+        content:"“";
+        position:absolute;
+        left:-42px;
+        top:-22px;
+        font:500 70px/1 "Playfair Display",serif;
+        color:var(--ums91-gold);
+        opacity:.55;
+      }
+
+      .editorial-philosophy-copy p:nth-of-type(2){
+        max-width:310px;
+        margin:5px 0 0;
+        color:#77736c;
+        font-size:13px;
+        line-height:1.9;
+      }
+
+      .editorial-philosophy-copy a{
+        grid-column:2;
+        margin-top:-42px;
+        width:max-content;
+      }
+
+      @media(max-width:900px){
+        .editorial-philosophy-title{
+          grid-template-columns:1fr;
+          gap:28px;
+        }
+
+        .editorial-philosophy-title h2{
+          justify-self:start;
+        }
+
+        .editorial-archive{
+          grid-template-columns:minmax(0,1.35fr) minmax(220px,.65fr);
+        }
+
+        .editorial-philosophy-copy{
+          width:min(760px,100%);
+          grid-template-columns:1fr;
+          gap:22px;
+          margin-top:48px;
+        }
+
+        .editorial-philosophy-copy p:nth-of-type(2){
+          max-width:430px;
+          margin:0;
+        }
+
+        .editorial-philosophy-copy a{
+          grid-column:auto;
+          margin-top:0;
+        }
       }
 
       @media(max-width:720px){
-        .editorial-archive-contact-sheet{
-          margin-top:28px;
+        .about.editorial-philosophy-wrap{
+          padding-top:80px;
+          padding-bottom:90px;
         }
 
-        .archive-sheet-grid{
-          grid-template-columns:repeat(2,minmax(0,1fr));
-          gap:8px;
+        .editorial-archive{
+          grid-template-columns:1fr;
+          gap:28px;
+        }
+
+        .editorial-archive-main{
+          height:500px;
+        }
+
+        .editorial-archive-fragment{
+          margin-top:24px;
+        }
+
+        .editorial-philosophy-copy{
+          width:100%;
+          margin-top:42px;
+        }
+
+        .editorial-philosophy-copy p:first-of-type{
+          max-width:100%;
+          font-size:clamp(21px,6vw,28px);
+          line-height:1.42;
+        }
+
+        .editorial-philosophy-copy p:first-of-type::before{
+          position:static;
+          display:block;
+          height:30px;
+          margin-bottom:4px;
+          font-size:52px;
+          line-height:.8;
+        }
+
+        .editorial-philosophy-copy p:nth-of-type(2){
+          max-width:100%;
+        }
+
+        .editorial-philosophy-copy a{
+          margin-top:4px;
         }
       }
     `;
