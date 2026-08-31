@@ -1,0 +1,39 @@
+/* UMS91 — subtle 3D front/back postcard preview */
+#productModal{perspective:1800px}
+.postcard-preview{position:absolute;inset:0;z-index:20;display:grid;grid-template-rows:auto 1fr auto;padding:22px 26px 24px;background:rgba(245,241,233,.98);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease,visibility .28s ease}
+.postcard-preview.open{opacity:1;visibility:visible;pointer-events:auto}
+.postcard-preview-head{display:flex;justify-content:space-between;align-items:center;font:500 9px/1 DM Sans,sans-serif;letter-spacing:.2em;color:#10110f;text-transform:uppercase}
+.postcard-close{border:0;background:none;font:300 28px/1 Arial,sans-serif;color:#10110f;cursor:pointer;width:34px;height:34px}
+.postcard-scene{display:grid;place-items:center;min-height:0;padding:18px 8px 10px;perspective:1400px}
+.postcard-card{position:relative;width:min(72%,470px);aspect-ratio:1.48;transform-style:preserve-3d;transition:transform .82s cubic-bezier(.2,.75,.2,1);cursor:pointer;outline:none;filter:drop-shadow(0 28px 28px rgba(16,17,15,.2));}
+.postcard-card:hover{transform:translateY(-4px) rotateX(1deg)}
+.postcard-card.is-back{transform:rotateY(180deg)}
+.postcard-card.is-back:hover{transform:rotateY(180deg) translateY(-4px) rotateX(1deg)}
+.postcard-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;border:1px solid rgba(16,17,15,.2);background:#f5f1e9}
+.postcard-front{transform:rotateY(0);background:#111}
+.postcard-front img{width:100%;height:100%;display:block;object-fit:cover}
+.postcard-front:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.45))}
+.postcard-front span{position:absolute;left:20px;bottom:17px;z-index:2;color:#fff;font:500 9px/1 DM Sans,sans-serif;letter-spacing:.18em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.postcard-back{transform:rotateY(180deg);padding:26px;background:#eee8dc;color:#171813}
+.postcard-back-brand{font:600 20px/1 Playfair Display,serif;letter-spacing:.08em}
+.postcard-back-line{position:absolute;left:50%;top:20%;bottom:19%;width:1px;background:rgba(16,17,15,.18)}
+.postcard-back-content{position:absolute;left:9%;right:54%;top:30%}
+.postcard-message{font:500 19px/1.25 Playfair Display,serif;font-style:italic}
+.postcard-address{position:absolute;left:135%;top:8px;width:130%;display:grid;gap:15px}
+.postcard-address i{display:block;border-top:1px solid rgba(16,17,15,.25)}
+.postcard-stamp{position:absolute;right:7%;top:8%;border:1px solid rgba(16,17,15,.4);width:54px;height:64px;display:grid;place-items:center;text-align:center;font:600 9px/1.2 DM Sans,sans-serif;letter-spacing:.12em}
+.postcard-stamp small{font-size:5px;letter-spacing:.12em}
+.postcard-back-footer{position:absolute;left:7%;right:7%;bottom:7%;font:500 6px/1 DM Sans,sans-serif;letter-spacing:.22em}
+.postcard-preview-controls{display:flex;justify-content:center;align-items:center;gap:14px;font:500 8px/1 DM Sans,sans-serif;letter-spacing:.18em;color:rgba(16,17,15,.58)}
+.postcard-flip-btn{border:1px solid rgba(16,17,15,.28);background:transparent;padding:10px 14px;color:#10110f;font:500 8px/1 DM Sans,sans-serif;letter-spacing:.15em;cursor:pointer}
+.postcard-flip-btn:hover{background:#10110f;color:#f5f1e9}
+.postcard-preview-trigger{display:block;margin:14px 0 12px;padding:0;border:0;background:none;color:#10110f;font:500 9px/1 DM Sans,sans-serif;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;text-align:left}
+.postcard-preview-trigger span{margin-left:5px;transition:transform .2s ease;display:inline-block}
+.postcard-preview-trigger:hover span{transform:translate(3px,-2px)}
+body.postcard-preview-open{overflow:hidden}
+@media(max-width:700px){
+ .postcard-preview{padding:16px 16px 18px}
+ .postcard-card{width:min(91%,390px)}
+ .postcard-back{padding:19px}.postcard-back-brand{font-size:16px}.postcard-message{font-size:15px}.postcard-address{gap:11px}.postcard-stamp{width:44px;height:51px;font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.postcard-preview,.postcard-card,.postcard-card:hover,.postcard-card.is-back:hover{transition:none}.postcard-card{transition:none}}
