@@ -163,8 +163,26 @@
     );
   }
 
+  function installProductClickFallback(){
+    // Some of the site's visual overlay layers can sit above the product card.
+    // Delegate clicks on the photo/card to the existing VIEW action instead of
+    // creating a second product-opening implementation.
+    document.addEventListener("click",e=>{
+      const card=e.target.closest?.(".product");
+      if(!card) return;
+      if(e.target.closest("button,a,input,select,textarea")) return;
+      const view=card.querySelector("[data-view]");
+      if(view){
+        e.preventDefault();
+        e.stopPropagation();
+        view.click();
+      }
+    },true);
+  }
+
   function init(){
     ensureStage();
+    installProductClickFallback();
     const modal=$("#productModal");
     if(modal){
       new MutationObserver(syncProduct).observe(modal,{
