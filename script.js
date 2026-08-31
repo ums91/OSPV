@@ -219,6 +219,19 @@ async function init(){
   window.renderCart=renderCart;
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
+  // Product-card click fallback. Runs in capture phase so visual overlay
+  // layers cannot prevent a photograph/card from opening its existing modal.
+  document.addEventListener("click",e=>{
+    const card=e.target.closest?.("#products .product");
+    if(!card)return;
+    if(e.target.closest?.("button,a,input,select,textarea"))return;
+    const id=card.dataset.product;
+    if(!id)return;
+    e.preventDefault();
+    e.stopPropagation();
+    openProduct(id);
+  },true);
+
   // Single commerce event delegation. BAG and ADD TO BAG are intentionally
   // handled here and nowhere else in the checkout system.
   document.addEventListener("click",e=>{
