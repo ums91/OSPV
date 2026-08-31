@@ -219,7 +219,6 @@ async function init(){
   window.renderCart=renderCart;
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
-
   // Single commerce event delegation. BAG and ADD TO BAG are intentionally
   // handled here and nowhere else in the checkout system.
   document.addEventListener("click",e=>{
