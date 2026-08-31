@@ -2414,13 +2414,12 @@ body.cart-open .sidebar {
   .sidebar { transition: none; }
 }
 
-
-/* OSPV product interaction: photo is an explicit hit surface.
-   Decorative layers are visual-only and cannot intercept photo clicks. */
-#products .product{cursor:pointer;position:relative}
-#products .product-image{position:relative;cursor:pointer}
-#products .product-image > img{position:relative;z-index:1;pointer-events:none}
-#products .product-image::after{pointer-events:none !important}
-#products .product-image .product-overlay{pointer-events:none}
+/* OSPV — clean product card hit area */
+#products .product,
+#products .product-image{cursor:pointer}
+#products .product-image .product-overlay{pointer-events:none !important}
 #products .product-image .product-overlay-actions,
-#products .product-image .product-overlay-actions button{pointer-events:auto}
+#products .product-image .product-overlay-actions button{pointer-events:auto !important}
+#products .product-image > img{pointer-events:none}
+#products .product-image::before,
+#products .product-image::after{pointer-events:none !important}
