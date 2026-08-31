@@ -66,12 +66,22 @@
     }).format(d);
   }
 
+  function safeHttpUrl(v){
+    try{
+      const u=new URL(String(v||"").trim(),location.origin);
+      return (u.protocol==="https:"||u.protocol==="http:") ? u.href : "";
+    }catch(e){
+      return "";
+    }
+  }
+
   function renderOrderResult(o){
     const items=Array.isArray(o.items)?o.items:[];
     const s=o.shipping||{};
     const shipped=o.orderStatus==="SHIPPED"||o.orderStatus==="DELIVERED";
     const delivered=o.orderStatus==="DELIVERED";
-    const tracking=s.trackingUrl ? `<a class="shipping-track" href="${esc(s.trackingUrl)}" target="_blank" rel="noopener noreferrer">TRACK SHIPMENT ↗</a>` : "";
+    const trackingUrl=safeHttpUrl(s.trackingUrl);
+    const tracking=trackingUrl ? `<a class="shipping-track" href="${esc(trackingUrl)}" target="_blank" rel="noopener noreferrer">TRACK SHIPMENT ↗</a>` : "";
     const shippingBlock=shipped ? `
       <div class="shipping-card">
         <div class="shipping-card-head"><span>SHIPPING</span><strong>${delivered?"DELIVERED":"ON THE WAY"}</strong></div>

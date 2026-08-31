@@ -9,12 +9,17 @@ dotenv.config();
 const app = express();
 const port = Number(process.env.PORT || 8787);
 
+const frontendOrigin = String(process.env.FRONTEND_ORIGIN || "").trim();
 app.use(cors({
-  origin: process.env.FRONTEND_ORIGIN || true,
+  origin: frontendOrigin || false,
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type"]
 }));
 app.use(express.json());
+
+function publicServerError(res, status=500){
+  return res.status(status).json({error:"Unable to complete the request."});
+}
 
 const catalog = new Map([
   ["mountain-lake-print", { id:"mountain-lake-print", title:"Mountain Lake", price:1999, stock:8 }],
@@ -77,7 +82,8 @@ app.post("/api/orders", async (req, res) => {
       keyId: process.env.RAZORPAY_KEY_ID
     });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error("Order creation failed:", error);
+    return publicServerError(res,400);
   }
 });
 
@@ -97,7 +103,12 @@ app.post("/api/payment/webhook", express.raw({ type: "application/json" }), (req
       .update(req.body)
       .digest("hex");
 
-    if (!signature || !crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected))) {
+    const signatureBuffer = Buffer.from(String(signature || ""), "utf8");
+    const expectedBuffer = Buffer.from(expected, "utf8");
+    if (
+      signatureBuffer.length !== expectedBuffer.length ||
+      !crypto.timingSafeEqual(signatureBuffer, expectedBuffer)
+    ) {
       return res.status(401).send("Invalid signature");
     }
 
