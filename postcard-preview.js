@@ -86,25 +86,32 @@
       type:type==="Postcard" ? "Postcard" : "Fine Art Print"
     };
 
-    const btn=$("#formatPreviewBtn");
-    if(!btn) return;
+    // Inject the preview control only after the existing product modal has
+    // opened. This leaves the core product-card click handler untouched.
+    const addButton=$("#addProduct");
+    if(!addButton) return;
 
-    btn.textContent="";
-    const label=document.createTextNode(
-      currentProduct.type==="Postcard" ? "SEE IT AS A POSTCARD " : "SEE IT AS FINE ART "
-    );
-    const arrow=document.createElement("span");
-    arrow.textContent="↗";
-    btn.append(label,arrow);
-
-    if(!btn.dataset.formatPreviewBound){
-      btn.dataset.formatPreviewBound="1";
+    let btn=$("#formatPreviewBtn");
+    if(!btn){
+      btn=document.createElement("button");
+      btn.id="formatPreviewBtn";
+      btn.type="button";
+      btn.className="format-preview-trigger";
+      addButton.insertAdjacentElement("afterend",btn);
       btn.addEventListener("click",e=>{
         e.preventDefault();
         e.stopPropagation();
         openPreview();
       });
     }
+
+    btn.textContent=currentProduct.type==="Postcard"
+      ? "SEE IT AS A POSTCARD "
+      : "SEE IT AS FINE ART ";
+
+    const arrow=document.createElement("span");
+    arrow.textContent="↗";
+    btn.appendChild(arrow);
   }
 
   function openPreview(){
