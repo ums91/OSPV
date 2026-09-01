@@ -129,6 +129,75 @@
     return data;
   }
 
+  function renderOrderAnimation(items){
+    const inner=$("#orderSuccess .order-success-inner");
+    if(!inner)return;
+
+    let host=$("#orderAnimation");
+    if(!host){
+      host=document.createElement("div");
+      host.id="orderAnimation";
+      host.className="order-animation";
+      const copy=$("#successCopy");
+      if(copy) inner.insertBefore(host,copy);
+      else inner.prepend(host);
+    }
+
+    const safeItems=Array.isArray(items)?items.filter(x=>x&&x.product):[];
+    const first=safeItems[0]?.product;
+    const hasPostcard=safeItems.some(x=>String(x.product?.type||"").toLowerCase().includes("postcard"));
+    const allFineArt=safeItems.length>0&&safeItems.every(x=>String(x.product?.type||"").toLowerCase().includes("fine art"));
+    const mode=hasPostcard&&!allFineArt?"postcard":allFineArt?"fineart":"collection";
+    const title=mode==="postcard"?"POSTCARD OBJECT":mode==="fineart"?"FINE ART OBJECT":"COLLECTED OBJECT";
+    const count=safeItems.reduce((n,x)=>n+(Number(x.qty)||1),0);
+    const image=first?.image||"";
+    const itemTitle=first?.title||"YOUR FRAME";
+    const imageHtml=image
+      ? `<img src="${esc(image)}" alt="" draggable="false">`
+      : `<span class="order-animation-placeholder">FRAME</span>`;
+
+    host.innerHTML=`
+      <div class="oa-head">
+        <span class="oa-kicker">OBJECT / ${mode.toUpperCase()}</span>
+        <span class="oa-count">${count} ${count===1?"FRAME":"FRAMES"}</span>
+      </div>
+      <div class="oa-stage oa-${mode}">
+        <div class="oa-corner oa-corner-tl"></div>
+        <div class="oa-corner oa-corner-tr"></div>
+        <div class="oa-corner oa-corner-bl"></div>
+        <div class="oa-corner oa-corner-br"></div>
+        <div class="oa-object">
+          ${mode==="postcard"?`
+            <div class="oa-postcard">
+              <div class="oa-card-face oa-card-front">${imageHtml}<span class="oa-card-code">FRAME / 01</span></div>
+              <div class="oa-card-face oa-card-back"><span class="oa-stamp">UMS91<br>ARCHIVE</span><span class="oa-lines"></span><span class="oa-back-mark">POSTCARD / ${count}</span></div>
+            </div>`:
+            mode==="fineart"?`
+            <div class="oa-print">
+              <div class="oa-mat">${imageHtml}</div>
+              <span class="oa-print-code">FINE ART / ${count}</span>
+            </div>`:
+            `<div class="oa-collection">
+              <div class="oa-mini oa-mini-a">${imageHtml}</div>
+              <div class="oa-mini oa-mini-b"></div>
+              <div class="oa-mini oa-mini-c"></div>
+            </div>`}
+        </div>
+        <div class="oa-path"></div>
+        <div class="oa-object-label">${title}<b>${esc(itemTitle)}</b></div>
+      </div>
+      <div class="oa-steps">
+        <div class="oa-step is-active"><i>01</i><span>FRAME LOGGED</span></div>
+        <div class="oa-step"><i>02</i><span>OBJECT PREPARED</span></div>
+        <div class="oa-step"><i>03</i><span>ORDER PLACED</span></div>
+      </div>`;
+
+    // Restart the animation every time a new order is submitted.
+    host.classList.remove("oa-run");
+    void host.offsetWidth;
+    host.classList.add("oa-run");
+  }
+
   async function createOrder(){
     const name=$("#checkoutName")?.value.trim();
     const email=$("#checkoutEmail")?.value.trim();
@@ -151,6 +220,13 @@
       })});
       const data=await response.json();
       if(!data.success)throw new Error(data.error||"Unable to create order.");
+
+      const submittedItems=window.store.items.map(x=>({
+        id:x.id,
+        qty:x.qty,
+        product:x.product
+      }));
+      renderOrderAnimation(submittedItems);
 
       window.store._items=[];
       window.store.save();
