@@ -129,53 +129,6 @@
     return data;
   }
 
-  function renderOrderAnimation(items){
-    const inner=$("#orderSuccess .order-success-inner");
-    if(!inner)return;
-
-    let host=$("#orderAnimation");
-    if(!host){
-      host=document.createElement("div");
-      host.id="orderAnimation";
-      host.className="order-animation";
-      inner.appendChild(host);
-    }
-
-    const safeItems=Array.isArray(items)?items.filter(x=>x&&x.product):[];
-    const count=safeItems.reduce((n,x)=>n+(Number(x.qty)||1),0);
-
-    host.innerHTML=`
-      <div class="oa-stack-header">
-        <span>WHAT YOU ORDERED</span>
-        <b>${count} ${count===1?"ITEM":"ITEMS"}</b>
-      </div>
-      <div class="oa-stack">
-        ${safeItems.map((x,i)=>{
-          const p=x.product||{};
-          const image=String(p.image||"").replace(/"/g,"&quot;");
-          const title=esc(p.title||"Untitled");
-          const type=esc(p.type||"Edition");
-          const qty=Math.max(1,Number(x.qty)||1);
-          return `<div class="oa-stack-card" style="--oa-i:${i}">
-            <div class="oa-thumb">${image?`<img src="${image}" alt="" draggable="false">`:""}</div>
-            <div class="oa-card-info">
-              <strong>${title}</strong>
-              <span>${type}</span>
-              <small>QTY ${qty}</small>
-            </div>
-            <em>${String(i+1).padStart(2,"0")}</em>
-          </div>`;
-        }).join("")}
-      </div>
-      <div class="oa-stack-foot">
-        <span>ORDER OBJECT</span><i></i><b>CONFIRMED</b>
-      </div>`;
-
-    host.classList.remove("oa-run");
-    void host.offsetWidth;
-    host.classList.add("oa-run");
-  }
-
   async function createOrder(){
     const name=$("#checkoutName")?.value.trim();
     const email=$("#checkoutEmail")?.value.trim();
@@ -198,13 +151,6 @@
       })});
       const data=await response.json();
       if(!data.success)throw new Error(data.error||"Unable to create order.");
-
-      const submittedItems=window.store.items.map(x=>({
-        id:x.id,
-        qty:x.qty,
-        product:x.product
-      }));
-      renderOrderAnimation(submittedItems);
 
       window.store._items=[];
       window.store.save();
