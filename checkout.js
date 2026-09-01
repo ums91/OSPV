@@ -144,16 +144,17 @@
     }
 
     const safeItems=Array.isArray(items)?items.filter(x=>x&&x.product):[];
-    const first=safeItems[0]?.product;
-    const hasPostcard=safeItems.some(x=>String(x.product?.type||"").toLowerCase().includes("postcard"));
-    const allFineArt=safeItems.length>0&&safeItems.every(x=>String(x.product?.type||"").toLowerCase().includes("fine art"));
+    const first=safeItems[0]?.product||{};
+    const types=safeItems.map(x=>String(x.product?.type||"").toLowerCase());
+    const hasPostcard=types.some(t=>t.includes("postcard"));
+    const allFineArt=safeItems.length>0&&types.every(t=>t.includes("fine art"));
     const mode=hasPostcard&&!allFineArt?"postcard":allFineArt?"fineart":"collection";
-    const title=mode==="postcard"?"POSTCARD OBJECT":mode==="fineart"?"FINE ART OBJECT":"COLLECTED OBJECT";
     const count=safeItems.reduce((n,x)=>n+(Number(x.qty)||1),0);
-    const image=first?.image||"";
-    const itemTitle=first?.title||"YOUR FRAME";
+    const image=String(first.image||"").replace(/"/g,"&quot;");
+    const title=esc(first.title||"YOUR FRAME");
+
     const imageHtml=image
-      ? `<img src="${esc(image)}" alt="" draggable="false">`
+      ? `<img src="${image}" alt="" draggable="false">`
       : `<span class="order-animation-placeholder">FRAME</span>`;
 
     host.innerHTML=`
@@ -169,8 +170,15 @@
         <div class="oa-object">
           ${mode==="postcard"?`
             <div class="oa-postcard">
-              <div class="oa-card-face oa-card-front">${imageHtml}<span class="oa-card-code">FRAME / 01</span></div>
-              <div class="oa-card-face oa-card-back"><span class="oa-stamp">UMS91<br>ARCHIVE</span><span class="oa-lines"></span><span class="oa-back-mark">POSTCARD / ${count}</span></div>
+              <div class="oa-card-face oa-card-front">
+                ${imageHtml}
+                <span class="oa-card-code">FRAME / 01</span>
+              </div>
+              <div class="oa-card-face oa-card-back">
+                <span class="oa-stamp">UMS91<br>ARCHIVE</span>
+                <span class="oa-lines"></span>
+                <span class="oa-back-mark">POSTCARD / ${count}</span>
+              </div>
             </div>`:
             mode==="fineart"?`
             <div class="oa-print">
@@ -184,7 +192,7 @@
             </div>`}
         </div>
         <div class="oa-path"></div>
-        <div class="oa-object-label">${title}<b>${esc(itemTitle)}</b></div>
+        <div class="oa-object-label">OBJECT / <b>${title}</b></div>
       </div>
       <div class="oa-steps">
         <div class="oa-step is-active"><i>01</i><span>FRAME LOGGED</span></div>
@@ -192,7 +200,6 @@
         <div class="oa-step"><i>03</i><span>ORDER PLACED</span></div>
       </div>`;
 
-    // Restart the animation every time a new order is submitted.
     host.classList.remove("oa-run");
     void host.offsetWidth;
     host.classList.add("oa-run");
