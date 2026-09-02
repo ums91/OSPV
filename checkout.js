@@ -69,6 +69,44 @@
     }).format(d);
   }
 
+  const PRODUCT_TYPES={
+    "mountain-lake":"Fine Art Print","valley-light":"Postcard","winter-lake":"Fine Art Print","summer-field":"Postcard",
+    "mountain-stream":"Fine Art Print","quiet-water":"Postcard","winter-birds":"Fine Art Print","garden-pool":"Postcard",
+    "garden-path":"Fine Art Print","orchard-garden":"Postcard","rose-study":"Fine Art Print","river-stone":"Fine Art Print",
+    "cloud-valley":"Fine Art Print","courtyard-morning":"Postcard","quiet-interior":"Fine Art Print","courtyard-blue-sky":"Fine Art Print",
+    "lake-ridge":"Fine Art Print","winter-water":"Fine Art Print","snow-lake":"Fine Art Print"
+  };
+
+  function orderFormatCopy(items){
+    const list=Array.isArray(items)?items:[];
+    let postcardQty=0,printQty=0;
+    list.forEach(item=>{
+      const type=String(item?.type||PRODUCT_TYPES[item?.id]||"").toLowerCase();
+      const qty=Math.max(1,Number(item?.quantity)||1);
+      if(type.includes("postcard")) postcardQty+=qty;
+      else if(type.includes("fine art")||type.includes("print")) printQty+=qty;
+    });
+    if(postcardQty>0 && printQty>0){
+      return {
+        label:"POSTCARDS + FINE ART PRINTS",
+        sentence:`Your ${postcardQty===1?"postcard":"postcards"} and ${printQty===1?"fine art print":"fine art prints"} are now reserved. We'll carefully prepare both pieces for their journey.`
+      };
+    }
+    if(postcardQty>0){
+      return {
+        label:postcardQty===1?"POSTCARD":"POSTCARDS",
+        sentence:`Your ${postcardQty===1?"postcard":"postcards"} ${postcardQty===1?"is":"are"} now reserved. We'll carefully prepare ${postcardQty===1?"it":"them"} for ${postcardQty===1?"its":"their"} journey.`
+      };
+    }
+    if(printQty>0){
+      return {
+        label:printQty===1?"FINE ART PRINT":"FINE ART PRINTS",
+        sentence:`Your ${printQty===1?"fine art print":"fine art prints"} ${printQty===1?"is":"are"} now reserved. We'll carefully prepare ${printQty===1?"it":"them"} for ${printQty===1?"its":"their"} journey.`
+      };
+    }
+    return {label:"POSTCARD / FINE ART PRINT",sentence:"Your piece is now reserved. We'll carefully prepare it for its journey."};
+  }
+
   function safeHttpUrl(v){
     try{
       const u=new URL(String(v||"").trim(),location.origin);
@@ -76,6 +114,23 @@
     }catch(e){
       return "";
     }
+  }
+
+  function receiptDate(v){
+    const d=v?new Date(v):new Date();
+    if(Number.isNaN(d.getTime()))return String(v||"");
+    return new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}).format(d).toUpperCase();
+  }
+
+  function receiptStampClass(label){
+    const key=String(label||"").toUpperCase();
+    if(key==="PAYMENT ISSUE")return "issue";
+    if(key==="VERIFYING PAYMENT")return "verifying";
+    if(key==="PAID")return "paid";
+    if(key==="PROCESSING")return "processing";
+    if(key==="SHIPPED")return "shipped";
+    if(key==="DELIVERED")return "delivered";
+    return "verifying";
   }
 
   function renderOrderResult(o){
@@ -95,18 +150,25 @@
         ${s.note?`<p class="shipping-note">${esc(s.note)}</p>`:""}
         ${tracking}
       </div>` : "";
-    return `<h3>Order ${esc(o.orderId)}</h3>
-      <div class="order-progress" aria-label="Order progress">
-        <span class="is-done">ORDER</span>
-        <span class="${o.orderStatus==="PROCESSING"||shipped||delivered?"is-done":""}">PROCESSING</span>
-        <span class="${shipped?"is-done":""}">SHIPPED</span>
-        <span class="${delivered?"is-done":""}">DELIVERED</span>
+    const copy=orderFormatCopy(items);
+    const status=receiptStatus(o);
+    const lines=items.map(i=>`<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${Number(i.quantity)||1} × ${money(i.price)}</small></div><span>${money((Number(i.quantity)||1)*Number(i.price))}</span></div>`).join("");
+    const receipt=`<div class="receipt-meta"><span>ORDER</span><strong>${esc(o.orderId||"")}</strong><span>DATE</span><strong>${esc(receiptDate(o.date))}</strong></div>
+      <div class="receipt-rule dashed"></div>
+      <div class="receipt-items">${lines}</div>
+      <div class="receipt-rule"></div>
+      <div class="receipt-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>
+      <div class="receipt-stamp-wrap"><div class="receipt-stamp stamp-${receiptStampClass(status[0])}">${esc(status[0])}</div></div>
+      <div class="receipt-barcode" aria-hidden="true"></div>
+      <div class="receipt-code">${esc(o.orderId||"UMS91")}</div>`;
+    return `<div class="status-receipt-scene" aria-live="polite">
+      <div class="receipt-printer status-receipt-printer" aria-hidden="true">
+        <div class="printer-top"><div class="printer-message"><strong>ORDER STATUS</strong><span>THANK YOU FOR YOUR ORDER</span><span>${esc(copy.sentence)}</span></div></div><div class="printer-slot"></div>
       </div>
-      <div class="order-status-row"><span>PAYMENT</span><strong>${esc(o.paymentStatus)}</strong></div>
-      <div class="order-status-row"><span>ORDER</span><strong>${esc(o.orderStatus)}</strong></div>
-      ${shippingBlock}
-      <div class="order-result-items">${items.map(i=>`<div class="order-result-item"><span>${esc(i.title)} × ${Number(i.quantity)||1}</span><strong>${money(i.price*(Number(i.quantity)||1))}</strong></div>`).join("")}</div>
-      <div class="commerce-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>`;
+      <div class="status-receipt-feed"><article class="order-receipt status-order-receipt">${receipt}</article></div>
+    </div>
+    <p class="status-receipt-copy">${esc(copy.sentence)}</p>
+    ${shippingBlock}`;
   }
 
   function showMessage(el,text,isError=false){
@@ -161,6 +223,9 @@
     $("#receiptTotal").textContent=money(total);
     $("#receiptCode").textContent=String(orderId||"UMS91").replace(/[^A-Z0-9-]/gi,"").toUpperCase();
     setReceiptStamp({paymentStatus:"PENDING",orderStatus:"PAYMENT VERIFICATION"},false);
+    const copy=orderFormatCopy(items);
+    const copyEl=$("#receiptProductCopy");
+    if(copyEl)copyEl.textContent=copy.sentence;
   }
 
   function stopReceiptPolling(){if(receiptPollTimer){clearTimeout(receiptPollTimer);receiptPollTimer=null;}}
@@ -213,11 +278,13 @@
       panel("#checkoutPanel",false);
 
       fillReceipt(data.orderId,receiptItems,receiptTotal);
-      receiptPrivateOrder={orderId:data.orderId,token:data.token||""};
       const link=new URL(SITE);
       link.searchParams.set("orderId",data.orderId);
       link.searchParams.set("token",data.token || "");
       const statusLink=data.orderUrl || link.toString();
+      let privateToken=data.token||"";
+      try{privateToken=new URL(statusLink,location.href).searchParams.get("token")||privateToken;}catch(e){}
+      receiptPrivateOrder={orderId:data.orderId,token:privateToken};
       const successLink=$("#successOrderLink");
       if(successLink){
         successLink.dataset.statusUrl=statusLink;
