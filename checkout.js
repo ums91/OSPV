@@ -152,7 +152,10 @@
       </div>` : "";
     const copy=orderFormatCopy(items);
     const status=receiptStatus(o);
-    const lines=items.map(i=>`<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${Number(i.quantity)||1} × ${money(i.price)}</small></div><span>${money((Number(i.quantity)||1)*Number(i.price))}</span></div>`).join("");
+    const lines=items.map(i=>{
+      const type=String(i?.type||PRODUCT_TYPES[i?.id]||"").trim();
+      return `<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${Number(i.quantity)||1} × ${money(i.price)}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(i.quantity)||1)*Number(i.price))}</span></div>`;
+    }).join("");
     const receipt=`<div class="receipt-meta"><span>ORDER</span><strong>${esc(o.orderId||"")}</strong><span>DATE</span><strong>${esc(receiptDate(o.date))}</strong></div>
       <div class="receipt-rule dashed"></div>
       <div class="receipt-items">${lines}</div>
@@ -160,7 +163,8 @@
       <div class="receipt-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>
       <div class="receipt-stamp-wrap"><div class="receipt-stamp stamp-${receiptStampClass(status[0])}">${esc(status[0])}</div></div>
       <div class="receipt-barcode" aria-hidden="true"></div>
-      <div class="receipt-code">${esc(o.orderId||"UMS91")}</div>`;
+      <div class="receipt-code">${esc(o.orderId||"UMS91")}</div>
+      <div class="receipt-brand">UMS91 · VISUAL JOURNAL</div>`;
     return `<div class="status-receipt-scene" aria-live="polite">
       <div class="receipt-printer status-receipt-printer" aria-hidden="true">
         <div class="printer-top"><div class="printer-message"><strong>ORDER STATUS</strong><span>THANK YOU FOR YOUR ORDER</span><span>${esc(copy.sentence)}</span></div></div><div class="printer-slot"></div>
@@ -205,6 +209,24 @@
     return ["VERIFYING PAYMENT","Your payment has been submitted and is being verified."];
   }
 
+  function shippingHtml(o){
+    const s=o?.shipping||{};
+    const shipped=o?.orderStatus==="SHIPPED"||o?.orderStatus==="DELIVERED";
+    const delivered=o?.orderStatus==="DELIVERED";
+    if(!shipped)return "";
+    const trackingUrl=safeHttpUrl(s.trackingUrl);
+    const tracking=trackingUrl ? `<a class="shipping-track" href="${esc(trackingUrl)}" target="_blank" rel="noopener noreferrer">TRACK SHIPMENT ↗</a>` : "";
+    return `<div class="shipping-card receipt-shipping-card">
+      <div class="shipping-card-head"><span>SHIPPING</span><strong>${delivered?"DELIVERED":"ON THE WAY"}</strong></div>
+      ${s.carrier?`<div class="shipping-row"><span>CARRIER</span><strong>${esc(s.carrier)}</strong></div>`:""}
+      ${s.trackingNumber?`<div class="shipping-row"><span>TRACKING</span><strong>${esc(s.trackingNumber)}</strong></div>`:""}
+      ${s.shippedDate?`<div class="shipping-row"><span>SHIPPED</span><strong>${esc(displayShippingDate(s.shippedDate))}</strong></div>`:""}
+      ${s.deliveredDate?`<div class="shipping-row"><span>DELIVERED</span><strong>${esc(displayShippingDate(s.deliveredDate))}</strong></div>`:""}
+      ${s.note?`<p class="shipping-note">${esc(s.note)}</p>`:""}
+      ${tracking}
+    </div>`;
+  }
+
   function setReceiptStamp(o,animate=true){
     const stamp=$("#receiptStatusStamp"), copy=$("#successCopy");
     if(!stamp)return;
@@ -214,12 +236,17 @@
       if(animate){stamp.classList.remove("stamp-hit");void stamp.offsetWidth;stamp.classList.add("stamp-hit");}
     }
     if(copy)copy.textContent=message;
+    const shippingEl=$("#receiptShipping");
+    if(shippingEl)shippingEl.innerHTML=shippingHtml(o);
   }
 
   function fillReceipt(orderId,items,total){
     $("#successOrderId").textContent=orderId||"—";
     $("#receiptDate").textContent=new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}).format(new Date()).toUpperCase();
-    $("#receiptItems").innerHTML=(items||[]).map(x=>`<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${money(x.price)}</small></div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`).join("");
+    $("#receiptItems").innerHTML=(items||[]).map(x=>{
+      const type=String(x?.type||PRODUCT_TYPES[x?.id]||"").trim();
+      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${money(x.price)}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`;
+    }).join("");
     $("#receiptTotal").textContent=money(total);
     $("#receiptCode").textContent=String(orderId||"UMS91").replace(/[^A-Z0-9-]/gi,"").toUpperCase();
     setReceiptStamp({paymentStatus:"PENDING",orderStatus:"PAYMENT VERIFICATION"},false);
@@ -256,7 +283,7 @@
     if(!/^[A-Za-z0-9][A-Za-z0-9\s-]{2,11}$/.test(postalCode)){showMessage(msg,"Please enter a valid PIN / postal code.",true);return;}
     if(!window.store?.count){showMessage(msg,"Your bag is empty. Add an edition before ordering.",true);return;}
 
-    const receiptItems=window.store.items.map(x=>({title:x.product.title,price:Number(x.product.price)||0,quantity:Number(x.qty)||1}));
+    const receiptItems=window.store.items.map(x=>({id:x.id,title:x.product.title,price:Number(x.product.price)||0,quantity:Number(x.qty)||1,type:PRODUCT_TYPES[x.id]||""}));
     const receiptTotal=window.store.total;
     const button=$("#submitUpiOrder");
     button.disabled=true;
