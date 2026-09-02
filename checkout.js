@@ -133,10 +133,15 @@
     const name=$("#checkoutName")?.value.trim();
     const email=$("#checkoutEmail")?.value.trim();
     const phone=$("#checkoutPhone")?.value.trim();
-    const address=$("#checkoutAddress")?.value.trim();
+    const addressLine1=$("#checkoutAddress")?.value.trim();
+    const city=$("#checkoutCity")?.value.trim();
+    const state=$("#checkoutState")?.value.trim();
+    const postalCode=$("#checkoutPostalCode")?.value.trim();
+    const country=$("#checkoutCountry")?.value.trim();
     const msg=$("#checkoutMessage");
-    if(!name||!email||!phone||!address){showMessage(msg,"Please complete your details before submitting your payment confirmation.",true);return;}
+    if(!name||!email||!phone||!addressLine1||!city||!state||!postalCode||!country){showMessage(msg,"Please complete all required shipping address fields.",true);return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showMessage(msg,"Please enter a valid email address.",true);return;}
+    if(!/^[A-Za-z0-9][A-Za-z0-9\s-]{2,11}$/.test(postalCode)){showMessage(msg,"Please enter a valid PIN / postal code.",true);return;}
     if(!window.store?.count){showMessage(msg,"Your bag is empty. Add an edition before ordering.",true);return;}
 
     const button=$("#submitUpiOrder");
@@ -146,7 +151,8 @@
 
     try{
       const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
-        action:"createOrder",customerName:name,email,phone,address,
+        action:"createOrder",customerName:name,email,phone,
+        address:[addressLine1,city,state,postalCode,country].join(", "),
         items:window.store.items.map(x=>({id:x.id,quantity:x.qty}))
       })});
       const data=await response.json();

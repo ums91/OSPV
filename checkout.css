@@ -181,3 +181,9 @@
 .shipping-note{margin:14px 0 0;font-size:.78rem;line-height:1.6;opacity:.72}
 .shipping-track{display:inline-block;margin-top:17px;color:#10110f;font-size:.65rem;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid rgba(16,17,15,.35);padding-bottom:4px}
 @media(max-width:640px){.order-progress span{font-size:.48rem;letter-spacing:.08em}.shipping-card{padding:17px}.shipping-row{align-items:flex-start;flex-direction:column;gap:4px}.shipping-row strong{text-align:left}}
+
+/* V3.3 checkout: structured mandatory shipping address fields */
+.commerce-form-grid label{display:flex;flex-direction:column;gap:8px;}
+.commerce-form-grid input,.commerce-form-grid textarea{width:100%;box-sizing:border-box;}
+.commerce-form-grid textarea{resize:vertical;min-height:64px;}
+@media(max-width:640px){.commerce-form-grid{grid-template-columns:1fr;} }

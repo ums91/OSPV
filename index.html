@@ -181,7 +181,11 @@
           <label>NAME<input id="checkoutName" autocomplete="name" required></label>
           <label>EMAIL<input id="checkoutEmail" type="email" autocomplete="email" required></label>
           <label>PHONE<input id="checkoutPhone" type="tel" autocomplete="tel" required></label>
-          <label class="full">SHIPPING ADDRESS<textarea id="checkoutAddress" autocomplete="street-address" rows="3" required></textarea></label>
+          <label class="full">ADDRESS LINE 1<textarea id="checkoutAddress" autocomplete="street-address" rows="2" required></textarea></label>
+          <label>CITY / TOWN<input id="checkoutCity" autocomplete="address-level2" required></label>
+          <label>STATE / PROVINCE<input id="checkoutState" autocomplete="address-level1" required></label>
+          <label>PIN / POSTAL CODE<input id="checkoutPostalCode" inputmode="numeric" autocomplete="postal-code" required></label>
+          <label>COUNTRY<input id="checkoutCountry" autocomplete="country-name" value="India" required></label>
         </div>
       </div>
     </section>
