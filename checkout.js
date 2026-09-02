@@ -4,6 +4,8 @@
   const SITE = "https://ums91.github.io/OSPV/";
   const $ = (s,r=document)=>r.querySelector(s);
   const money = n => new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0);
+  let receiptPollTimer=null;
+  let receiptPrivateOrder=null;
 
   function panel(id, open=true){
     const el=$(id); if(!el)return;
@@ -29,6 +31,7 @@
   }
 
   function openOrderStatus(){
+    stopReceiptPolling();
     document.querySelector("#cartDrawer")?.classList.remove("open");
     document.querySelector("#bagBtn")?.setAttribute("aria-expanded","false");
     document.querySelector("#cartDrawer")?.setAttribute("aria-hidden","true");
@@ -129,6 +132,50 @@
     return data;
   }
 
+  function receiptStatus(o){
+    const payment=String(o?.paymentStatus||"").trim().toUpperCase();
+    const order=String(o?.orderStatus||"").trim().toUpperCase();
+    if(order==="DELIVERED") return ["DELIVERED","Your frame has been delivered."];
+    if(order==="SHIPPED") return ["SHIPPED","Your frame is on the way."];
+    if(order==="PROCESSING") return ["PROCESSING","Your frame is being prepared for dispatch."];
+    if(payment==="CONFIRMED" || order==="CONFIRMED") return ["PAID","Payment verified. Your order is confirmed."];
+    if(payment==="NOT RECEIVED" || order==="PAYMENT ISSUE") return ["PAYMENT ISSUE","We could not verify the payment. Please contact us before paying again."];
+    return ["VERIFYING PAYMENT","Your payment has been submitted and is being verified."];
+  }
+
+  function setReceiptStamp(o,animate=true){
+    const stamp=$("#receiptStatusStamp"), copy=$("#successCopy");
+    if(!stamp)return;
+    const [label,message]=receiptStatus(o);
+    if(stamp.textContent!==label){
+      stamp.textContent=label;
+      if(animate){stamp.classList.remove("stamp-hit");void stamp.offsetWidth;stamp.classList.add("stamp-hit");}
+    }
+    if(copy)copy.textContent=message;
+  }
+
+  function fillReceipt(orderId,items,total){
+    $("#successOrderId").textContent=orderId||"—";
+    $("#receiptDate").textContent=new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}).format(new Date()).toUpperCase();
+    $("#receiptItems").innerHTML=(items||[]).map(x=>`<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${money(x.price)}</small></div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`).join("");
+    $("#receiptTotal").textContent=money(total);
+    $("#receiptCode").textContent=String(orderId||"UMS91").replace(/[^A-Z0-9-]/gi,"").toUpperCase();
+    setReceiptStamp({paymentStatus:"PENDING",orderStatus:"PAYMENT VERIFICATION"},false);
+  }
+
+  function stopReceiptPolling(){if(receiptPollTimer){clearTimeout(receiptPollTimer);receiptPollTimer=null;}}
+  function pollReceiptStatus(){
+    stopReceiptPolling();
+    if(!receiptPrivateOrder?.orderId||!receiptPrivateOrder?.token)return;
+    const tick=()=>{
+      if(!$("#orderSuccess")?.classList.contains("open")){stopReceiptPolling();return;}
+      postJson({action:"getOrder",orderId:receiptPrivateOrder.orderId,token:receiptPrivateOrder.token})
+        .then(data=>{setReceiptStamp(data.order,true);const status=receiptStatus(data.order)[0];if(status!=="DELIVERED"&&status!=="PAYMENT ISSUE")receiptPollTimer=setTimeout(tick,8000);})
+        .catch(()=>{receiptPollTimer=setTimeout(tick,12000);});
+    };
+    receiptPollTimer=setTimeout(tick,5000);
+  }
+
   async function createOrder(){
     const name=$("#checkoutName")?.value.trim();
     const email=$("#checkoutEmail")?.value.trim();
@@ -144,6 +191,8 @@
     if(!/^[A-Za-z0-9][A-Za-z0-9\s-]{2,11}$/.test(postalCode)){showMessage(msg,"Please enter a valid PIN / postal code.",true);return;}
     if(!window.store?.count){showMessage(msg,"Your bag is empty. Add an edition before ordering.",true);return;}
 
+    const receiptItems=window.store.items.map(x=>({title:x.product.title,price:Number(x.product.price)||0,quantity:Number(x.qty)||1}));
+    const receiptTotal=window.store.total;
     const button=$("#submitUpiOrder");
     button.disabled=true;
     button.innerHTML="SUBMITTING…";
@@ -163,7 +212,8 @@
       if(typeof window.renderCart==="function")window.renderCart();
       panel("#checkoutPanel",false);
 
-      $("#successOrderId").textContent=data.orderId;
+      fillReceipt(data.orderId,receiptItems,receiptTotal);
+      receiptPrivateOrder={orderId:data.orderId,token:data.token||""};
       const link=new URL(SITE);
       link.searchParams.set("orderId",data.orderId);
       link.searchParams.set("token",data.token || "");
@@ -174,6 +224,7 @@
         successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
       }
       panel("#orderSuccess",true);
+      pollReceiptStatus();
     }catch(err){
       console.error(err);
       showMessage(msg,(err.message||"Unable to submit order.").toUpperCase(),true);
@@ -248,7 +299,7 @@
     $("#submitUpiOrder")?.addEventListener("click",createOrder);
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
-    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>panel("#"+b.dataset.close,false)));
+    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>{if(b.dataset.close==="orderSuccess")stopReceiptPolling();panel("#"+b.dataset.close,false);}));
     $("#successBack")?.addEventListener("click",()=>{
       panel("#orderSuccess",false);
       const journal=document.querySelector("#journal");

@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="editorial-redesign.css?v=20260823-final">
 <link rel="stylesheet" href="edition-flip.css">
-<link rel="stylesheet" href="checkout.css">
+<link rel="stylesheet" href="checkout.css?v=20260902-receipt-stamp-1">
 <link rel="stylesheet" href="desktop-menu-fix.css?v=20260826-desktop-menu-1">
 <link rel="stylesheet" href="ums91-about-final.css?v=20260829-final-2">
 </head>
@@ -228,15 +228,27 @@
     <section id="orderResult" class="order-result" hidden></section>
   </div>
 </div>
-<div class="order-success-panel" id="orderSuccess" aria-hidden="true">
-  <div class="order-success-inner">
-    <button class="commerce-close" type="button" data-close="orderSuccess" aria-label="Close">×</button>
-    <span class="eyebrow dark">ORDER RECEIVED</span>
-    <h2>Thank you for<br><em>collecting a frame.</em></h2>
-    <p id="successCopy">Your order has been submitted and is awaiting payment verification.</p>
-    <div class="success-order-id" id="successOrderId"></div>
-    <button id="successOrderLink" class="pill dark-pill" type="button">VIEW ORDER STATUS <span>→</span></button>
-    <button id="successBack" class="under" type="button">BACK TO JOURNAL <span>↗</span></button>
+<div class="order-success-panel receipt-success" id="orderSuccess" aria-hidden="true">
+  <div class="receipt-scene">
+    <button class="commerce-close receipt-close" type="button" data-close="orderSuccess" aria-label="Close">×</button>
+    <div class="receipt-printer" aria-hidden="true"><div class="printer-top"></div><div class="printer-slot"></div></div>
+    <div class="receipt-feed">
+      <article class="order-receipt" id="orderReceipt">
+        <header class="receipt-head"><strong>UMS91</strong><span>VISUAL JOURNAL</span></header>
+        <div class="receipt-rule"></div>
+        <div class="receipt-meta"><span>ORDER</span><strong id="successOrderId">—</strong><span>DATE</span><strong id="receiptDate">—</strong></div>
+        <div class="receipt-rule dashed"></div>
+        <div class="receipt-items" id="receiptItems"></div>
+        <div class="receipt-rule"></div>
+        <div class="receipt-total"><span>TOTAL</span><strong id="receiptTotal">₹0</strong></div>
+        <div class="receipt-stamp-wrap"><div class="receipt-stamp" id="receiptStatusStamp">VERIFYING PAYMENT</div></div>
+        <div class="receipt-barcode" aria-hidden="true"></div>
+        <div class="receipt-code" id="receiptCode">UMS91</div>
+      </article>
+    </div>
+    <p class="receipt-status-copy" id="successCopy">Your payment has been submitted and is being verified.</p>
+    <button id="successOrderLink" class="pill dark-pill receipt-status-button" type="button">VIEW ORDER DETAILS <span>→</span></button>
+    <button id="successBack" class="under receipt-back" type="button">BACK TO JOURNAL <span>↗</span></button>
   </div>
 </div>
 <div class="drawer" id="cartDrawer" aria-hidden="true"><div class="drawer-head"><span>YOUR BAG <b id="drawerCount">0</b></span><button data-close="cartDrawer" aria-label="Close bag">×</button></div><div class="cart-lines" id="cartLines" aria-live="polite"></div><div class="drawer-total"><div><span>SUBTOTAL</span><strong id="subtotal">₹0</strong></div><button id="checkout" type="button">PROCEED TO ORDER <span>→</span></button><small>Your bag is not an order.
@@ -249,7 +261,7 @@ Your order is created only after you submit your payment confirmation.</small></
 <script type="module" src="script.js?v=20260826-commerce-final-4"></script>
 <script src="editorial-redesign.js?v=20260823-final"></script>
 <script src="edition-flip.js?v=20260829-frame-1-2"></script>
-<script src="checkout.js?v=20260826-commerce-final-4"></script>
+<script src="checkout.js?v=20260902-receipt-stamp-1"></script>
 <script src="ums91-about-final.js?v=20260829-final-1"></script>
 </body>
 </html>

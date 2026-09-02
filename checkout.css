@@ -187,3 +187,29 @@
 .commerce-form-grid input,.commerce-form-grid textarea{width:100%;box-sizing:border-box;}
 .commerce-form-grid textarea{resize:vertical;min-height:64px;}
 @media(max-width:640px){.commerce-form-grid{grid-template-columns:1fr;} }
+
+
+/* V3.4 — receipt-printer confirmation + live ink stamp */
+.receipt-success{background:#e9e5dc;overflow:auto;}
+.receipt-scene{position:relative;width:min(440px,calc(100% - 34px));margin:0 auto;padding:70px 0 56px;text-align:center;}
+.receipt-close{position:fixed!important;right:clamp(18px,4vw,48px)!important;top:clamp(18px,4vw,40px)!important;z-index:8;}
+.receipt-printer{position:relative;z-index:4;width:min(370px,92%);height:88px;margin:0 auto -18px;filter:drop-shadow(0 15px 18px rgba(16,17,15,.18));}
+.printer-top{position:absolute;inset:0;border-radius:20px 20px 9px 9px;background:linear-gradient(#242522,#0f100e);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -12px 18px rgba(0,0,0,.32);}
+.printer-top:before{content:"UMS91";position:absolute;left:22px;top:20px;color:#d8d3c8;font-size:.58rem;letter-spacing:.22em;opacity:.72;}
+.printer-slot{position:absolute;z-index:2;left:8%;right:8%;bottom:8px;height:10px;border-radius:8px;background:#050605;box-shadow:inset 0 2px 5px #000,0 1px 0 rgba(255,255,255,.1);}
+.receipt-feed{position:relative;z-index:3;width:min(318px,80%);margin:0 auto;overflow:hidden;padding-bottom:14px;}
+.order-receipt{position:relative;box-sizing:border-box;width:100%;min-height:430px;padding:38px 28px 34px;background:#f8f4e9;color:#171713;text-align:left;box-shadow:0 14px 30px rgba(16,17,15,.16);font-family:"DM Sans",Arial,sans-serif;transform:translateY(-108%);}
+.order-success-panel.open .order-receipt{animation:receiptFeed 1.65s cubic-bezier(.22,.68,.25,1) .18s forwards;}
+.order-receipt:after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:10px;background:linear-gradient(135deg,#f8f4e9 7px,transparent 0) 0 0/14px 10px repeat-x;}
+@keyframes receiptFeed{0%{transform:translateY(-108%)}58%{transform:translateY(-24%)}82%{transform:translateY(-4%)}100%{transform:translateY(0)}}
+.receipt-head{text-align:center;display:grid;gap:4px}.receipt-head strong{font-family:"Playfair Display",serif;font-size:1.65rem;letter-spacing:.08em}.receipt-head span{font-size:.54rem;letter-spacing:.27em;}
+.receipt-rule{height:1px;background:rgba(23,23,19,.55);margin:22px 0}.receipt-rule.dashed{background:repeating-linear-gradient(90deg,rgba(23,23,19,.48) 0 5px,transparent 5px 9px)}
+.receipt-meta{display:grid;grid-template-columns:auto 1fr;gap:7px 16px;align-items:baseline}.receipt-meta span{font-size:.52rem;letter-spacing:.15em;opacity:.55}.receipt-meta strong{text-align:right;font-size:.63rem;letter-spacing:.08em;word-break:break-word}
+.receipt-items{display:grid;gap:13px}.receipt-line{display:grid;grid-template-columns:1fr auto;gap:16px}.receipt-line div{display:grid;gap:3px}.receipt-line strong,.receipt-line>span{font-size:.68rem}.receipt-line small{font-size:.53rem;letter-spacing:.08em;opacity:.55}
+.receipt-total{display:flex;justify-content:space-between;align-items:baseline}.receipt-total span{font-size:.62rem;letter-spacing:.18em}.receipt-total strong{font-size:1rem}
+.receipt-stamp-wrap{display:flex;justify-content:center;min-height:84px;margin:24px 0 16px;align-items:center}.receipt-stamp{display:inline-flex;align-items:center;justify-content:center;max-width:230px;min-height:45px;padding:6px 13px;border:3px double currentColor;border-radius:4px;color:#7d2f27;font:800 .83rem/1.05 "DM Sans",Arial,sans-serif;letter-spacing:.11em;text-align:center;text-transform:uppercase;transform:rotate(-6deg) scale(1);opacity:.82;mix-blend-mode:multiply;box-shadow:inset 0 0 0 1px currentColor;text-shadow:.4px .4px 0 currentColor;}
+.receipt-stamp.stamp-hit{animation:stampHit .42s cubic-bezier(.2,.85,.25,1)}@keyframes stampHit{0%{opacity:0;transform:rotate(-6deg) scale(1.7)}55%{opacity:.92;transform:rotate(-6deg) scale(.92)}100%{opacity:.82;transform:rotate(-6deg) scale(1)}}
+.receipt-barcode{width:74%;height:38px;margin:0 auto;background:repeating-linear-gradient(90deg,#171713 0 2px,transparent 2px 4px,#171713 4px 5px,transparent 5px 8px,#171713 8px 11px,transparent 11px 13px);opacity:.82}.receipt-code{text-align:center;margin-top:7px;font-size:.48rem;letter-spacing:.24em;opacity:.6}
+.receipt-status-copy{max-width:330px!important;margin:26px auto 20px!important;text-align:center;font-size:.78rem;line-height:1.6!important;opacity:.68!important}.receipt-status-button{width:min(318px,80%)!important;margin:0 auto}.receipt-back{margin:20px auto 0!important;color:#10110f!important;font:inherit;font-size:.62rem!important;letter-spacing:.12em!important;}
+@media(max-width:600px){.receipt-scene{padding-top:62px}.receipt-printer{height:74px}.receipt-feed{width:84%}.order-receipt{padding:32px 22px 30px;min-height:405px}.receipt-stamp{font-size:.72rem}.receipt-status-button{width:84%!important}}
+@media(prefers-reduced-motion:reduce){.order-success-panel.open .order-receipt{animation:none;transform:none}.receipt-stamp.stamp-hit{animation:none}}
