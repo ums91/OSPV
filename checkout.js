@@ -178,11 +178,20 @@
   function scrollToReceiptPrinter(){
     const printer=document.querySelector("#orderResult .status-receipt-printer");
     if(!printer)return;
+    // The result is inserted dynamically, so scroll only after the browser
+    // has laid out the receipt. scrollIntoView is more reliable here than
+    // calculating document offsets, especially on mobile and when the page
+    // has a sticky/header offset.
     requestAnimationFrame(()=>{
-      setTimeout(()=>{
-        const top=printer.getBoundingClientRect().top+window.pageYOffset-12;
-        window.scrollTo({top:Math.max(0,top),behavior:"smooth"});
-      },80);
+      requestAnimationFrame(()=>{
+        printer.scrollIntoView({behavior:"smooth",block:"start",inline:"nearest"});
+        // Leave the black printer section just below the top edge.
+        setTimeout(()=>{
+          const offset=18;
+          try{ window.scrollBy({top:-offset,left:0,behavior:"smooth"}); }
+          catch(e){ window.scrollBy(0,-offset); }
+        },450);
+      });
     });
   }
 
