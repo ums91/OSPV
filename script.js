@@ -40,7 +40,7 @@ function productCard(p,i){
         <div class="product-overlay-meta"><span>${esc(p.type)}</span><strong>${money(p.price)}</strong></div>
         <div class="product-overlay-actions">
           <button type="button" class="quick-view" data-view="${esc(p.id)}">VIEW <span>↗</span></button>
-          <button type="button" class="card-add" data-add="${esc(p.id)}">ADD TO BAG <span>+</span></button>
+          <button type="button" class="card-add cart-animated" data-add="${esc(p.id)}" aria-label="Add ${esc(p.title)} to bag"><span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/></svg></span><span class="cart-label">ADD TO BAG</span></button>
         </div>
       </div>
     </div>
@@ -76,6 +76,7 @@ function openProduct(id){
   $("#mEdition").textContent=current.edition;
   $("#mSize").textContent=current.size;
   $("#mPrice").textContent=money(current.price);
+  decorateCartButton($("#addProduct"));
   close("#cartDrawer");
   const modal=$("#productModal");
   modal.classList.add("open");
@@ -104,12 +105,25 @@ function renderCart(newId=null){
 }
 function confirmCart(button){
   if(button){
-    const old=button.dataset.originalLabel||button.innerHTML;
-    button.dataset.originalLabel=old;
-    button.innerHTML="ADDED TO BAG <span>✓</span>";
-    button.classList.add("is-added");
-    clearTimeout(button.__cartTimer);
-    button.__cartTimer=setTimeout(()=>{button.innerHTML=old;button.classList.remove("is-added")},1800);
+    if(button.classList.contains("cart-animated")){
+      button.classList.remove("is-added","is-animating");
+      void button.offsetWidth;
+      button.classList.add("is-animating");
+      clearTimeout(button.__cartTimer);
+      button.__cartTimer=setTimeout(()=>{
+        button.classList.remove("is-animating");
+        button.classList.add("is-added");
+      },850);
+      clearTimeout(button.__cartResetTimer);
+      button.__cartResetTimer=setTimeout(()=>button.classList.remove("is-added"),2200);
+    }else{
+      const old=button.dataset.originalLabel||button.innerHTML;
+      button.dataset.originalLabel=old;
+      button.innerHTML="ADDED TO BAG <span>✓</span>";
+      button.classList.add("is-added");
+      clearTimeout(button.__cartTimer);
+      button.__cartTimer=setTimeout(()=>{button.innerHTML=old;button.classList.remove("is-added")},1800);
+    }
   }
   const bag=$("#bagBtn"), count=$("#bagCount");
   [bag,count].forEach(el=>{if(!el)return;el.classList.remove("bag-pulse");void el.offsetWidth;el.classList.add("bag-pulse")});
@@ -156,6 +170,12 @@ function openBagDrawer(){
   renderCart();
   syncOverlayLock();
 }
+function decorateCartButton(button){
+  if(!button || button.classList.contains("cart-animated"))return;
+  button.classList.add("cart-animated");
+  button.innerHTML='<span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/></svg></span><span class="cart-label">ADD TO BAG</span>';
+}
+
 function addToCart(id,button=null){
   closeCommerceForBag();
   if(!store){toast("CART IS STILL LOADING");return false;}
@@ -217,6 +237,7 @@ async function init(){
   }
   window.store=store;
   window.renderCart=renderCart;
+  decorateCartButton($("#addProduct"));
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
   // Single commerce event delegation. BAG and ADD TO BAG are intentionally

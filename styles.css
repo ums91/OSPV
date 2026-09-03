@@ -36,3 +36,56 @@
   .search-result strong{font-size:18px}
   .search-results, #searchResults{max-height:52vh}
 }
+
+
+/* UMS91 — Add to Bag interaction inspired by the supplied cart animation. */
+.cart-animated{
+  position:relative;
+  overflow:hidden;
+  justify-content:center;
+  gap:18px;
+  min-height:52px;
+  isolation:isolate;
+}
+.cart-animated .cart-icon{
+  width:44px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  flex:0 0 44px;
+  transform:translateX(0);
+  transition:transform .55s cubic-bezier(.22,.8,.25,1),opacity .35s ease;
+}
+.cart-animated .cart-icon svg{width:40px;height:34px;overflow:visible;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.cart-animated .cart-label{
+  white-space:nowrap;
+  letter-spacing:.17em;
+  transition:transform .55s cubic-bezier(.22,.8,.25,1),opacity .35s ease;
+}
+.cart-animated.is-animating .cart-icon{animation:cartTravel .85s cubic-bezier(.22,.8,.25,1) forwards;}
+.cart-animated.is-animating .cart-label{animation:cartLabelShift .85s cubic-bezier(.22,.8,.25,1) forwards;}
+.cart-animated.is-added .cart-icon{transform:translateX(0) scale(.88);}
+.cart-animated.is-added .cart-label::after{content:"✓";font-size:15px;margin-left:10px;vertical-align:-1px;}
+@keyframes cartTravel{
+  0%{transform:translateX(0) rotate(0deg) scale(1);opacity:1;}
+  45%{transform:translateX(145%) rotate(-7deg) scale(.94);opacity:1;}
+  68%{transform:translateX(190%) rotate(4deg) scale(.82);opacity:.15;}
+  100%{transform:translateX(0) rotate(0deg) scale(.88);opacity:1;}
+}
+@keyframes cartLabelShift{
+  0%{transform:translateX(0);opacity:1;}
+  45%{transform:translateX(-16px);opacity:.92;}
+  68%{transform:translateX(-24px);opacity:.15;}
+  100%{transform:translateX(0);opacity:1;}
+}
+/* Card buttons need to remain usable over the product image. */
+.product-overlay-actions .cart-animated{min-width:170px;}
+/* Modal button keeps the same interaction without changing its existing pill treatment. */
+#addProduct.cart-animated{min-width:220px;}
+@media(max-width:600px){
+  .cart-animated{gap:12px;min-height:50px;}
+  .product-overlay-actions .cart-animated{min-width:150px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .cart-animated .cart-icon,.cart-animated .cart-label{animation:none!important;transition:none!important;}
+}
