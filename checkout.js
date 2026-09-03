@@ -175,6 +175,17 @@
     ${shippingBlock}`;
   }
 
+  function scrollToReceiptPrinter(){
+    const printer=document.querySelector("#orderResult .status-receipt-printer");
+    if(!printer)return;
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{
+        const top=printer.getBoundingClientRect().top+window.pageYOffset-12;
+        window.scrollTo({top:Math.max(0,top),behavior:"smooth"});
+      },80);
+    });
+  }
+
   function showMessage(el,text,isError=false){
     if(!el)return;
     el.textContent=text;
@@ -344,9 +355,7 @@
       showMessage(msg,"");
       // After VIEW ORDER, bring the receipt/status details gently into view.
       // Keep a little of the lookup area visible so the transition feels intentional.
-      requestAnimationFrame(()=>{
-        setTimeout(()=>result.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"}),80);
-      });
+      scrollToReceiptPrinter();
     }catch(err){showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);}
   }
 
@@ -378,6 +387,7 @@
         result.innerHTML=renderOrderResult(o);
         result.hidden=false;
         showMessage(msg,"");
+        scrollToReceiptPrinter();
       })
       .catch(err=>showMessage(msg,(err.message||"Unable to load order.").toUpperCase(),true));
   }
