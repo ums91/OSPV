@@ -40,7 +40,7 @@ function productCard(p,i){
         <div class="product-overlay-meta"><span>${esc(p.type)}</span><strong>${money(p.price)}</strong></div>
         <div class="product-overlay-actions">
           <button type="button" class="quick-view" data-view="${esc(p.id)}">VIEW <span>↗</span></button>
-          <button type="button" class="card-add cart-animated" data-add="${esc(p.id)}" aria-label="Add ${esc(p.title)} to bag"><span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO BAG</span></button>
+          <button type="button" class="card-add" data-add="${esc(p.id)}">ADD TO BAG <span>+</span></button>
         </div>
       </div>
     </div>
@@ -76,7 +76,6 @@ function openProduct(id){
   $("#mEdition").textContent=current.edition;
   $("#mSize").textContent=current.size;
   $("#mPrice").textContent=money(current.price);
-  decorateCartButton($("#addProduct"));
   close("#cartDrawer");
   const modal=$("#productModal");
   modal.classList.add("open");
@@ -105,38 +104,16 @@ function renderCart(newId=null){
 }
 function confirmCart(button){
   if(button){
-    if(button.classList.contains("cart-animated")){
-      button.classList.remove("is-added","is-animating");
-      const travel=Math.max(100,Math.round(button.getBoundingClientRect().width-70));
-      button.style.setProperty("--cart-travel",`${travel}px`);
-      void button.offsetWidth;
-      button.classList.add("is-animating");
-      clearTimeout(button.__cartTimer);
-      clearTimeout(button.__cartResetTimer);
-      button.__cartTimer=setTimeout(()=>{
-        button.classList.remove("is-animating");
-        button.classList.add("is-added");
-      },2000);
-      button.__cartResetTimer=setTimeout(()=>{
-        button.classList.remove("is-added");
-      },2250);
-    }else{
-      const old=button.dataset.originalLabel||button.innerHTML;
-      button.dataset.originalLabel=old;
-      button.innerHTML="ADDED TO BAG <span>✓</span>";
-      button.classList.add("is-added");
-      clearTimeout(button.__cartTimer);
-      button.__cartTimer=setTimeout(()=>{button.innerHTML=old;button.classList.remove("is-added")},1800);
-    }
+    const old=button.dataset.originalLabel||button.innerHTML;
+    button.dataset.originalLabel=old;
+    button.innerHTML="ADDED TO BAG <span>✓</span>";
+    button.classList.add("is-added");
+    clearTimeout(button.__cartTimer);
+    button.__cartTimer=setTimeout(()=>{button.innerHTML=old;button.classList.remove("is-added")},1800);
   }
   const bag=$("#bagBtn"), count=$("#bagCount");
   [bag,count].forEach(el=>{if(!el)return;el.classList.remove("bag-pulse");void el.offsetWidth;el.classList.add("bag-pulse")});
   toast("1 ITEM ADDED TO CART");
-  // Keep the add interaction visible before opening the bag drawer.
-  if(button?.classList.contains("cart-animated") && button?.id!=="addProduct"){
-    clearTimeout(button.__openBagTimer);
-    button.__openBagTimer=setTimeout(()=>openBagDrawer(),2050);
-  }
 }
 function closeCommerceForBag(){
   ["#checkoutPanel","#orderStatusPanel","#orderSuccess"].forEach(id=>{
@@ -179,12 +156,6 @@ function openBagDrawer(){
   renderCart();
   syncOverlayLock();
 }
-function decorateCartButton(button){
-  if(!button || button.classList.contains("cart-animated"))return;
-  button.classList.add("cart-animated");
-  button.innerHTML='<span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO BAG</span>';
-}
-
 function addToCart(id,button=null){
   closeCommerceForBag();
   if(!store){toast("CART IS STILL LOADING");return false;}
@@ -193,21 +164,12 @@ function addToCart(id,button=null){
   try{
     const added=store.add(id);
     renderCart(added.id);
-    const fromProductModal=button?.id==="addProduct";
-    if(!fromProductModal){
-      $("#productModal")?.classList.remove("open");
-      $("#productModal")?.setAttribute("aria-hidden","true");
-    }
+    $("#productModal")?.classList.remove("open");
+    $("#productModal")?.setAttribute("aria-hidden","true");
+    const drawer=$("#cartDrawer");
+    if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false")}
     syncOverlayLock();
     confirmCart(button);
-    if(fromProductModal){
-      clearTimeout(button.__closeModalTimer);
-      button.__closeModalTimer=setTimeout(()=>{
-        $("#productModal")?.classList.remove("open");
-        $("#productModal")?.setAttribute("aria-hidden","true");
-        openBagDrawer();
-      },2050);
-    }
     return true;
   }catch(error){
     console.error("OMER cart add failed:",error);
@@ -255,7 +217,6 @@ async function init(){
   }
   window.store=store;
   window.renderCart=renderCart;
-  decorateCartButton($("#addProduct"));
   window.OMER_CLOSE=close;
   window.OMER_TOAST=toast;
   // Single commerce event delegation. BAG and ADD TO BAG are intentionally
