@@ -342,6 +342,11 @@
       result.innerHTML=renderOrderResult(o);
       result.hidden=false;
       showMessage(msg,"");
+      // After VIEW ORDER, bring the receipt/status details gently into view.
+      // Keep a little of the lookup area visible so the transition feels intentional.
+      requestAnimationFrame(()=>{
+        setTimeout(()=>result.scrollIntoView({behavior:"smooth",block:"center",inline:"nearest"}),80);
+      });
     }catch(err){showMessage(msg,(err.message||"Unable to find order.").toUpperCase(),true);}
   }
 
