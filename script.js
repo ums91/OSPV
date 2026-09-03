@@ -40,7 +40,7 @@ function productCard(p,i){
         <div class="product-overlay-meta"><span>${esc(p.type)}</span><strong>${money(p.price)}</strong></div>
         <div class="product-overlay-actions">
           <button type="button" class="quick-view" data-view="${esc(p.id)}">VIEW <span>↗</span></button>
-          <button type="button" class="card-add cart-animated" data-add="${esc(p.id)}" aria-label="Add ${esc(p.title)} to bag"><span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO CART</span></button>
+          <button type="button" class="card-add cart-animated" data-add="${esc(p.id)}" aria-label="Add ${esc(p.title)} to bag"><span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO BAG</span></button>
         </div>
       </div>
     </div>
@@ -182,7 +182,7 @@ function openBagDrawer(){
 function decorateCartButton(button){
   if(!button || button.classList.contains("cart-animated"))return;
   button.classList.add("cart-animated");
-  button.innerHTML='<span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO CART</span>';
+  button.innerHTML='<span class="cart-icon" aria-hidden="true"><svg viewBox="0 0 52 44" focusable="false"><path class="cart-body" d="M4 5h7l5 24h25l6-18H13"/><circle cx="21" cy="37" r="3"/><circle cx="39" cy="37" r="3"/><path class="cart-basket" d="M17 16h26l-2.5 10H19.2z"/><path class="cart-handle" d="M17 16h-3"/></svg><span class="cart-item" aria-hidden="true"></span></span><span class="cart-label">ADD TO BAG</span>';
 }
 
 function addToCart(id,button=null){
