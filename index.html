@@ -165,7 +165,33 @@
 </section>
 <section class="contact" id="contact"><p class="eyebrow">STAY IN THE JOURNAL</p><h2>Occasional notes.<br><em>No noise.</em></h2><p class="newsletter-note">New photographs, journal stories and edition releases — occasionally, and only when there is something worth sharing.</p><form id="newsletter" novalidate><input type="email" name="email" autocomplete="email" placeholder="Your email address" aria-label="Your email address" required><button type="submit">SUBSCRIBE →</button></form><p class="newsletter-message" id="newsletterMessage" role="status" aria-live="polite"></p></section>
 </main>
-<footer><span>© 2026 UMS91 VISUAL JOURNAL</span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer">@UMS91 INSTAGRAM ↗</a><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#home">BACK TO TOP ↑</a></footer>
+<footer><span>© 2026 UMS91 VISUAL JOURNAL</span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer">@UMS91 INSTAGRAM ↗</a><span>PHOTOGRAPHY · PRINT · PAPER</span><a href="#home">BACK TO TOP ↑</a>
+<!-- UMS91 • VISITORS WORLDWIDE -->
+<div class="ums91-visitors">
+  <div class="ums91-visitors-label"><span>VISITORS WORLDWIDE</span><span class="ums91-visitors-line"></span></div>
+  <div class="ums91-visitors-content">
+    <div class="ums91-visitors-text">
+      <div class="ums91-visitors-title">From around the world.</div>
+      <div class="ums91-visitors-subtitle">A quiet record of where UMS91 is being discovered.</div>
+    </div>
+    <a class="ums91-flag-link" href="https://info.flagcounter.com/1skQ" target="_blank" rel="noopener noreferrer" aria-label="See UMS91 visitors by country">
+      <img src="https://s01.flagcounter.com/count2/1skQ/bg_111111/txt_E8E2D8/border_333333/columns_8/maxflags_50/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="" loading="lazy">
+    </a>
+  </div>
+</div>
+<style>
+.ums91-visitors{width:100%;box-sizing:border-box;padding:48px 42px 52px;background:#111;color:#e8e2d8;border-top:1px solid rgba(255,255,255,.08)}
+.ums91-visitors-label{display:flex;align-items:center;gap:18px;margin-bottom:30px;font-size:9px;letter-spacing:.22em;font-weight:500;color:#918d85}
+.ums91-visitors-line{height:1px;width:70px;background:rgba(255,255,255,.15)}
+.ums91-visitors-content{display:flex;align-items:center;justify-content:space-between;gap:40px;max-width:1180px;margin:0 auto}
+.ums91-visitors-title{font-size:clamp(22px,3vw,34px);font-weight:400;letter-spacing:-.025em;line-height:1.15;color:#e8e2d8}
+.ums91-visitors-subtitle{margin-top:10px;max-width:420px;font-size:11px;line-height:1.7;letter-spacing:.04em;color:#77746e}
+.ums91-flag-link{display:block;flex-shrink:0;padding:10px;background:#111;border:1px solid rgba(255,255,255,.10);transition:border-color .25s ease,transform .25s ease}
+.ums91-flag-link:hover{border-color:rgba(201,161,99,.45);transform:translateY(-2px)}
+.ums91-flag-link img{display:block;max-width:100%;height:auto;border:0}
+@media(max-width:700px){.ums91-visitors{padding:38px 24px 42px}.ums91-visitors-label{margin-bottom:24px}.ums91-visitors-content{display:block}.ums91-visitors-title{font-size:25px}.ums91-visitors-subtitle{margin-top:9px;font-size:10px;max-width:320px}.ums91-flag-link{display:inline-block;margin-top:25px;max-width:100%}}
+</style>
+</footer>
 
 <div class="commerce-panel" id="checkoutPanel" aria-hidden="true">
   <div class="commerce-head">
@@ -265,192 +291,5 @@ Your order is created only after you submit your payment confirmation.</small></
 <script src="edition-flip.js?v=20260829-frame-1-2"></script>
 <script src="checkout.js?v=20260902-receipt-stamp-2"></script>
 <script src="ums91-about-final.js?v=20260829-final-1"></script>
-<!-- UMS91 • Around the World -->
-<section class="ums91-world-counter" aria-label="UMS91 visitors around the world">
-
-  <div class="ums91-world-counter__inner">
-
-    <div class="ums91-world-counter__eyebrow">
-      UMS91 • AROUND THE WORLD
-    </div>
-
-    <h2 class="ums91-world-counter__title">
-      From where you’re visiting
-    </h2>
-
-    <p class="ums91-world-counter__sub">
-      A small glimpse of the places discovering UMS91.
-    </p>
-
-    <div class="ums91-world-counter__card">
-      <a
-        href="https://info.flagcounter.com/1skQ"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="View UMS91 Flag Counter"
-      >
-        <img
-          src="https://s01.flagcounter.com/count2/1skQ/bg_FFFFFF/txt_000000/border_CCCCCC/columns_8/maxflags_50/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
-          alt="Countries visiting UMS91"
-          loading="lazy"
-        >
-      </a>
-    </div>
-
-  </div>
-
-</section>
-
-
-<style>
-/* =========================================
-   UMS91 — AROUND THE WORLD
-   ========================================= */
-
-.ums91-world-counter {
-  --ums91-bg: #111111;
-  --ums91-panel: #171717;
-  --ums91-text: #f3f1ec;
-  --ums91-muted: #a7a39b;
-  --ums91-line: rgba(255,255,255,0.13);
-
-  width: 100%;
-  box-sizing: border-box;
-
-  padding: clamp(54px, 7vw, 92px) 20px;
-
-  background: var(--ums91-bg);
-  color: var(--ums91-text);
-
-  text-align: center;
-}
-
-
-.ums91-world-counter__inner {
-  max-width: 1080px;
-  margin: 0 auto;
-}
-
-
-/* Small heading */
-.ums91-world-counter__eyebrow {
-  margin-bottom: 10px;
-
-  font-size: 10px;
-  line-height: 1.4;
-
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-
-  color: var(--ums91-muted);
-
-  font-weight: 600;
-}
-
-
-/* Main heading */
-.ums91-world-counter__title {
-  margin: 0;
-
-  font-size: clamp(24px, 4vw, 38px);
-  line-height: 1.15;
-
-  font-weight: 500;
-
-  letter-spacing: -0.025em;
-}
-
-
-/* Description */
-.ums91-world-counter__sub {
-  margin: 12px auto 28px;
-
-  max-width: 560px;
-
-  color: var(--ums91-muted);
-
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-
-/* Flag Counter container */
-.ums91-world-counter__card {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  max-width: 100%;
-
-  padding: 14px;
-
-  background: var(--ums91-panel);
-
-  border: 1px solid var(--ums91-line);
-
-  border-radius: 2px;
-
-  box-shadow: 0 14px 40px rgba(0,0,0,0.18);
-
-  overflow: hidden;
-
-  transition:
-    border-color 0.25s ease,
-    transform 0.25s ease;
-}
-
-
-/* Hover */
-.ums91-world-counter__card:hover {
-  border-color: rgba(255,255,255,0.28);
-
-  transform: translateY(-2px);
-}
-
-
-/* Link */
-.ums91-world-counter__card a {
-  display: block;
-  max-width: 100%;
-}
-
-
-/* Flag Counter image */
-.ums91-world-counter__card img {
-  display: block;
-
-  width: auto;
-  max-width: 100%;
-  height: auto;
-
-  border: 0;
-}
-
-
-/* =========================================
-   MOBILE
-   ========================================= */
-
-@media (max-width: 640px) {
-
-  .ums91-world-counter {
-    padding: 48px 14px;
-  }
-
-  .ums91-world-counter__card {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 9px;
-  }
-
-  .ums91-world-counter__card img {
-    margin: 0 auto;
-  }
-
-}
-</style> 
 </body>
 </html>
