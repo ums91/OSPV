@@ -169,64 +169,78 @@
 <!-- UMS91 • VISITORS WORLDWIDE -->
 <div class="ums91-visitors">
 
-  <div class="ums91-visitors-label">
-    VISITORS WORLDWIDE
-  </div>
-
-  <div class="ums91-visitors-content">
-
-    <div class="ums91-visitors-copy">
-      <div class="ums91-visitors-title">
-        From around the world.
-      </div>
-
-      <div class="ums91-visitors-subtitle">
-        A quiet record of where UMS91 is being discovered.
-      </div>
+  <div class="ums91-visitors-copy">
+    <div class="ums91-visitors-label">
+      VISITORS WORLDWIDE
     </div>
 
-    <a
-      class="ums91-flag-link"
-      href="https://info.flagcounter.com/1skQ"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="UMS91 visitors worldwide"
+    <div class="ums91-visitors-title">
+      From around the world.
+    </div>
+
+    <div class="ums91-visitors-subtitle">
+      A quiet record of where UMS91 is being discovered.
+    </div>
+  </div>
+
+  <a
+    class="ums91-flag-link"
+    href="https://info.flagcounter.com/1skQ"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="UMS91 visitors worldwide"
+  >
+    <img
+      src="https://s01.flagcounter.com/count2/1skQ/bg_111111/txt_E8E2D8/border_333333/columns_8/maxflags_50/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
+      alt="UMS91 visitors by country"
+      loading="lazy"
     >
-      <img
-        src="https://s01.flagcounter.com/count2/1skQ/bg_111111/txt_E8E2D8/border_333333/columns_8/maxflags_50/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
-        alt="UMS91 visitors by country"
-        loading="lazy"
-      >
-    </a>
+  </a>
 
 </div>
 
 <style>
-/* UMS91 — VISITORS WORLDWIDE
-   New footer row, with copy + flags side by side. */
+/* UMS91 — Visitors Worldwide
+   Own row: text left, Flag Counter right. */
+
+footer {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  column-gap: 28px;
+  row-gap: 0;
+}
 
 .ums91-visitors {
   grid-column: 1 / -1 !important;
 
   width: 100%;
+  min-width: 0;
   box-sizing: border-box;
 
-  margin-top: 28px;
-  padding-top: 24px;
+  margin-top: 24px;
+  padding-top: 20px;
 
   border-top: 1px solid rgba(255,255,255,0.08);
 
-  display: grid !important;
-  grid-template-columns: minmax(120px, .7fr) minmax(220px, 1.4fr) auto;
+  display: flex !important;
   align-items: center;
-  gap: 32px;
+  justify-content: space-between;
+
+  gap: 40px;
 
   color: #e8e2d8;
   text-align: left;
 }
 
+.ums91-visitors-copy {
+  min-width: 0;
+  flex: 1 1 auto;
+  text-align: left;
+}
+
 .ums91-visitors-label {
-  margin: 0;
+  margin: 0 0 5px;
 
   font-size: 9px;
   line-height: 1.3;
@@ -236,22 +250,17 @@
   color: #8c8982;
 }
 
-.ums91-visitors-content {
-  display: block !important;
-  margin: 0;
-}
-
 .ums91-visitors-title {
   font-size: 11px;
   line-height: 1.45;
   letter-spacing: .05em;
+
   color: #b8b4ad;
 }
 
 .ums91-visitors-subtitle {
   margin-top: 2px;
-
-  max-width: 420px;
+  max-width: 440px;
 
   font-size: 9px;
   line-height: 1.5;
@@ -261,15 +270,16 @@
 }
 
 .ums91-flag-link {
+  flex: 0 0 auto;
+
   display: block !important;
 
   width: fit-content;
-  max-width: 100%;
+  max-width: 48%;
 
   margin: 0;
 
   opacity: .85;
-
   text-decoration: none;
 
   transition: opacity .25s ease;
@@ -289,20 +299,35 @@
   border: 0;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 720px) {
+
+  footer {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px;
+    row-gap: 18px;
+  }
 
   .ums91-visitors {
-    grid-template-columns: 1fr;
-    gap: 8px;
+    grid-column: 1 / -1 !important;
 
-    margin-top: 24px;
-    padding-top: 20px;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    margin-top: 18px;
+    padding-top: 18px;
+  }
+
+  .ums91-visitors-copy {
+    flex: 1 1 auto;
   }
 
   .ums91-flag-link {
-    margin-top: 10px;
+    flex: 0 1 auto;
+    max-width: 52%;
   }
-
 }
 </style>
 </footer>
