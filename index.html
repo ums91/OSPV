@@ -201,25 +201,26 @@
 
 <style>
 /* UMS91 — Visitors Worldwide
-   Own row: text left, Flag Counter right. */
+   New footer line, with copy on the left and a compact
+   Flag Counter on the right. */
 
 footer {
-  display: grid !important;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  display: flex !important;
+  flex-wrap: wrap !important;
   align-items: center;
+  justify-content: space-between;
   column-gap: 28px;
   row-gap: 0;
 }
 
 .ums91-visitors {
-  grid-column: 1 / -1 !important;
-
+  flex: 0 0 100% !important;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
 
-  margin-top: 24px;
-  padding-top: 20px;
+  margin-top: 28px;
+  padding-top: 22px;
 
   border-top: 1px solid rgba(255,255,255,0.08);
 
@@ -234,8 +235,8 @@ footer {
 }
 
 .ums91-visitors-copy {
-  min-width: 0;
   flex: 1 1 auto;
+  min-width: 0;
   text-align: left;
 }
 
@@ -274,12 +275,12 @@ footer {
 
   display: block !important;
 
-  width: fit-content;
-  max-width: 48%;
+  width: min(360px, 36vw);
+  max-width: 360px;
 
   margin: 0;
 
-  opacity: .85;
+  opacity: .84;
   text-decoration: none;
 
   transition: opacity .25s ease;
@@ -292,7 +293,7 @@ footer {
 .ums91-flag-link img {
   display: block !important;
 
-  width: auto;
+  width: 100% !important;
   max-width: 100%;
   height: auto;
 
@@ -302,31 +303,20 @@ footer {
 @media (max-width: 720px) {
 
   footer {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 18px;
     row-gap: 18px;
   }
 
   .ums91-visitors {
-    grid-column: 1 / -1 !important;
-
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 18px;
-
     margin-top: 18px;
     padding-top: 18px;
-  }
 
-  .ums91-visitors-copy {
-    flex: 1 1 auto;
+    gap: 18px;
   }
 
   .ums91-flag-link {
-    flex: 0 1 auto;
-    max-width: 52%;
+    width: min(280px, 42vw);
+    max-width: 280px;
   }
 }
 </style>

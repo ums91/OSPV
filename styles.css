@@ -38,24 +38,14 @@
 }
 
 
-/* UMS91 Flag Counter — second footer row */
+/* UMS91 Flag Counter — dedicated second footer row */
 footer{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
+  display:flex;
+  flex-wrap:wrap;
   align-items:center;
-  column-gap:28px;
-  row-gap:0;
+  justify-content:space-between;
 }
 .ums91-visitors{
-  grid-column:1/-1 !important;
-}
-@media(max-width:720px){
-  footer{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    column-gap:18px;
-    row-gap:18px;
-  }
-  .ums91-visitors{
-    grid-column:1/-1 !important;
-  }
+  flex:0 0 100%;
+  width:100%;
 }
