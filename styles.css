@@ -39,6 +39,7 @@
 
 
 
-/* UMS91 visitor footer structural fallback */
-.ums91-footer-main{width:100%;}
-.ums91-visitors{width:100%;}
+/* UMS91 footer visitor row — structural fallback */
+footer.ums91-footer{width:auto;}
+footer.ums91-footer .ums91-footer-main{width:100%;}
+footer.ums91-footer .ums91-visitors{width:100%;}

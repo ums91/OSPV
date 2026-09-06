@@ -167,7 +167,6 @@
 </main>
 <footer class="ums91-footer">
 
-  <!-- Existing UMS91 footer row -->
   <div class="ums91-footer-main">
     <span>© 2026 UMS91 VISUAL JOURNAL</span>
     <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer">@UMS91 INSTAGRAM ↗</a>
@@ -175,7 +174,6 @@
     <a href="#home">BACK TO TOP ↑</a>
   </div>
 
-  <!-- Visitors: a completely separate row -->
   <div class="ums91-visitors">
     <div class="ums91-visitors-copy">
       <div class="ums91-visitors-label">VISITORS WORLDWIDE</div>
@@ -196,53 +194,70 @@
   </div>
 
   <style>
-    /* =========================================================
-       UMS91 VISITOR COUNTER
-       Row 1 = original footer
-       Row 2 = visitor copy LEFT + counter RIGHT
-       ========================================================= */
+    /*
+      FINAL UMS91 FOOTER LAYOUT
+      Row 1: existing footer links
+      Row 2: visitor text LEFT + Flag Counter RIGHT
+    */
 
     footer.ums91-footer {
-      display: block !important;
-      position: relative !important;
-      box-sizing: border-box !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: flex-start !important;
+      align-items: stretch !important;
+      flex-wrap: nowrap !important;
+
       width: auto !important;
       min-height: 0 !important;
+      height: auto !important;
+
       overflow: visible !important;
+
+      gap: 0 !important;
     }
 
     footer.ums91-footer .ums91-footer-main {
-      display: grid !important;
-      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      order: 1 !important;
+
+      display: flex !important;
+      flex-direction: row !important;
       align-items: center !important;
+      justify-content: space-between !important;
+
       width: 100% !important;
-      min-width: 0 !important;
+      min-height: 24px !important;
       margin: 0 !important;
       padding: 0 !important;
-      column-gap: 28px !important;
+
+      gap: 24px !important;
     }
 
     footer.ums91-footer .ums91-visitors {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) 250px !important;
+      order: 2 !important;
+
+      display: flex !important;
+      flex-direction: row !important;
       align-items: center !important;
+      justify-content: space-between !important;
+
       width: 100% !important;
-      min-width: 0 !important;
+      min-height: 0 !important;
       box-sizing: border-box !important;
 
-      margin: 32px 0 0 !important;
+      margin: 30px 0 0 !important;
       padding: 20px 0 0 !important;
 
       border-top: 1px solid rgba(255,255,255,.08) !important;
 
-      column-gap: 48px !important;
+      gap: 40px !important;
+      text-align: left !important;
     }
 
     footer.ums91-footer .ums91-visitors-copy {
-      grid-column: 1 !important;
+      order: 1 !important;
+      flex: 1 1 auto !important;
       min-width: 0 !important;
       text-align: left !important;
-      justify-self: start !important;
     }
 
     footer.ums91-footer .ums91-visitors-label {
@@ -272,40 +287,51 @@
     }
 
     footer.ums91-footer .ums91-flag-link {
-      grid-column: 2 !important;
-      justify-self: end !important;
+      order: 2 !important;
+      flex: 0 0 250px !important;
+
       display: block !important;
+
       width: 250px !important;
       max-width: 250px !important;
+
       margin: 0 !important;
       padding: 0 !important;
-      opacity: .84 !important;
+
       text-decoration: none !important;
+      opacity: .84 !important;
     }
 
     footer.ums91-footer .ums91-flag-link img {
       display: block !important;
+
       width: 250px !important;
       max-width: 250px !important;
       height: auto !important;
+
       margin: 0 !important;
+      padding: 0 !important;
       border: 0 !important;
     }
 
     @media (max-width: 720px) {
       footer.ums91-footer .ums91-footer-main {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        flex-wrap: wrap !important;
         gap: 16px 18px !important;
       }
 
       footer.ums91-footer .ums91-visitors {
-        grid-template-columns: minmax(0, 1fr) 175px !important;
-        column-gap: 20px !important;
         margin-top: 24px !important;
         padding-top: 18px !important;
+        gap: 20px !important;
       }
 
-      footer.ums91-footer .ums91-flag-link,
+      footer.ums91-footer .ums91-flag-link {
+        flex-basis: 175px !important;
+        width: 175px !important;
+        max-width: 175px !important;
+      }
+
       footer.ums91-footer .ums91-flag-link img {
         width: 175px !important;
         max-width: 175px !important;
@@ -314,16 +340,16 @@
 
     @media (max-width: 520px) {
       footer.ums91-footer .ums91-visitors {
-        grid-template-columns: 1fr !important;
-        row-gap: 12px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
       }
 
       footer.ums91-footer .ums91-flag-link {
-        grid-column: 1 !important;
-        justify-self: start !important;
+        flex-basis: auto !important;
+        width: 220px !important;
+        max-width: 220px !important;
       }
 
-      footer.ums91-footer .ums91-flag-link,
       footer.ums91-footer .ums91-flag-link img {
         width: 220px !important;
         max-width: 220px !important;
