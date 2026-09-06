@@ -37,15 +37,6 @@
   .search-results, #searchResults{max-height:52vh}
 }
 
-
-/* UMS91 Flag Counter — dedicated second footer row */
-footer{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  justify-content:space-between;
-}
-.ums91-visitors{
-  flex:0 0 100%;
-  width:100%;
-}
+/* UMS91 Flag Counter footer — dedicated visitor row */
+.ums91-footer-main{width:100%;}
+.ums91-visitors{width:100%;}
