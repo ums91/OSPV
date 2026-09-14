@@ -317,3 +317,36 @@ html body .sale-announcement {
     max-height: calc(100dvh - 58px) !important;
   }
 }
+
+
+/* UMS91 — DESKTOP BAG UX: use a proper modal scrim behind the drawer.
+   This prevents the fixed header controls (Search / Contact / Order Status)
+   from remaining visually active or appearing to sit on top of the Bag. */
+@supports selector(body:has(#cartDrawer.open)) {
+  body:has(#cartDrawer.open)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2147483640;
+    background: rgba(16,17,15,.28);
+    pointer-events: auto;
+  }
+
+  body:has(#cartDrawer.open) .topbar,
+  body:has(#cartDrawer.open) .sale-announcement {
+    pointer-events: none !important;
+  }
+
+  body:has(#cartDrawer.open) #cartDrawer {
+    pointer-events: auto !important;
+  }
+}
+
+/* On mobile the Bag is intentionally full-width, so no scrim is needed. */
+@media (max-width: 720px) {
+  @supports selector(body:has(#cartDrawer.open)) {
+    body:has(#cartDrawer.open)::before {
+      display: none;
+    }
+  }
+}
