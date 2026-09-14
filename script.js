@@ -344,11 +344,10 @@ async function init(){
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
 
-/* Autumn Chinar leaves: light ambient fall with a settled foreground pile. */
+/* Autumn Chinar leaves: subtle ambient fall. */
 (function initChinarLeaves(){
   const ambient=document.getElementById("chinarAmbient");
-  const pile=document.getElementById("chinarPile");
-  if(!ambient||!pile)return;
+  if(!ambient)return;
   const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const colors=["#a94b2b","#b65b32","#c06a35","#8f3d28","#9f4a2b","#c27a3e","#7f3526"];
   const mobile=window.matchMedia&&window.matchMedia("(max-width:720px)").matches;
@@ -370,22 +369,8 @@ async function init(){
     leaf.style.setProperty("--delay",(-rand(0,18)).toFixed(2)+"s");
     ambient.appendChild(leaf);
   }
-  const pileCount=mobile?13:22;
-  for(let i=0;i<pileCount;i++){
-    const leaf=document.createElement("span");
-    leaf.className="chinar-pile-leaf";
-    leaf.style.setProperty("--left",rand(-1,101).toFixed(1)+"%");
-    leaf.style.setProperty("--bottom",rand(1,mobile?24:38).toFixed(1)+"px");
-    leaf.style.setProperty("--size",rand(mobile?20:24,mobile?34:46).toFixed(1)+"px");
-    leaf.style.setProperty("--rotate",rand(-75,75).toFixed(0)+"deg");
-    leaf.style.setProperty("--scale",rand(.72,1.18).toFixed(2));
-    leaf.style.setProperty("--opacity",rand(.58,.9).toFixed(2));
-    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
-    pile.appendChild(leaf);
-  }
-  if(reduced){ambient.setAttribute("data-motion-disabled","true")}
+  if(reduced)ambient.setAttribute("data-motion-disabled","true");
 })();
-
 init();
 addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;const progress=$(".progress i");if(progress)progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
 if(matchMedia("(pointer:fine)").matches){

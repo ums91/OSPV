@@ -131,15 +131,13 @@ footer .ums91-flag-link img{
 }
 
 /* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
-.chinar-ambient,
-.chinar-pile{
+.chinar-ambient{
   position:absolute;
   inset:0;
   pointer-events:none;
   overflow:hidden;
+  z-index:5;
 }
-.chinar-ambient{z-index:5;}
-.chinar-pile{z-index:6;}
 .chinar-leaf{
   --leaf-size:26px;
   --leaf-color:#b55a32;
@@ -147,9 +145,9 @@ footer .ums91-flag-link img{
   top:-10vh;
   left:0;
   width:var(--leaf-size);
-  height:calc(var(--leaf-size) * .92);
+  height:calc(var(--leaf-size) * 1.02);
   opacity:0;
-  transform-origin:48% 45%;
+  transform-origin:50% 46%;
   will-change:transform,opacity;
   filter:drop-shadow(0 2px 2px rgba(35,20,10,.18));
   animation:chinarFall var(--fall,12s) linear var(--delay,0s) infinite;
@@ -159,17 +157,30 @@ footer .ums91-flag-link img{
   position:absolute;
   inset:0;
   background:var(--leaf-color);
-  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
-  border-radius:40% 45% 42% 46%;
+  /* Distinctive five-lobed Chinar silhouette: broad upper lobes,
+     deep sinuses, pointed central lobe and tapered lower lobes. */
+  clip-path:polygon(
+    50% 0%,
+    57% 24%, 77% 11%,
+    69% 37%, 100% 31%,
+    76% 51%, 94% 67%,
+    66% 62%, 71% 91%,
+    54% 71%, 50% 100%,
+    46% 71%, 29% 91%,
+    34% 62%, 6% 67%,
+    24% 51%, 0% 31%,
+    31% 37%, 23% 11%,
+    43% 24%
+  );
 }
 .chinar-leaf::after{
   content:"";
   position:absolute;
-  left:48%;
-  top:3%;
+  left:49.5%;
+  top:5%;
   width:1px;
-  height:93%;
-  background:rgba(91,49,28,.42);
+  height:91%;
+  background:rgba(83,46,26,.46);
   transform:rotate(var(--vein-tilt,0deg));
   transform-origin:center;
 }
@@ -182,40 +193,12 @@ footer .ums91-flag-link img{
   94%{opacity:var(--opacity,.62)}
   100%{transform:translate3d(var(--drift),112vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
 }
-.chinar-pile::before{
-  content:"";
-  position:absolute;
-  left:-4%;right:-4%;bottom:-8px;height:82px;
-  background:linear-gradient(180deg,rgba(76,37,20,.03),rgba(42,23,13,.22));
-  filter:blur(7px);
-}
-.chinar-pile-leaf{
-  position:absolute;
-  bottom:var(--bottom,10px);
-  left:var(--left,50%);
-  width:var(--size,34px);
-  height:calc(var(--size,34px) * .92);
-  opacity:var(--opacity,.78);
-  transform:translateX(-50%) rotate(var(--rotate,0deg)) scale(var(--scale,1));
-  transform-origin:center;
-  filter:drop-shadow(0 2px 2px rgba(30,15,8,.25));
-}
-.chinar-pile-leaf::before{
-  content:"";position:absolute;inset:0;background:var(--leaf-color,#9d4328);
-  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
-  border-radius:40% 45% 42% 46%;
-}
-.chinar-pile-leaf::after{
-  content:"";position:absolute;left:48%;top:5%;width:1px;height:90%;background:rgba(74,37,22,.42);
-}
 .hero-image img{content-visibility:auto}
 .hero-copy{z-index:8}
 .hero-vignette{z-index:2}
 .hero-page,.hero-scroll{z-index:9}
 @media(max-width:720px){
   .chinar-leaf{--leaf-size:20px}
-  .chinar-pile-leaf{--size:27px}
-  .chinar-pile::before{height:58px}
 }
 @media(prefers-reduced-motion:reduce){
   .chinar-leaf{animation:none;opacity:0!important}
