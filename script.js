@@ -365,7 +365,7 @@ async function init(){
     leaf.style.setProperty("--vein-tilt",rand(-8,8).toFixed(0)+"deg");
     leaf.style.setProperty("--scale",rand(.7,1.18).toFixed(2));
     leaf.style.setProperty("--opacity",rand(.38,.72).toFixed(2));
-    leaf.style.setProperty("--fall",rand(10,18).toFixed(2)+"s");
+    leaf.style.setProperty("--fall",rand(12,20).toFixed(2)+"s");
     leaf.style.setProperty("--delay",(-rand(0,18)).toFixed(2)+"s");
     ambient.appendChild(leaf);
   }

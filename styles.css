@@ -190,8 +190,9 @@ footer .ums91-flag-link img{
   28%{transform:translate3d(calc(var(--drift)*.28),28vh,0) rotate(calc(var(--spin)*.3 + var(--r0,0deg))) scale(var(--scale,1))}
   52%{transform:translate3d(calc(var(--drift)*.62),52vh,0) rotate(calc(var(--spin)*.58 + var(--r0,0deg))) scale(var(--scale,1))}
   76%{transform:translate3d(calc(var(--drift)*.84),76vh,0) rotate(calc(var(--spin)*.82 + var(--r0,0deg))) scale(var(--scale,1))}
-  94%{opacity:var(--opacity,.62)}
-  100%{transform:translate3d(var(--drift),112vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
+  94%{transform:translate3d(calc(var(--drift)*.98),98vh,0) rotate(calc(var(--spin)*.96 + var(--r0,0deg))) scale(var(--scale,1));opacity:var(--opacity,.62)}
+  99%{transform:translate3d(var(--drift),104vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:var(--opacity,.62)}
+  100%{transform:translate3d(var(--drift),110vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
 }
 .hero-image img{content-visibility:auto}
 .hero-copy{z-index:8}
