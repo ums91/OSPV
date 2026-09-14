@@ -275,3 +275,117 @@
     bottom: 25px !important;
   }
 }
+
+/* =========================================================
+   UMS91 — MOBILE CLOSE CONTROLS / STACKING REPAIR
+   Final layer: make both Bag and hamburger close controls
+   independent of font rendering and stacking-context conflicts.
+   ========================================================= */
+@media (max-width:720px){
+  /* The mobile menu sits below the fixed header so the header's
+     hamburger button can remain visible and turn into a close icon. */
+  #mobileMenu.mobile-menu,
+  #mobileMenu.mobile-menu.open{
+    z-index:155 !important;
+  }
+
+  .topbar{
+    z-index:1000 !important;
+  }
+
+  #menuBtn,
+  #menuBtn.is-open{
+    position:relative !important;
+    z-index:1002 !important;
+    width:42px !important;
+    height:42px !important;
+    min-width:42px !important;
+    min-height:42px !important;
+    display:grid !important;
+    place-items:center !important;
+    overflow:visible !important;
+  }
+
+  /* Replace the two hamburger strokes with a guaranteed X when open. */
+  #menuBtn.is-open i{
+    display:none !important;
+  }
+  #menuBtn.is-open::before,
+  #menuBtn.is-open::after{
+    content:"" !important;
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
+    width:18px !important;
+    height:2px !important;
+    margin:0 !important;
+    background:#fff !important;
+    border-radius:2px !important;
+    transform-origin:center !important;
+  }
+  #menuBtn.is-open::before{
+    transform:translate(-50%,-50%) rotate(45deg) !important;
+  }
+  #menuBtn.is-open::after{
+    transform:translate(-50%,-50%) rotate(-45deg) !important;
+  }
+
+  /* The close control inside the Bag gets a drawn X rather than relying
+     on the glyph "×", which can disappear under inherited font rules. */
+  #cartDrawer .drawer-head button[aria-label="Close bag"]{
+    position:absolute !important;
+    top:50% !important;
+    right:8px !important;
+    transform:translateY(-50%) !important;
+    width:52px !important;
+    height:52px !important;
+    min-width:52px !important;
+    min-height:52px !important;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    z-index:2147483647 !important;
+    border:0 !important;
+    background:transparent !important;
+    color:transparent !important;
+    font-size:0 !important;
+    line-height:0 !important;
+    overflow:visible !important;
+  }
+  #cartDrawer .drawer-head button[aria-label="Close bag"]::before,
+  #cartDrawer .drawer-head button[aria-label="Close bag"]::after{
+    content:"" !important;
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
+    width:20px !important;
+    height:2px !important;
+    background:#10110f !important;
+    border-radius:2px !important;
+    transform-origin:center !important;
+  }
+  #cartDrawer .drawer-head button[aria-label="Close bag"]::before{
+    transform:translate(-50%,-50%) rotate(45deg) !important;
+  }
+  #cartDrawer .drawer-head button[aria-label="Close bag"]::after{
+    transform:translate(-50%,-50%) rotate(-45deg) !important;
+  }
+
+  /* Keep the Bag above every header/menu stacking context. */
+  #cartDrawer,
+  #cartDrawer.open{
+    z-index:20000 !important;
+  }
+}
+
+@media (max-width:430px){
+  #menuBtn,
+  #menuBtn.is-open{
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    min-height:40px !important;
+  }
+  #menuBtn.is-open::before,
+  #menuBtn.is-open::after{width:17px !important;}
+}
