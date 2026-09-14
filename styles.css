@@ -328,3 +328,41 @@ footer .ums91-flag-link img{
   .coupon-row{max-width:none}
 }
 @media(max-width:430px){.sale-announcement{height:58px;font-size:6.5px;letter-spacing:.055em}.sale-announcement a{font-size:6.5px}.topbar{top:58px}.coupon-box{margin-top:20px}}
+
+
+/* UMS91 FALL SALE — FINAL STICKY BANNER OVERRIDE */
+html body .sale-announcement{
+  position:fixed !important;
+  top:0 !important;
+  left:142px !important;
+  right:0 !important;
+  width:auto !important;
+  height:34px !important;
+  min-height:34px !important;
+  z-index:9999 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+}
+html body .topbar{top:34px !important;}
+html body .sale-announcement a{pointer-events:auto !important;}
+@media(max-width:1100px){
+  html body .sale-announcement{left:90px !important;}
+  html body .topbar{top:34px !important;}
+}
+@media(max-width:720px){
+  html body .sale-announcement{
+    left:0 !important; right:0 !important; top:0 !important;
+    height:54px !important; min-height:54px !important;
+    padding:7px 12px !important;
+    display:flex !important;
+  }
+  html body .topbar{top:54px !important;}
+}
+@media(max-width:430px){
+  html body .sale-announcement{height:58px !important; min-height:58px !important;}
+  html body .topbar{top:58px !important;}
+}
