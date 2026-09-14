@@ -24,6 +24,10 @@
     document.querySelector("#orderStatusPanel")?.classList.remove("open");
     document.querySelector("#orderSuccess")?.classList.remove("open");
     document.querySelector("#cartDrawer")?.classList.remove("open");
+    // The Bag header reflow is driven by this class. Leaving it behind when
+    // moving from Bag -> Checkout makes the header stay permanently shrunk.
+    document.body.classList.remove("bag-is-open");
+    document.querySelector("#bagBtn")?.setAttribute("aria-expanded","false");
     if(!window.store?.count){
       window.toast?.("YOUR BAG IS EMPTY");
       return;
@@ -441,7 +445,11 @@
     $("#couponCode")?.addEventListener("input",()=>{if(appliedCoupon && $("#couponCode").value.trim().toUpperCase()!==COUPON.code){appliedCoupon="";renderCheckout();}});
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
-    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>{if(b.dataset.close==="orderSuccess")stopReceiptPolling();panel("#"+b.dataset.close,false);}));
+    document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>{
+      if(b.dataset.close==="orderSuccess")stopReceiptPolling();
+      panel("#"+b.dataset.close,false);
+      if(b.dataset.close==="checkoutPanel" || b.dataset.close==="orderStatusPanel" || b.dataset.close==="orderSuccess") document.body.classList.remove("bag-is-open");
+    }));
     $("#successBack")?.addEventListener("click",()=>{
       panel("#orderSuccess",false);
       const journal=document.querySelector("#journal");
