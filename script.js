@@ -27,7 +27,12 @@ const photoDescriptions={
   "courtyard-blue-sky":"A quiet garden courtyard framed by tall trees, crisp winter light and an open blue sky.",
   "lake-ridge":"A broad lake opens toward a layered mountain ridge, with a single boat breaking the still blue water.",
   "winter-water":"A muted winter shoreline rests beside calm water, bare trees and distant houses reflected in the grey-blue surface.",
-  "snow-lake":"A snow-covered lake holds a bare tree and quiet boat against a misty mountain backdrop."
+  "snow-lake":"A snow-covered lake holds a bare tree and quiet boat against a misty mountain backdrop.",
+  "autumn-stillness":"A quiet autumn clearing beneath tall trees, where fallen leaves turn the ground into a field of copper and the old green cabins settle into the season.",
+  "light-after-rain":"Sunlight breaks through a layered sky after rain, stretching long shadows across a quiet field as birds move through the clearing light.",
+  "golden-road":"A still road disappears beneath a canopy of autumn gold, framed by tall trees and the warm hush of a late-season afternoon.",
+  "blossom-walk":"Pink blossoms lean over a quiet walkway, with old brick, ornate lamps and distant mountains creating a delicate meeting of city and spring.",
+  "river-and-ridge":"A clear mountain river moves through a green valley beneath layered forested slopes, with a snow-bright ridge rising quietly in the distance."
 };
 
 function productCard(p,i){

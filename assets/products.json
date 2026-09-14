@@ -149,7 +149,7 @@
     "image": "assets/instagram/15-18524130307032995.webp",
     "stock": 8
   },
-    {
+  {
     "id": "courtyard-blue-sky",
     "title": "Courtyard Blue Sky",
     "type": "Fine Art Print",
@@ -188,5 +188,60 @@
     "size": "16 × 20 in",
     "image": "assets/instagram/19-snow-lake.jpeg",
     "stock": 8
+  },
+  {
+    "id": "autumn-stillness",
+    "title": "Autumn Stillness",
+    "type": "Fine Art Print",
+    "price": 2499,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/20-autumn-stillness.jpg",
+    "stock": 8,
+    "description": "A quiet autumn clearing beneath tall trees, where fallen leaves turn the ground into a field of copper and the old green cabins settle into the season."
+  },
+  {
+    "id": "light-after-rain",
+    "title": "Light After Rain",
+    "type": "Fine Art Print",
+    "price": 2299,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/21-light-after-rain.jpg",
+    "stock": 8,
+    "description": "Sunlight breaks through a layered sky after rain, stretching long shadows across a quiet field as birds move through the clearing light."
+  },
+  {
+    "id": "golden-road",
+    "title": "Golden Road",
+    "type": "Fine Art Print",
+    "price": 2399,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/22-golden-road.jpg",
+    "stock": 8,
+    "description": "A still road disappears beneath a canopy of autumn gold, framed by tall trees and the warm hush of a late-season afternoon."
+  },
+  {
+    "id": "blossom-walk",
+    "title": "Blossom Walk",
+    "type": "Fine Art Print",
+    "price": 2299,
+    "edition": "Signed · Edition of 25",
+    "size": "12 × 16 in",
+    "image": "assets/instagram/23-blossom-walk.jpg",
+    "stock": 8,
+    "description": "Pink blossoms lean over a quiet walkway, with old brick, ornate lamps and distant mountains creating a delicate meeting of city and spring."
+  },
+  {
+    "id": "river-and-ridge",
+    "title": "River & Ridge",
+    "type": "Fine Art Print",
+    "price": 2699,
+    "edition": "Signed · Edition of 20",
+    "size": "16 × 20 in",
+    "image": "assets/instagram/24-river-and-ridge.jpg",
+    "stock": 8,
+    "description": "A clear mountain river moves through a green valley beneath layered forested slopes, with a snow-bright ridge rising quietly in the distance."
   }
 ]
