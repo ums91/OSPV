@@ -130,64 +130,194 @@ footer .ums91-flag-link img{
   }
 }
 
-
-/* ── UMS91 ambient chinar leaves ── */
-.chinar-leaves{
-  position:fixed;
+/* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
+.chinar-ambient,
+.chinar-pile{
+  position:absolute;
   inset:0;
-  z-index:12;
   pointer-events:none;
   overflow:hidden;
-  opacity:0;
-  animation:chinarLayerIn 1.4s ease 0.6s forwards;
 }
+.chinar-ambient{z-index:5;}
+.chinar-pile{z-index:6;}
 .chinar-leaf{
+  --leaf-size:26px;
+  --leaf-color:#b55a32;
   position:absolute;
-  top:-9vh;
-  left:var(--leaf-left);
+  top:-10vh;
+  left:0;
   width:var(--leaf-size);
   height:calc(var(--leaf-size) * .92);
-  opacity:var(--leaf-opacity);
-  transform:translate3d(0,-10vh,0) rotate(var(--leaf-rotate));
-  animation:chinarLeafFall var(--leaf-duration) linear var(--leaf-delay) infinite;
+  opacity:0;
+  transform-origin:48% 45%;
   will-change:transform,opacity;
-  filter:drop-shadow(0 2px 2px rgba(39,29,18,.10));
+  filter:drop-shadow(0 2px 2px rgba(35,20,10,.18));
+  animation:chinarFall var(--fall,12s) linear var(--delay,0s) infinite;
 }
 .chinar-leaf::before{
   content:"";
   position:absolute;
   inset:0;
   background:var(--leaf-color);
-  clip-path:polygon(50% 0%,59% 17%,78% 8%,75% 29%,96% 28%,81% 43%,100% 55%,78% 58%,86% 79%,64% 68%,54% 94%,46% 69%,23% 84%,30% 60%,4% 57%,21% 43%,4% 29%,28% 30%,23% 8%,42% 18%);
-  border-radius:44% 56% 42% 58%;
+  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
+  border-radius:40% 45% 42% 46%;
 }
 .chinar-leaf::after{
   content:"";
   position:absolute;
-  left:49%;
-  top:18%;
+  left:48%;
+  top:3%;
   width:1px;
-  height:68%;
-  background:rgba(76,53,31,.30);
-  transform:rotate(-7deg);
+  height:93%;
+  background:rgba(91,49,28,.42);
+  transform:rotate(var(--vein-tilt,0deg));
   transform-origin:center;
 }
-@keyframes chinarLayerIn{to{opacity:1}}
-@keyframes chinarLeafFall{
-  0%{transform:translate3d(0,-10vh,0) rotate(var(--leaf-rotate));opacity:0}
-  7%{opacity:var(--leaf-opacity)}
-  24%{transform:translate3d(calc(var(--leaf-drift)*.22),22vh,0) rotate(calc(var(--leaf-rotate) + var(--leaf-spin)*.22))}
-  48%{transform:translate3d(calc(var(--leaf-drift)*.58),48vh,0) rotate(calc(var(--leaf-rotate) + var(--leaf-spin)*.5))}
-  73%{transform:translate3d(calc(var(--leaf-drift)*.84),73vh,0) rotate(calc(var(--leaf-rotate) + var(--leaf-spin)*.76))}
-  92%{opacity:var(--leaf-opacity)}
-  100%{transform:translate3d(var(--leaf-drift),110vh,0) rotate(calc(var(--leaf-rotate) + var(--leaf-spin)));opacity:0}
+@keyframes chinarFall{
+  0%{transform:translate3d(0,-12vh,0) rotate(var(--r0,0deg)) scale(var(--scale,1));opacity:0}
+  7%{opacity:var(--opacity,.62)}
+  28%{transform:translate3d(calc(var(--drift)*.28),28vh,0) rotate(calc(var(--spin)*.3 + var(--r0,0deg))) scale(var(--scale,1))}
+  52%{transform:translate3d(calc(var(--drift)*.62),52vh,0) rotate(calc(var(--spin)*.58 + var(--r0,0deg))) scale(var(--scale,1))}
+  76%{transform:translate3d(calc(var(--drift)*.84),76vh,0) rotate(calc(var(--spin)*.82 + var(--r0,0deg))) scale(var(--scale,1))}
+  94%{opacity:var(--opacity,.62)}
+  100%{transform:translate3d(var(--drift),112vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
 }
+.chinar-pile::before{
+  content:"";
+  position:absolute;
+  left:-4%;right:-4%;bottom:-8px;height:82px;
+  background:linear-gradient(180deg,rgba(76,37,20,.03),rgba(42,23,13,.22));
+  filter:blur(7px);
+}
+.chinar-pile-leaf{
+  position:absolute;
+  bottom:var(--bottom,10px);
+  left:var(--left,50%);
+  width:var(--size,34px);
+  height:calc(var(--size,34px) * .92);
+  opacity:var(--opacity,.78);
+  transform:translateX(-50%) rotate(var(--rotate,0deg)) scale(var(--scale,1));
+  transform-origin:center;
+  filter:drop-shadow(0 2px 2px rgba(30,15,8,.25));
+}
+.chinar-pile-leaf::before{
+  content:"";position:absolute;inset:0;background:var(--leaf-color,#9d4328);
+  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
+  border-radius:40% 45% 42% 46%;
+}
+.chinar-pile-leaf::after{
+  content:"";position:absolute;left:48%;top:5%;width:1px;height:90%;background:rgba(74,37,22,.42);
+}
+.hero-image img{content-visibility:auto}
+.hero-copy{z-index:8}
+.hero-vignette{z-index:2}
+.hero-page,.hero-scroll{z-index:9}
 @media(max-width:720px){
-  .chinar-leaves{opacity:0;animation:chinarLayerIn 1.2s ease .4s forwards}
-  .chinar-leaf{filter:none}
+  .chinar-leaf{--leaf-size:20px}
+  .chinar-pile-leaf{--size:27px}
+  .chinar-pile::before{height:58px}
 }
 @media(prefers-reduced-motion:reduce){
-  .chinar-leaves{animation:none;opacity:.75}
-  .chinar-leaf{animation:none;top:var(--leaf-top-static);transform:rotate(var(--leaf-rotate));}
+  .chinar-leaf{animation:none;opacity:0!important}
 }
-body.light .chinar-leaf::after{background:rgba(76,53,31,.22)}
+
+/* ── Autumn Kashmir hero treatment ──────────────────────────────────────── */
+.hero{
+  background:#d9d1c6;
+}
+.hero-image{
+  width:100%;
+  height:100%;
+  left:0;
+}
+.hero-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 47%;
+  filter:saturate(.92) contrast(.98);
+  transform:scale(1.015);
+}
+.hero:hover .hero-image img{transform:scale(1.02)}
+.hero-vignette{
+  background:
+    linear-gradient(90deg,rgba(10,12,10,.18) 0%,rgba(243,240,234,.04) 25%,rgba(243,240,234,.18) 48%,rgba(243,240,234,.74) 78%,rgba(243,240,234,.9) 100%),
+    linear-gradient(180deg,rgba(10,10,8,.08) 0%,transparent 42%,rgba(8,9,7,.2) 100%);
+}
+.hero-copy{
+  left:50%;
+  top:50%;
+  bottom:auto;
+  width:min(680px,72%);
+  transform:translate(-50%,-50%);
+  text-align:center;
+  padding:28px 34px 32px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(243,240,234,.22);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+}
+.hero-copy .eyebrow{
+  color:#6f583d;
+  text-shadow:0 1px 10px rgba(255,255,255,.6);
+}
+.hero h1{
+  margin:16px 0 10px;
+  font-size:clamp(64px,8vw,112px);
+  line-height:.9;
+  letter-spacing:.08em;
+  color:#171511;
+  text-shadow:0 2px 18px rgba(255,255,255,.48);
+}
+.hero h1 em{color:inherit}
+.hero-subline{
+  max-width:none;
+  margin:0 auto;
+  font-size:9px;
+  letter-spacing:.36em;
+  color:#25221d;
+  font-weight:600;
+}
+.hero-quote{
+  margin:25px auto 0;
+  max-width:430px;
+  font:italic 500 clamp(15px,1.5vw,20px)/1.45 "Playfair Display",serif;
+  color:#29251f;
+  text-shadow:0 1px 12px rgba(255,255,255,.7);
+}
+.hero-actions{justify-content:center;margin-top:27px}
+.hero-actions .pill{box-shadow:0 8px 24px rgba(25,22,17,.16)}
+.hero-page{right:4%;bottom:78px;color:rgba(255,255,255,.78);text-shadow:0 2px 8px rgba(0,0,0,.3)}
+.hero-page strong{font-size:96px}
+.hero-scroll{left:auto;right:4%;bottom:14px;color:rgba(255,255,255,.88);text-shadow:0 1px 6px rgba(0,0,0,.35)}
+@media(max-width:1100px){
+  .hero-copy{width:min(700px,74%);}
+}
+@media(max-width:720px){
+  .hero{height:calc(100svh - 0px);min-height:700px}
+  .hero-image img{object-position:66% 48%;}
+  .hero-vignette{
+    background:linear-gradient(180deg,rgba(10,10,8,.06) 0%,rgba(243,240,234,.08) 38%,rgba(243,240,234,.8) 72%,rgba(243,240,234,.96) 100%);
+  }
+  .hero-copy{
+    left:50%;
+    top:auto;
+    bottom:72px;
+    width:88%;
+    padding:22px 18px 24px;
+    transform:translateX(-50%);
+    background:rgba(243,240,234,.42);
+  }
+  .hero h1{font-size:clamp(58px,18vw,92px);letter-spacing:.06em}
+  .hero-subline{font-size:8px;letter-spacing:.25em}
+  .hero-quote{font-size:15px;margin-top:18px}
+  .hero-actions{margin-top:20px;gap:12px}
+  .hero-page{display:none}
+}
+@media(max-width:460px){
+  .hero{min-height:680px}
+  .hero-copy{bottom:58px;width:90%;}
+  .hero h1{font-size:64px}
+  .hero-actions{flex-direction:column;align-items:center}
+  .hero-actions .under{border-bottom:0;padding-bottom:0}
+}

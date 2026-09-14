@@ -343,6 +343,49 @@ async function init(){
   }
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
+
+/* Autumn Chinar leaves: light ambient fall with a settled foreground pile. */
+(function initChinarLeaves(){
+  const ambient=document.getElementById("chinarAmbient");
+  const pile=document.getElementById("chinarPile");
+  if(!ambient||!pile)return;
+  const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const colors=["#a94b2b","#b65b32","#c06a35","#8f3d28","#9f4a2b","#c27a3e","#7f3526"];
+  const mobile=window.matchMedia&&window.matchMedia("(max-width:720px)").matches;
+  const count=mobile?10:17;
+  const rand=(a,b)=>a+Math.random()*(b-a);
+  for(let i=0;i<count;i++){
+    const leaf=document.createElement("span");
+    leaf.className="chinar-leaf";
+    leaf.style.left=rand(1,99).toFixed(2)+"%";
+    leaf.style.setProperty("--leaf-size",rand(mobile?15:18,mobile?25:34).toFixed(1)+"px");
+    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
+    leaf.style.setProperty("--drift",rand(-150,150).toFixed(0)+"px");
+    leaf.style.setProperty("--spin",rand(-560,560).toFixed(0)+"deg");
+    leaf.style.setProperty("--r0",rand(-35,35).toFixed(0)+"deg");
+    leaf.style.setProperty("--vein-tilt",rand(-8,8).toFixed(0)+"deg");
+    leaf.style.setProperty("--scale",rand(.7,1.18).toFixed(2));
+    leaf.style.setProperty("--opacity",rand(.38,.72).toFixed(2));
+    leaf.style.setProperty("--fall",rand(10,18).toFixed(2)+"s");
+    leaf.style.setProperty("--delay",(-rand(0,18)).toFixed(2)+"s");
+    ambient.appendChild(leaf);
+  }
+  const pileCount=mobile?13:22;
+  for(let i=0;i<pileCount;i++){
+    const leaf=document.createElement("span");
+    leaf.className="chinar-pile-leaf";
+    leaf.style.setProperty("--left",rand(-1,101).toFixed(1)+"%");
+    leaf.style.setProperty("--bottom",rand(1,mobile?24:38).toFixed(1)+"px");
+    leaf.style.setProperty("--size",rand(mobile?20:24,mobile?34:46).toFixed(1)+"px");
+    leaf.style.setProperty("--rotate",rand(-75,75).toFixed(0)+"deg");
+    leaf.style.setProperty("--scale",rand(.72,1.18).toFixed(2));
+    leaf.style.setProperty("--opacity",rand(.58,.9).toFixed(2));
+    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
+    pile.appendChild(leaf);
+  }
+  if(reduced){ambient.setAttribute("data-motion-disabled","true")}
+})();
+
 init();
 addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;const progress=$(".progress i");if(progress)progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
 if(matchMedia("(pointer:fine)").matches){
@@ -353,34 +396,6 @@ if(matchMedia("(pointer:fine)").matches){
     c.classList.toggle("cursor-photo",!!e.target.closest(".product-image,.editorial-journal-feature,.editorial-note-media,.editorial-archive-main,.editorial-archive-side,.edition-page"));
   });
 }
-
-
-/* UMS91 — ambient falling chinar leaves */
-(function initChinarLeaves(){
-  const layer=document.getElementById("chinarLeaves");
-  if(!layer) return;
-  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const count=reduce?7:(window.innerWidth<=720?9:16);
-  const colors=["#b8743d","#9f6035","#c58a4b","#8f4f32","#d19a57","#a9663a"];
-  const rand=(a,b)=>Math.random()*(b-a)+a;
-  const frag=document.createDocumentFragment();
-  for(let i=0;i<count;i++){
-    const leaf=document.createElement("span");
-    leaf.className="chinar-leaf";
-    leaf.style.setProperty("--leaf-left",rand(-4,104).toFixed(2)+"vw");
-    leaf.style.setProperty("--leaf-size",rand(window.innerWidth<=720?11:13,window.innerWidth<=720?22:31).toFixed(1)+"px");
-    leaf.style.setProperty("--leaf-opacity",rand(.18,.48).toFixed(2));
-    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
-    leaf.style.setProperty("--leaf-duration",rand(13,25).toFixed(1)+"s");
-    leaf.style.setProperty("--leaf-delay",(-rand(0,24)).toFixed(1)+"s");
-    leaf.style.setProperty("--leaf-drift",rand(-16,16).toFixed(1)+"vw");
-    leaf.style.setProperty("--leaf-spin",rand(280,760).toFixed(0)+"deg");
-    leaf.style.setProperty("--leaf-rotate",rand(-35,35).toFixed(0)+"deg");
-    leaf.style.setProperty("--leaf-top-static",rand(8,92).toFixed(1)+"vh");
-    frag.appendChild(leaf);
-  }
-  layer.appendChild(frag);
-})();
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(close);$("#menuBtn")?.classList.remove("is-open");$("#menuBtn")?.setAttribute("aria-expanded","false")}});
 
 (() => {
