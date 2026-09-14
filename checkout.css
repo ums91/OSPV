@@ -240,3 +240,80 @@
 /* V3.7 — receipt identity + live shipping details */
 .receipt-shipping-card{width:min(318px,80%);margin:0 auto 18px;text-align:left;}
 @media(max-width:600px){.receipt-shipping-card{width:84%;}}
+
+
+/* UMS91 — FINAL BAG LAYER / CLOSE BUTTON FIX
+   Loaded after styles.css so the drawer always sits above the header controls.
+   The drawer begins below the sticky Fall Sale announcement, while its own
+   close control remains fully visible on every viewport. */
+#cartDrawer,
+#cartDrawer.open {
+  position: fixed !important;
+  top: 34px !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: calc(100dvh - 34px) !important;
+  max-height: calc(100dvh - 34px) !important;
+  width: min(480px, 100vw) !important;
+  z-index: 2147483647 !important;
+  isolation: isolate !important;
+}
+
+#cartDrawer .drawer-head {
+  position: relative !important;
+  top: auto !important;
+  z-index: 10 !important;
+  flex: 0 0 auto !important;
+  min-height: 72px !important;
+  background: #f4f0e8 !important;
+}
+
+#cartDrawer .drawer-head button {
+  position: relative !important;
+  z-index: 11 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  color: #171714 !important;
+  font-size: 30px !important;
+  line-height: 1 !important;
+  padding: 4px 8px !important;
+  min-width: 40px !important;
+  min-height: 40px !important;
+}
+
+/* Keep all fixed header elements below the open Bag drawer. */
+html body .topbar,
+html body .sale-announcement {
+  z-index: 160 !important;
+}
+
+@media (max-width: 720px) {
+  #cartDrawer,
+  #cartDrawer.open {
+    top: 54px !important;
+    height: calc(100dvh - 54px) !important;
+    max-height: calc(100dvh - 54px) !important;
+    width: 100vw !important;
+  }
+  #cartDrawer .drawer-head {
+    min-height: 68px !important;
+    padding: 18px 20px !important;
+  }
+  #cartDrawer .drawer-head button {
+    font-size: 32px !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    margin: -5px -5px -5px 0 !important;
+  }
+}
+
+@media (max-width: 430px) {
+  #cartDrawer,
+  #cartDrawer.open {
+    top: 58px !important;
+    height: calc(100dvh - 58px) !important;
+    max-height: calc(100dvh - 58px) !important;
+  }
+}
