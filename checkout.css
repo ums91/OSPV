@@ -85,3 +85,55 @@
     max-height: calc(100vh - 58px) !important;
   }
 }
+
+
+/* UMS91 — BAG OPEN HEADER REFLOW
+   When the desktop bag is open, the header becomes the remaining page area.
+   This keeps the navigation readable and prevents it from visually running
+   underneath the bag surface. The class is removed when the bag closes. */
+@media (min-width:901px){
+  :root{--ums91-bag-width:min(520px,42vw);}
+
+  body.bag-is-open .topbar{
+    right:var(--ums91-bag-width) !important;
+    transition:right .48s cubic-bezier(.22,.61,.36,1),
+               background-color .25s ease;
+  }
+
+  body.bag-is-open .topbar nav{
+    gap:clamp(17px,2.15vw,28px) !important;
+    transform:translateX(-8px);
+    transition:gap .35s ease, transform .35s ease;
+  }
+
+  body.bag-is-open .topbar nav a{
+    font-size:8px !important;
+    letter-spacing:.14em !important;
+    white-space:nowrap;
+  }
+
+  body.bag-is-open .top-actions{
+    right:16px !important;
+    gap:10px !important;
+    transform:scale(.92);
+    transform-origin:right center;
+    transition:gap .35s ease, transform .35s ease;
+  }
+
+  body.bag-is-open .top-actions .order-status-btn{
+    min-width:96px !important;
+    padding-left:5px !important;
+    padding-right:5px !important;
+    font-size:8px !important;
+  }
+
+  body.bag-is-open .top-actions .bag-btn{
+    min-width:50px !important;
+    font-size:8px !important;
+  }
+}
+
+/* Mobile layout is intentionally left at the established Bag geometry. */
+@media (max-width:900px){
+  body.bag-is-open .topbar{right:0 !important;}
+}

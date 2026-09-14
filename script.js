@@ -156,6 +156,7 @@ function openBagDrawer(){
   if(!drawer)return;
   drawer.classList.add("open");
   drawer.setAttribute("aria-hidden","false");
+  document.body.classList.add("bag-is-open");
   const bag=$("#bagBtn");
   if(bag)bag.setAttribute("aria-expanded","true");
   renderCart();
@@ -172,7 +173,7 @@ function addToCart(id,button=null){
     $("#productModal")?.classList.remove("open");
     $("#productModal")?.setAttribute("aria-hidden","true");
     const drawer=$("#cartDrawer");
-    if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false")}
+    if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");document.body.classList.add("bag-is-open")}
     syncOverlayLock();
     confirmCart(button);
     return true;
@@ -208,6 +209,11 @@ function close(id){
     const v=$("#activeVideo");if(v){v.pause();v.removeAttribute("src");v.load()}
   }
   if(id==="#productModal")document.body.classList.remove("product-view-open");
+  if(id==="#cartDrawer"){
+    document.body.classList.remove("bag-is-open");
+    const bag=$("#bagBtn");
+    if(bag)bag.setAttribute("aria-expanded","false");
+  }
   syncOverlayLock();
 }
 async function init(){
