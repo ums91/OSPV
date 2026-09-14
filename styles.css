@@ -130,39 +130,31 @@ footer .ums91-flag-link img{
   }
 }
 
-/* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
+
+/* UMS91 Autumn Chinar leaves — fixed ambient fall, no pile */
 .chinar-ambient{
   position:fixed;
   inset:0;
-  width:100vw;
-  height:100vh;
-  height:100dvh;
   pointer-events:none;
-  overflow:hidden;
   z-index:12;
-  opacity:1;
+  overflow:hidden;
 }
 .chinar-leaf{
-  --leaf-size:26px;
-  --leaf-color:#b55a32;
   position:absolute;
-  top:-9vh;
-  left:0;
-  width:var(--leaf-size);
-  height:calc(var(--leaf-size) * 1.12);
+  top:-8vh;
+  width:var(--leaf-size,26px);
+  height:var(--leaf-size,26px);
   opacity:0;
-  transform-origin:50% 48%;
+  transform-origin:center;
+  animation:chinarLeafFall var(--fall,14s) linear infinite;
+  animation-delay:var(--delay,0s);
   will-change:transform,opacity;
-  filter:drop-shadow(0 2px 2px rgba(35,20,10,.16));
-  animation:chinarFall var(--fall,12s) linear var(--delay,0s) infinite;
 }
 .chinar-leaf::before{
   content:"";
   position:absolute;
   inset:0;
-  background:var(--leaf-color);
-  /* Five-lobed Chinar silhouette: pointed central lobe, broad lateral lobes,
-     deep sinuses and tapered lower lobes. */
+  background:var(--leaf-color,#b8542e);
   clip-path:polygon(
     50% 0%,
     55% 17%, 72% 7%,
@@ -190,139 +182,28 @@ footer .ums91-flag-link img{
   transform:rotate(var(--vein-tilt,0deg));
   transform-origin:center;
 }
-@keyframes chinarFall{
+@keyframes chinarLeafFall{
   0%{
-    transform:translate3d(0,-9vh,0) rotate(var(--r0,0deg)) scale(var(--scale,1));
+    transform:translate3d(0,-8vh,0) rotate(var(--r0,0deg)) scale(var(--scale,1));
     opacity:0;
   }
-  6%{opacity:var(--opacity,.68)}
+  6%{opacity:var(--opacity,.62)}
   22%{
-    transform:translate3d(calc(var(--drift)*.24),22vh,0)
-      rotate(calc(var(--spin)*.22 + var(--r0,0deg))) scale(var(--scale,1));
+    transform:translate3d(calc(var(--drift) * .28),22vh,0) rotate(calc(var(--spin) * .22)) scale(var(--scale,1));
   }
   48%{
-    transform:translate3d(calc(var(--drift)*.52),48vh,0)
-      rotate(calc(var(--spin)*.5 + var(--r0,0deg))) scale(var(--scale,1));
+    transform:translate3d(calc(var(--drift) * .58),48vh,0) rotate(calc(var(--spin) * .5)) scale(var(--scale,1));
   }
   74%{
-    transform:translate3d(calc(var(--drift)*.78),74vh,0)
-      rotate(calc(var(--spin)*.76 + var(--r0,0deg))) scale(var(--scale,1));
+    transform:translate3d(calc(var(--drift) * .82),74vh,0) rotate(calc(var(--spin) * .76)) scale(var(--scale,1));
   }
-  94%{opacity:var(--opacity,.68)}
+  94%{opacity:var(--opacity,.62)}
   100%{
-    transform:translate3d(var(--drift),109vh,0)
-      rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));
+    transform:translate3d(var(--drift),108vh,0) rotate(var(--spin)) scale(var(--scale,1));
     opacity:0;
   }
 }
-.hero-image img{content-visibility:auto}
-.hero-copy{z-index:8}
-.hero-vignette{z-index:2}
-.hero-page,.hero-scroll{z-index:9}
+.chinar-ambient[data-motion-disabled="true"] .chinar-leaf{animation:none;display:none}
 @media(max-width:720px){
-  .chinar-leaf{--leaf-size:19px}
-}
-@media(prefers-reduced-motion:reduce){
-  .chinar-leaf{animation:none;opacity:0!important}
-}
-
-/* ── Autumn Kashmir hero treatment ──────────────────────────────────────── */
-.hero{
-  background:#d9d1c6;
-}
-.hero-image{
-  width:100%;
-  height:100%;
-  left:0;
-}
-.hero-image img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:center 47%;
-  filter:saturate(.92) contrast(.98);
-  transform:scale(1.015);
-}
-.hero:hover .hero-image img{transform:scale(1.02)}
-.hero-vignette{
-  background:
-    linear-gradient(90deg,rgba(10,12,10,.18) 0%,rgba(243,240,234,.04) 25%,rgba(243,240,234,.18) 48%,rgba(243,240,234,.74) 78%,rgba(243,240,234,.9) 100%),
-    linear-gradient(180deg,rgba(10,10,8,.08) 0%,transparent 42%,rgba(8,9,7,.2) 100%);
-}
-.hero-copy{
-  left:50%;
-  top:50%;
-  bottom:auto;
-  width:min(680px,72%);
-  transform:translate(-50%,-50%);
-  text-align:center;
-  padding:28px 34px 32px;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(243,240,234,.22);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
-}
-.hero-copy .eyebrow{
-  color:#6f583d;
-  text-shadow:0 1px 10px rgba(255,255,255,.6);
-}
-.hero h1{
-  margin:16px 0 10px;
-  font-size:clamp(64px,8vw,112px);
-  line-height:.9;
-  letter-spacing:.08em;
-  color:#171511;
-  text-shadow:0 2px 18px rgba(255,255,255,.48);
-}
-.hero h1 em{color:inherit}
-.hero-subline{
-  max-width:none;
-  margin:0 auto;
-  font-size:9px;
-  letter-spacing:.36em;
-  color:#25221d;
-  font-weight:600;
-}
-.hero-quote{
-  margin:25px auto 0;
-  max-width:430px;
-  font:italic 500 clamp(15px,1.5vw,20px)/1.45 "Playfair Display",serif;
-  color:#29251f;
-  text-shadow:0 1px 12px rgba(255,255,255,.7);
-}
-.hero-actions{justify-content:center;margin-top:27px}
-.hero-actions .pill{box-shadow:0 8px 24px rgba(25,22,17,.16)}
-.hero-page{right:4%;bottom:78px;color:rgba(255,255,255,.78);text-shadow:0 2px 8px rgba(0,0,0,.3)}
-.hero-page strong{font-size:96px}
-.hero-scroll{left:auto;right:4%;bottom:14px;color:rgba(255,255,255,.88);text-shadow:0 1px 6px rgba(0,0,0,.35)}
-@media(max-width:1100px){
-  .hero-copy{width:min(700px,74%);}
-}
-@media(max-width:720px){
-  .hero{height:calc(100svh - 0px);min-height:700px}
-  .hero-image img{object-position:66% 48%;}
-  .hero-vignette{
-    background:linear-gradient(180deg,rgba(10,10,8,.06) 0%,rgba(243,240,234,.08) 38%,rgba(243,240,234,.8) 72%,rgba(243,240,234,.96) 100%);
-  }
-  .hero-copy{
-    left:50%;
-    top:auto;
-    bottom:72px;
-    width:88%;
-    padding:22px 18px 24px;
-    transform:translateX(-50%);
-    background:rgba(243,240,234,.42);
-  }
-  .hero h1{font-size:clamp(58px,18vw,92px);letter-spacing:.06em}
-  .hero-subline{font-size:8px;letter-spacing:.25em}
-  .hero-quote{font-size:15px;margin-top:18px}
-  .hero-actions{margin-top:20px;gap:12px}
-  .hero-page{display:none}
-}
-@media(max-width:460px){
-  .hero{min-height:680px}
-  .hero-copy{bottom:58px;width:90%;}
-  .hero h1{font-size:64px}
-  .hero-actions{flex-direction:column;align-items:center}
-  .hero-actions .under{border-bottom:0;padding-bottom:0}
+  .chinar-ambient{z-index:12}
 }
