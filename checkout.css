@@ -87,53 +87,92 @@
 }
 
 
-/* UMS91 — BAG OPEN HEADER REFLOW
-   When the desktop bag is open, the header becomes the remaining page area.
-   This keeps the navigation readable and prevents it from visually running
-   underneath the bag surface. The class is removed when the bag closes. */
+/* UMS91 — BAG OPEN HEADER REFLOW / FINAL
+   Desktop: reserve exactly the drawer width in the header so the header never
+   extends underneath the Bag. Mobile keeps its established full-width layout. */
 @media (min-width:901px){
   :root{--ums91-bag-width:min(520px,42vw);}
 
   body.bag-is-open .topbar{
     right:var(--ums91-bag-width) !important;
-    transition:right .48s cubic-bezier(.22,.61,.36,1),
-               background-color .25s ease;
+    left:var(--ums91-sidebar-width, 142px) !important;
+    width:auto !important;
+    transition:right .42s cubic-bezier(.22,.61,.36,1), background-color .25s ease;
   }
 
   body.bag-is-open .topbar nav{
-    gap:clamp(17px,2.15vw,28px) !important;
-    transform:translateX(-8px);
+    gap:clamp(15px,1.85vw,27px) !important;
+    transform:translateX(-10px);
     transition:gap .35s ease, transform .35s ease;
   }
 
   body.bag-is-open .topbar nav a{
     font-size:8px !important;
-    letter-spacing:.14em !important;
+    letter-spacing:.135em !important;
     white-space:nowrap;
   }
 
   body.bag-is-open .top-actions{
-    right:16px !important;
-    gap:10px !important;
-    transform:scale(.92);
+    right:10px !important;
+    gap:8px !important;
+    transform:scale(.90);
     transform-origin:right center;
-    transition:gap .35s ease, transform .35s ease;
   }
 
   body.bag-is-open .top-actions .order-status-btn{
-    min-width:96px !important;
-    padding-left:5px !important;
-    padding-right:5px !important;
-    font-size:8px !important;
+    min-width:92px !important;
+    padding-left:4px !important;
+    padding-right:4px !important;
+    font-size:7.5px !important;
   }
 
   body.bag-is-open .top-actions .bag-btn{
-    min-width:50px !important;
-    font-size:8px !important;
+    min-width:48px !important;
+    font-size:7.5px !important;
   }
 }
 
-/* Mobile layout is intentionally left at the established Bag geometry. */
+/* Mobile: Bag remains below the sale strip. Do not compress the mobile nav. */
 @media (max-width:900px){
-  body.bag-is-open .topbar{right:0 !important;}
+  body.bag-is-open .topbar{right:0 !important;left:0 !important;width:auto !important;}
+}
+
+/* Final Bag close-button guarantee. The close control is anchored inside the
+   Bag header instead of relying on inherited flex/stacking behavior. */
+#cartDrawer .drawer-head{
+  position:relative !important;
+  z-index:20 !important;
+}
+#cartDrawer .drawer-head button[aria-label="Close bag"]{
+  position:absolute !important;
+  top:50% !important;
+  right:18px !important;
+  transform:translateY(-50%) !important;
+  z-index:99999 !important;
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+  display:grid !important;
+  place-items:center !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  color:#10110f !important;
+  background:transparent !important;
+  font-size:30px !important;
+  line-height:1 !important;
+  cursor:pointer !important;
+}
+
+@media (max-width:900px){
+  #cartDrawer .drawer-head button[aria-label="Close bag"]{
+    top:50% !important;
+    right:12px !important;
+    width:48px !important;
+    height:48px !important;
+    min-width:48px !important;
+    min-height:48px !important;
+    font-size:32px !important;
+  }
 }
