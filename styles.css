@@ -366,3 +366,83 @@ html body .sale-announcement a{pointer-events:auto !important;}
   html body .sale-announcement{height:58px !important; min-height:58px !important;}
   html body .topbar{top:58px !important;}
 }
+
+
+/* UMS91 — BAG DRAWER / STICKY SALE BANNER COMPATIBILITY
+   The bag must cover the fixed announcement + navigation on desktop. */
+#cartDrawer {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 20000 !important;
+  width: min(430px, 100vw) !important;
+}
+#cartDrawer.open {
+  top: 0 !important;
+  bottom: 0 !important;
+  z-index: 20000 !important;
+}
+#cartDrawer .drawer-head {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+
+/* UMS91 — DESKTOP HEADER / FALL SALE REFINEMENT
+   Keep the navigation and right-side actions from colliding, while giving
+   the small header sale treatment a restrained editorial fall look. */
+.sale-mini {
+  left: 24px !important;
+  gap: 0 !important;
+  white-space: nowrap !important;
+}
+.sale-mini span {
+  display: inline-block !important;
+  color: #9a6f3f !important;
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-size: 13px !important;
+  font-style: italic !important;
+  font-weight: 500 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  line-height: 1 !important;
+  transform: rotate(-2deg);
+  transform-origin: left center;
+}
+.topbar nav {
+  gap: 36px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+}
+.topbar nav a {
+  flex: 0 0 auto !important;
+}
+.top-actions {
+  right: 16px !important;
+  gap: 16px !important;
+  white-space: nowrap !important;
+}
+.top-actions .order-status-btn {
+  font-size: 9px !important;
+  letter-spacing: .12em !important;
+  white-space: nowrap !important;
+}
+.top-actions .bag-btn {
+  flex: 0 0 auto !important;
+  white-space: nowrap !important;
+}
+@media (max-width: 1250px) and (min-width: 721px) {
+  .topbar nav { gap: 27px !important; }
+  .sale-mini { left: 18px !important; }
+  .top-actions { gap: 12px !important; right: 12px !important; }
+}
+@media (max-width: 1100px) and (min-width: 721px) {
+  .topbar nav { gap: 21px !important; }
+  .sale-mini span { font-size: 12px !important; }
+  .top-actions .order-status-btn { font-size: 8px !important; }
+}
+@media (max-width: 720px) {
+  .sale-mini { display: none !important; }
+}
