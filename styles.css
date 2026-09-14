@@ -372,16 +372,28 @@ html body .sale-announcement a{pointer-events:auto !important;}
    The bag must cover the fixed announcement + navigation on desktop. */
 #cartDrawer {
   position: fixed !important;
-  top: 0 !important;
+  top: 34px !important;
   right: 0 !important;
   bottom: 0 !important;
   z-index: 20000 !important;
   width: min(430px, 100vw) !important;
 }
 #cartDrawer.open {
-  top: 0 !important;
+  top: 34px !important;
   bottom: 0 !important;
   z-index: 20000 !important;
+}
+@media (max-width: 720px) {
+  #cartDrawer,
+  #cartDrawer.open {
+    top: 54px !important;
+  }
+}
+@media (max-width: 430px) {
+  #cartDrawer,
+  #cartDrawer.open {
+    top: 58px !important;
+  }
 }
 #cartDrawer .drawer-head {
   position: sticky;
@@ -445,4 +457,37 @@ html body .sale-announcement a{pointer-events:auto !important;}
 }
 @media (max-width: 720px) {
   .sale-mini { display: none !important; }
+}
+
+
+/* UMS91 — BAG DRAWER: visible close control on desktop + mobile */
+#cartDrawer, #cartDrawer.open {
+  position: fixed !important;
+  right: 0 !important;
+  top: 34px !important;
+  bottom: 0 !important;
+  height: calc(100vh - 34px) !important;
+  max-height: calc(100vh - 34px) !important;
+  z-index: 20000 !important;
+}
+#cartDrawer .drawer-head {
+  flex: 0 0 auto !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 3 !important;
+  background: #f4f0e8 !important;
+}
+@media (max-width: 720px) {
+  #cartDrawer, #cartDrawer.open {
+    top: 54px !important;
+    height: calc(100vh - 54px) !important;
+    max-height: calc(100vh - 54px) !important;
+  }
+}
+@media (max-width: 430px) {
+  #cartDrawer, #cartDrawer.open {
+    top: 58px !important;
+    height: calc(100vh - 58px) !important;
+    max-height: calc(100vh - 58px) !important;
+  }
 }
