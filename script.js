@@ -353,6 +353,34 @@ if(matchMedia("(pointer:fine)").matches){
     c.classList.toggle("cursor-photo",!!e.target.closest(".product-image,.editorial-journal-feature,.editorial-note-media,.editorial-archive-main,.editorial-archive-side,.edition-page"));
   });
 }
+
+
+/* UMS91 — ambient falling chinar leaves */
+(function initChinarLeaves(){
+  const layer=document.getElementById("chinarLeaves");
+  if(!layer) return;
+  const reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const count=reduce?7:(window.innerWidth<=720?9:16);
+  const colors=["#b8743d","#9f6035","#c58a4b","#8f4f32","#d19a57","#a9663a"];
+  const rand=(a,b)=>Math.random()*(b-a)+a;
+  const frag=document.createDocumentFragment();
+  for(let i=0;i<count;i++){
+    const leaf=document.createElement("span");
+    leaf.className="chinar-leaf";
+    leaf.style.setProperty("--leaf-left",rand(-4,104).toFixed(2)+"vw");
+    leaf.style.setProperty("--leaf-size",rand(window.innerWidth<=720?11:13,window.innerWidth<=720?22:31).toFixed(1)+"px");
+    leaf.style.setProperty("--leaf-opacity",rand(.18,.48).toFixed(2));
+    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
+    leaf.style.setProperty("--leaf-duration",rand(13,25).toFixed(1)+"s");
+    leaf.style.setProperty("--leaf-delay",(-rand(0,24)).toFixed(1)+"s");
+    leaf.style.setProperty("--leaf-drift",rand(-16,16).toFixed(1)+"vw");
+    leaf.style.setProperty("--leaf-spin",rand(280,760).toFixed(0)+"deg");
+    leaf.style.setProperty("--leaf-rotate",rand(-35,35).toFixed(0)+"deg");
+    leaf.style.setProperty("--leaf-top-static",rand(8,92).toFixed(1)+"vh");
+    frag.appendChild(leaf);
+  }
+  layer.appendChild(frag);
+})();
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(close);$("#menuBtn")?.classList.remove("is-open");$("#menuBtn")?.setAttribute("aria-expanded","false")}});
 
 (() => {
