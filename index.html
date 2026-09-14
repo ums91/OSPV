@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="ums91-about-final.css?v=20260829-final-2">
 </head>
 <body>
+<div class="sale-announcement" role="region" aria-label="Fall sale announcement"><span>LIMITED · 50% FALL SALE · SELECT EDITIONS OVER ₹1,000</span><a href="#shop">SHOP THE SALE <b>→</b></a></div>
 <div class="grain"></div><div class="cursor"></div><div class="progress"><i></i></div>
 <aside class="sidebar">
   <a class="logo" href="#home"><strong>UMS91</strong><small>PHOTOS &amp; MOTION</small></a>
@@ -336,6 +337,13 @@
       <div>
         <h3>YOUR ORDER</h3>
         <div id="checkoutLines"></div>
+        <div class="coupon-box">
+          <label for="couponCode">COUPON CODE</label>
+          <div class="coupon-row"><input id="couponCode" type="text" inputmode="text" autocomplete="off" placeholder="ENTER CODE" maxlength="24"><button id="applyCoupon" type="button">APPLY</button></div>
+          <p id="couponMessage" class="coupon-message" aria-live="polite">Use <strong>FALL50</strong> for 50% off eligible editions over ₹1,000.</p>
+        </div>
+        <div class="commerce-total commerce-subtotal"><span>SUBTOTAL</span><strong id="checkoutSubtotal">₹0</strong></div>
+        <div class="commerce-total coupon-discount-row" id="couponDiscountRow" hidden><span>FALL50 · 50% OFF</span><strong id="couponDiscount">−₹0</strong></div>
         <div class="commerce-total"><span>TOTAL</span><strong id="checkoutTotal">₹0</strong></div>
       </div>
     </section>

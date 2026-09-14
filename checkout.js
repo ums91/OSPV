@@ -4,6 +4,9 @@
   const SITE = "https://ums91.github.io/OSPV/";
   const $ = (s,r=document)=>r.querySelector(s);
   const money = n => new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format(Number(n)||0);
+  const COUPON={code:"FALL50",percent:50,minOriginalPrice:1000,label:"50% FALL SALE"};
+  let appliedCoupon="";
+  const eligibleDiscount=()=>window.store?.items?.reduce((sum,x)=>{const price=Number(x.product.price)||0;return sum+(price>COUPON.minOriginalPrice?(price-Math.round(price*(1-COUPON.percent/100)))*x.qty:0);},0)||0;
   let receiptPollTimer=null;
   let receiptPrivateOrder=null;
 
@@ -42,7 +45,7 @@
   }
 
   function renderCheckout(){
-    const lines=$("#checkoutLines"), total=$("#checkoutTotal");
+    const lines=$("#checkoutLines"), subtotalEl=$("#checkoutSubtotal"), total=$("#checkoutTotal");
     if(!lines || !window.store)return;
     lines.innerHTML=window.store.items.map(x=>`
       <div class="checkout-line">
@@ -50,7 +53,24 @@
         <div><h4>${String(x.product.title).replace(/[&<>]/g,"")}</h4><small>${x.qty} × ${money(x.product.price)}</small></div>
         <strong>${money(x.qty*x.product.price)}</strong>
       </div>`).join("");
-    total.textContent=money(window.store.total);
+    const subtotal=window.store.total;
+    const discount=appliedCoupon===COUPON.code?eligibleDiscount():0;
+    if(subtotalEl)subtotalEl.textContent=money(subtotal);
+    if(total)total.textContent=money(subtotal-discount);
+    const row=$("#couponDiscountRow"), disc=$("#couponDiscount");
+    if(row){row.hidden=!discount;if(disc)disc.textContent="−"+money(discount);}
+    const msg=$("#couponMessage");
+    if(msg && !appliedCoupon)msg.innerHTML='Use <strong>FALL50</strong> for 50% off eligible editions over ₹1,000.';
+  }
+
+  function applyCoupon(){
+    const input=$("#couponCode"), msg=$("#couponMessage");
+    const code=(input?.value||"").trim().toUpperCase();
+    if(code!==COUPON.code){appliedCoupon="";if(msg){msg.textContent="INVALID COUPON CODE.";msg.classList.add("error");}renderCheckout();return;}
+    if(!eligibleDiscount()){appliedCoupon="";if(msg){msg.textContent="FALL50 applies only to editions over ₹1,000.";msg.classList.add("error");}renderCheckout();return;}
+    appliedCoupon=COUPON.code;
+    if(msg){msg.innerHTML='✓ <strong>FALL50 applied</strong> — 50% off eligible editions.';msg.classList.remove("error");}
+    renderCheckout();
   }
 
 
@@ -74,7 +94,8 @@
     "mountain-stream":"Fine Art Print","quiet-water":"Postcard","winter-birds":"Fine Art Print","garden-pool":"Postcard",
     "garden-path":"Fine Art Print","orchard-garden":"Postcard","rose-study":"Fine Art Print","river-stone":"Fine Art Print",
     "cloud-valley":"Fine Art Print","courtyard-morning":"Postcard","quiet-interior":"Fine Art Print","courtyard-blue-sky":"Fine Art Print",
-    "lake-ridge":"Fine Art Print","winter-water":"Fine Art Print","snow-lake":"Fine Art Print"
+    "lake-ridge":"Fine Art Print","winter-water":"Fine Art Print","snow-lake":"Fine Art Print",
+    "autumn-stillness":"Fine Art Print","light-after-rain":"Fine Art Print","golden-road":"Fine Art Print","blossom-walk":"Fine Art Print","river-and-ridge":"Fine Art Print"
   };
 
   function orderFormatCopy(items){
@@ -265,7 +286,7 @@
     $("#receiptDate").textContent=new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}).format(new Date()).toUpperCase();
     $("#receiptItems").innerHTML=(items||[]).map(x=>{
       const type=String(x?.type||PRODUCT_TYPES[x?.id]||"").trim();
-      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${money(x.price)}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`;
+      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${x.originalPrice&&Number(x.originalPrice)>Number(x.price)?`${money(x.originalPrice)} → ${money(x.price)}`:money(x.price)}${x.originalPrice&&Number(x.originalPrice)>Number(x.price)?` · ${SALE.percent}% OFF`:""}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`;
     }).join("");
     $("#receiptTotal").textContent=money(total);
     $("#receiptCode").textContent=String(orderId||"UMS91").replace(/[^A-Z0-9-]/gi,"").toUpperCase();
@@ -303,8 +324,8 @@
     if(!/^[A-Za-z0-9][A-Za-z0-9\s-]{2,11}$/.test(postalCode)){showMessage(msg,"Please enter a valid PIN / postal code.",true);return;}
     if(!window.store?.count){showMessage(msg,"Your bag is empty. Add an edition before ordering.",true);return;}
 
-    const receiptItems=window.store.items.map(x=>({id:x.id,title:x.product.title,price:Number(x.product.price)||0,quantity:Number(x.qty)||1,type:PRODUCT_TYPES[x.id]||""}));
-    const receiptTotal=window.store.total;
+    const receiptItems=window.store.items.map(x=>({id:x.id,title:x.product.title,price:Number(x.product.price)||0,quantity:Number(x.qty)||1,type:PRODUCT_TYPES[x.id]||x.product.type||""}));
+    const receiptTotal=window.store.total-(appliedCoupon===COUPON.code?eligibleDiscount():0);
     const button=$("#submitUpiOrder");
     button.disabled=true;
     button.innerHTML="SUBMITTING…";
@@ -314,7 +335,7 @@
       const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
         action:"createOrder",customerName:name,email,phone,
         address:[addressLine1,city,state,postalCode,country].join(", "),
-        items:window.store.items.map(x=>({id:x.id,quantity:x.qty}))
+        items:window.store.items.map(x=>({id:x.id,quantity:x.qty})),couponCode:appliedCoupon
       })});
       const data=await response.json();
       if(!data.success)throw new Error(data.error||"Unable to create order.");
@@ -324,7 +345,7 @@
       if(typeof window.renderCart==="function")window.renderCart();
       panel("#checkoutPanel",false);
 
-      fillReceipt(data.orderId,receiptItems,receiptTotal);
+      fillReceipt(data.orderId,receiptItems,Number(data.total)||receiptTotal);
       const link=new URL(SITE);
       link.searchParams.set("orderId",data.orderId);
       link.searchParams.set("token",data.token || "");
@@ -415,6 +436,9 @@
     document.querySelectorAll("[data-open-order-status]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();openOrderStatus();}));
     $("#checkout")?.addEventListener("click",e=>{e.preventDefault();openCheckout();});
     $("#submitUpiOrder")?.addEventListener("click",createOrder);
+    $("#applyCoupon")?.addEventListener("click",applyCoupon);
+    $("#couponCode")?.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();applyCoupon();}});
+    $("#couponCode")?.addEventListener("input",()=>{if(appliedCoupon && $("#couponCode").value.trim().toUpperCase()!==COUPON.code){appliedCoupon="";renderCheckout();}});
     $("#lookupOrder")?.addEventListener("click",lookupOrder);
     $("#orderStatusBtn")?.addEventListener("click",openOrderStatus);
     document.querySelectorAll('[data-close="checkoutPanel"],[data-close="orderStatusPanel"],[data-close="orderSuccess"]').forEach(b=>b.addEventListener("click",()=>{if(b.dataset.close==="orderSuccess")stopReceiptPolling();panel("#"+b.dataset.close,false);}));

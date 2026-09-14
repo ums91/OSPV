@@ -293,3 +293,32 @@ footer .ums91-flag-link img{
   .hero-actions{flex-direction:column;align-items:center}
   .hero-actions .under{border-bottom:0;padding-bottom:0}
 }
+
+/* UMS91 — limited Fall Sale announcement */
+.sale-announcement{position:fixed;top:0;left:142px;right:0;height:34px;z-index:170;background:#171814;color:#f3f0ea;display:flex;align-items:center;justify-content:center;gap:18px;padding:0 18px;font-size:8px;letter-spacing:.17em;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.08)}
+.sale-announcement span{white-space:nowrap}
+.sale-announcement a{color:#f3f0ea;text-decoration:none;border-bottom:1px solid rgba(243,240,234,.45);padding-bottom:3px;transition:color .2s,border-color .2s;white-space:nowrap}
+.sale-announcement a:hover{color:#d4ad78;border-color:#d4ad78}
+.sale-announcement a b{font-size:13px;font-weight:400;margin-left:7px}
+.topbar{top:34px}
+.coupon-box{margin:24px 0 20px;padding:16px 0;border-top:1px solid #d7d2ca;border-bottom:1px solid #d7d2ca}
+.coupon-box>label{display:block;font-size:7px;letter-spacing:.18em;color:#77736c;margin-bottom:9px}
+.coupon-row{display:flex;max-width:440px;border-bottom:1px solid #a9a39a}
+.coupon-row input{flex:1;min-width:0;border:0;background:transparent;outline:0;padding:10px 0;color:#171714;font:500 12px "DM Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.coupon-row input::placeholder{color:#aaa49b}
+.coupon-row button{border:0;background:#171814;color:#f3f0ea;padding:0 17px;font-size:7px;letter-spacing:.18em;cursor:pointer}
+.coupon-message{margin:9px 0 0;color:#89847c;font-size:8px;line-height:1.5;letter-spacing:.03em}
+.coupon-message strong{color:#5e4932;font-weight:600}
+.coupon-message.error{color:#9a4d3d}
+.coupon-discount-row strong{color:#8b5b37}
+.commerce-subtotal{margin-top:2px}
+@media(max-width:1100px){.sale-announcement{left:90px}.topbar{top:34px}}
+@media(max-width:720px){
+  .sale-announcement{position:relative;left:0;right:auto;height:38px;gap:8px;justify-content:center;padding:0 10px;font-size:7px;letter-spacing:.095em}
+  .sale-announcement span{white-space:nowrap}
+  .sale-announcement a{font-size:7px}
+  .sale-announcement a b{font-size:11px;margin-left:3px}
+  .topbar{top:0}
+  .coupon-row{max-width:none}
+}
+@media(max-width:430px){.sale-announcement{font-size:6.5px;letter-spacing:.07em}.sale-announcement a{font-size:6.5px}.coupon-box{margin-top:20px}}
