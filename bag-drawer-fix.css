@@ -1,25 +1,13 @@
 /* UMS91 — FINAL BAG DRAWER COMPOSITION
-   Desktop: true off-canvas drawer + page scrim.
+   Desktop: true off-canvas drawer + non-interactive visual scrim.
    Mobile: deliberately untouched because its current positioning is correct. */
 
 @media (min-width: 901px) {
-  /* Freeze the document while the bag is open so the drawer is the only
-     active surface and the fixed header cannot visually compete with it. */
-  body:has(#cartDrawer.open) {
-    overflow: hidden !important;
-  }
 
-  /* Professional modal scrim: all page chrome stays behind the bag. */
-  body:has(#cartDrawer.open)::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(16, 17, 15, 0.38);
-    z-index: 19990;
-    pointer-events: auto;
-  }
 
-  /* The bag is the single foreground surface. */
+  /* The bag is the single foreground surface.
+     The oversized box-shadow provides the visual dimming without an
+     intercepting overlay, so the document never becomes unresponsive. */
   #cartDrawer,
   #cartDrawer.open {
     position: fixed !important;
@@ -35,7 +23,7 @@
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
-    box-shadow: -24px 0 60px rgba(0,0,0,.18);
+    box-shadow: -100vw 0 0 100vw rgba(16,17,15,.20), -24px 0 60px rgba(0,0,0,.18);
   }
 
   #cartDrawer.open {
