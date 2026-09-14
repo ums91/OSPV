@@ -131,15 +131,15 @@ footer .ums91-flag-link img{
 }
 
 /* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
-.chinar-ambient,
-.chinar-pile{
-  position:absolute;
+/* Fixed to the viewport so leaves continue falling while the page scrolls,
+   including across the sections all the way to the footer. */
+.chinar-ambient{
+  position:fixed;
   inset:0;
   pointer-events:none;
   overflow:hidden;
+  z-index:12;
 }
-.chinar-ambient{z-index:5;}
-.chinar-pile{z-index:6;}
 .chinar-leaf{
   --leaf-size:26px;
   --leaf-color:#b55a32;
@@ -182,40 +182,12 @@ footer .ums91-flag-link img{
   94%{opacity:var(--opacity,.62)}
   100%{transform:translate3d(var(--drift),112vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
 }
-.chinar-pile::before{
-  content:"";
-  position:absolute;
-  left:-4%;right:-4%;bottom:-8px;height:82px;
-  background:linear-gradient(180deg,rgba(76,37,20,.03),rgba(42,23,13,.22));
-  filter:blur(7px);
-}
-.chinar-pile-leaf{
-  position:absolute;
-  bottom:var(--bottom,10px);
-  left:var(--left,50%);
-  width:var(--size,34px);
-  height:calc(var(--size,34px) * .92);
-  opacity:var(--opacity,.78);
-  transform:translateX(-50%) rotate(var(--rotate,0deg)) scale(var(--scale,1));
-  transform-origin:center;
-  filter:drop-shadow(0 2px 2px rgba(30,15,8,.25));
-}
-.chinar-pile-leaf::before{
-  content:"";position:absolute;inset:0;background:var(--leaf-color,#9d4328);
-  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
-  border-radius:40% 45% 42% 46%;
-}
-.chinar-pile-leaf::after{
-  content:"";position:absolute;left:48%;top:5%;width:1px;height:90%;background:rgba(74,37,22,.42);
-}
 .hero-image img{content-visibility:auto}
 .hero-copy{z-index:8}
 .hero-vignette{z-index:2}
 .hero-page,.hero-scroll{z-index:9}
 @media(max-width:720px){
   .chinar-leaf{--leaf-size:20px}
-  .chinar-pile-leaf{--size:27px}
-  .chinar-pile::before{height:58px}
 }
 @media(prefers-reduced-motion:reduce){
   .chinar-leaf{animation:none;opacity:0!important}
@@ -295,7 +267,7 @@ footer .ums91-flag-link img{
 }
 @media(max-width:720px){
   .hero{height:calc(100svh - 0px);min-height:700px}
-  .hero-image img{object-position:66% 48%;}
+  .hero-image img{object-position:center center;}
   .hero-vignette{
     background:linear-gradient(180deg,rgba(10,10,8,.06) 0%,rgba(243,240,234,.08) 38%,rgba(243,240,234,.8) 72%,rgba(243,240,234,.96) 100%);
   }
