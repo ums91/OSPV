@@ -404,3 +404,12 @@
     left:142px !important;
   }
 }
+
+/* UMS91 — BAG-OPEN FALL SALE POSITION
+   Keep the sale label fully inside the white header when the Bag is open. */
+@media (min-width:901px){
+  body.cart-open .sale-mini,
+  body.bag-is-open .sale-mini{
+    left:70px !important;
+  }
+}
