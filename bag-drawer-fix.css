@@ -1,0 +1,98 @@
+/* UMS91 — FINAL BAG DRAWER COMPOSITION
+   Desktop: true off-canvas drawer + page scrim.
+   Mobile: deliberately untouched because its current positioning is correct. */
+
+@media (min-width: 901px) {
+  /* Freeze the document while the bag is open so the drawer is the only
+     active surface and the fixed header cannot visually compete with it. */
+  body:has(#cartDrawer.open) {
+    overflow: hidden !important;
+  }
+
+  /* Professional modal scrim: all page chrome stays behind the bag. */
+  body:has(#cartDrawer.open)::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 17, 15, 0.38);
+    z-index: 19990;
+    pointer-events: auto;
+  }
+
+  /* The bag is the single foreground surface. */
+  #cartDrawer,
+  #cartDrawer.open {
+    position: fixed !important;
+    top: 34px !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: min(520px, 42vw) !important;
+    height: calc(100vh - 34px) !important;
+    max-height: calc(100vh - 34px) !important;
+    z-index: 20000 !important;
+    isolation: isolate;
+    transform: translateX(105%);
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-shadow: -24px 0 60px rgba(0,0,0,.18);
+  }
+
+  #cartDrawer.open {
+    transform: translateX(0) !important;
+  }
+
+  /* Keep the title row fixed inside the drawer and guarantee a visible close
+     control even when the page header is underneath the scrim. */
+  #cartDrawer .drawer-head {
+    position: relative !important;
+    flex: 0 0 auto !important;
+    z-index: 3 !important;
+    min-height: 78px;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    padding: 20px 28px !important;
+    background: rgba(244,240,232,.98) !important;
+  }
+
+  #cartDrawer .drawer-head button {
+    position: relative !important;
+    z-index: 10 !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #10110f !important;
+    font-size: 30px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+  }
+
+  #cartDrawer .cart-lines {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+  }
+
+  #cartDrawer .drawer-total {
+    position: relative;
+    z-index: 2;
+    flex: 0 0 auto;
+    background: #f4f0e8;
+  }
+}
+
+/* No desktop rules leak into mobile. */
+@media (max-width: 900px) {
+  #cartDrawer {
+    z-index: 20000 !important;
+  }
+}
