@@ -319,7 +319,7 @@ footer .ums91-flag-link img{
 .commerce-subtotal{margin-top:2px}
 @media(max-width:1100px){.sale-announcement{left:90px}.topbar{left:90px;top:34px}.sale-mini{left:18px}}
 @media(max-width:720px){
-  .sale-announcement{position:relative;left:0;right:auto;height:54px;gap:5px;justify-content:center;align-content:center;flex-wrap:wrap;padding:7px 12px;font-size:7px;line-height:1.25;letter-spacing:.075em;text-align:center}
+  .sale-announcement{position:fixed;top:0;left:0;right:0;height:54px;gap:5px;justify-content:center;align-content:center;flex-wrap:wrap;padding:7px 12px;font-size:7px;line-height:1.25;letter-spacing:.075em;text-align:center}
   .sale-announcement span{white-space:normal;flex:0 0 100%}
   .sale-announcement a{font-size:7px;padding-bottom:2px}
   .sale-announcement a b{font-size:11px;margin-left:3px}
