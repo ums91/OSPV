@@ -389,3 +389,18 @@
   #menuBtn.is-open::before,
   #menuBtn.is-open::after{width:17px !important;}
 }
+
+/* UMS91 — DESKTOP HEADER / SIDEBAR BOUNDARY FIX
+   Keep the white top header visually behind the black left rail.
+   This prevents any header background from bleeding into the sidebar. */
+@media (min-width: 901px){
+  .sidebar{
+    z-index:190 !important;
+  }
+
+  .topbar,
+  body.cart-open .topbar,
+  body.bag-is-open .topbar{
+    left:142px !important;
+  }
+}
