@@ -344,7 +344,7 @@ async function init(){
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
 
-/* Autumn Chinar leaves: slow ambient fall inspired by the wedding reference. */
+/* Autumn Chinar leaves: same slow, ambient fall language as the wedding reference. */
 (function initChinarLeaves(){
   const ambient=document.getElementById("chinarAmbient");
   if(!ambient)return;
@@ -353,6 +353,7 @@ async function init(){
   const colors=["#a8432a","#b8542e","#c36532","#d17835","#91402a","#9f4828","#c8753a"];
   const count=mobile?7:9;
   const rand=(a,b)=>a+Math.random()*(b-a);
+
   for(let i=0;i<count;i++){
     const leaf=document.createElement("span");
     leaf.className="chinar-leaf";
@@ -371,7 +372,6 @@ async function init(){
   }
   if(reduced)ambient.setAttribute("data-motion-disabled","true");
 })();
-
 init();
 addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;const progress=$(".progress i");if(progress)progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
 if(matchMedia("(pointer:fine)").matches){
