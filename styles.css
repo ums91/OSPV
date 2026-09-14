@@ -130,70 +130,12 @@ footer .ums91-flag-link img{
   }
 }
 
-/* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
-.chinar-ambient{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:5;
-}
-.chinar-leaf{
-  --leaf-size:26px;
-  --leaf-color:#b55a32;
-  position:absolute;
-  top:-10vh;
-  left:0;
-  width:var(--leaf-size);
-  height:calc(var(--leaf-size) * 1.02);
-  opacity:0;
-  transform-origin:50% 46%;
-  will-change:transform,opacity;
-  filter:drop-shadow(0 2px 2px rgba(35,20,10,.18));
-  animation:chinarFall var(--fall,12s) linear var(--delay,0s) infinite;
-}
-.chinar-leaf::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:var(--leaf-color);
-  /* Distinctive five-lobed Chinar silhouette: broad upper lobes,
-     deep sinuses, pointed central lobe and tapered lower lobes. */
-  clip-path:polygon(
-    50% 0%,
-    57% 24%, 77% 11%,
-    69% 37%, 100% 31%,
-    76% 51%, 94% 67%,
-    66% 62%, 71% 91%,
-    54% 71%, 50% 100%,
-    46% 71%, 29% 91%,
-    34% 62%, 6% 67%,
-    24% 51%, 0% 31%,
-    31% 37%, 23% 11%,
-    43% 24%
-  );
-}
-.chinar-leaf::after{
-  content:"";
-  position:absolute;
-  left:49.5%;
-  top:5%;
-  width:1px;
-  height:91%;
-  background:rgba(83,46,26,.46);
-  transform:rotate(var(--vein-tilt,0deg));
-  transform-origin:center;
-}
-@keyframes chinarFall{
-  0%{transform:translate3d(0,-12vh,0) rotate(var(--r0,0deg)) scale(var(--scale,1));opacity:0}
-  7%{opacity:var(--opacity,.62)}
-  28%{transform:translate3d(calc(var(--drift)*.28),28vh,0) rotate(calc(var(--spin)*.3 + var(--r0,0deg))) scale(var(--scale,1))}
-  52%{transform:translate3d(calc(var(--drift)*.62),52vh,0) rotate(calc(var(--spin)*.58 + var(--r0,0deg))) scale(var(--scale,1))}
-  76%{transform:translate3d(calc(var(--drift)*.84),76vh,0) rotate(calc(var(--spin)*.82 + var(--r0,0deg))) scale(var(--scale,1))}
-  94%{transform:translate3d(calc(var(--drift)*.98),98vh,0) rotate(calc(var(--spin)*.96 + var(--r0,0deg))) scale(var(--scale,1));opacity:var(--opacity,.62)}
-  99%{transform:translate3d(var(--drift),104vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:var(--opacity,.62)}
-  100%{transform:translate3d(var(--drift),110vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
-}
+/* ── Autumn Chinar atmosphere — full-page fall ─────────────────────────── */
+.chinar-ambient{position:absolute;top:0;left:0;width:100%;height:var(--chinar-page-height,100vh);pointer-events:none;overflow:hidden;z-index:4}
+.chinar-leaf{--leaf-size:26px;--leaf-color:#b55a32;position:absolute;top:calc(var(--leaf-size) * -1.25);left:0;width:var(--leaf-size);height:calc(var(--leaf-size) * 1.18);opacity:0;transform-origin:50% 48%;will-change:transform,opacity;filter:drop-shadow(0 2px 2px rgba(35,20,10,.16));animation:chinarFall var(--fall,38s) linear var(--delay,0s) infinite}
+.chinar-leaf::before{content:"";position:absolute;left:2%;top:0;width:96%;height:88%;background:linear-gradient(76deg,transparent 47%,rgba(83,46,26,.22) 48%,rgba(83,46,26,.22) 50%,transparent 51%),var(--leaf-color);clip-path:polygon(50% 0%,53% 10%,56% 22%,62% 29%,69% 27%,76% 20%,75% 31%,82% 28%,92% 22%,88% 35%,100% 39%,91% 45%,86% 50%,91% 58%,100% 64%,89% 65%,82% 70%,84% 80%,77% 76%,69% 73%,70% 85%,63% 79%,56% 75%,51% 91%,48% 75%,40% 80%,34% 85%,35% 73%,27% 76%,16% 80%,18% 70%,10% 66%,0% 64%,10% 57%,14% 50%,8% 45%,0% 39%,12% 34%,8% 23%,19% 28%,25% 31%,24% 20%,31% 27%,38% 29%,44% 21%,47% 10%)}
+.chinar-leaf::after{content:"";position:absolute;left:49%;top:72%;width:2px;height:30%;background:linear-gradient(180deg,rgba(83,46,26,.58),rgba(83,46,26,.15));border-radius:50%;transform:rotate(var(--stem-tilt,0deg));transform-origin:top center}
+@keyframes chinarFall{0%{transform:translate3d(0,calc(var(--leaf-size) * -1.5),0) rotate(var(--r0,0deg)) scale(var(--scale,1));opacity:0}5%{opacity:var(--opacity,.58)}22%{transform:translate3d(calc(var(--drift)*.20),calc(var(--fall-distance)*.22),0) rotate(calc(var(--spin)*.20 + var(--r0,0deg))) scale(var(--scale,1))}45%{transform:translate3d(calc(var(--drift)*.52),calc(var(--fall-distance)*.45),0) rotate(calc(var(--spin)*.46 + var(--r0,0deg))) scale(var(--scale,1))}68%{transform:translate3d(calc(var(--drift)*.78),calc(var(--fall-distance)*.68),0) rotate(calc(var(--spin)*.72 + var(--r0,0deg))) scale(var(--scale,1))}88%{opacity:var(--opacity,.58)}100%{transform:translate3d(var(--drift),var(--fall-distance),0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}}
 .hero-image img{content-visibility:auto}
 .hero-copy{z-index:8}
 .hero-vignette{z-index:2}

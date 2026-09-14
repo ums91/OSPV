@@ -344,32 +344,27 @@ async function init(){
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
 
-/* Autumn Chinar leaves: subtle ambient fall. */
+/* Autumn Chinar leaves: full-page ambient fall to the footer. */
 (function initChinarLeaves(){
-  const ambient=document.getElementById("chinarAmbient");
-  if(!ambient)return;
+  const ambient=document.getElementById("chinarAmbient"); if(!ambient)return;
   const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const colors=["#a94b2b","#b65b32","#c06a35","#8f3d28","#9f4a2b","#c27a3e","#7f3526"];
   const mobile=window.matchMedia&&window.matchMedia("(max-width:720px)").matches;
-  const count=mobile?10:17;
-  const rand=(a,b)=>a+Math.random()*(b-a);
-  for(let i=0;i<count;i++){
-    const leaf=document.createElement("span");
-    leaf.className="chinar-leaf";
-    leaf.style.left=rand(1,99).toFixed(2)+"%";
-    leaf.style.setProperty("--leaf-size",rand(mobile?15:18,mobile?25:34).toFixed(1)+"px");
-    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
-    leaf.style.setProperty("--drift",rand(-150,150).toFixed(0)+"px");
-    leaf.style.setProperty("--spin",rand(-560,560).toFixed(0)+"deg");
-    leaf.style.setProperty("--r0",rand(-35,35).toFixed(0)+"deg");
-    leaf.style.setProperty("--vein-tilt",rand(-8,8).toFixed(0)+"deg");
-    leaf.style.setProperty("--scale",rand(.7,1.18).toFixed(2));
-    leaf.style.setProperty("--opacity",rand(.38,.72).toFixed(2));
-    leaf.style.setProperty("--fall",rand(12,20).toFixed(2)+"s");
-    leaf.style.setProperty("--delay",(-rand(0,18)).toFixed(2)+"s");
-    ambient.appendChild(leaf);
+  const count=mobile?9:16; const rand=(a,b)=>a+Math.random()*(b-a);
+  function syncPageTravel(){
+    const pageHeight=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight,window.innerHeight);
+    const travel=pageHeight+window.innerHeight*.08;
+    ambient.style.height=pageHeight+"px"; ambient.style.setProperty("--chinar-page-height",pageHeight+"px");
+    ambient.querySelectorAll(".chinar-leaf").forEach(leaf=>leaf.style.setProperty("--fall-distance",travel+"px"));
   }
-  if(reduced)ambient.setAttribute("data-motion-disabled","true");
+  for(let i=0;i<count;i++){
+    const leaf=document.createElement("span"); leaf.className="chinar-leaf"; leaf.style.left=rand(0,100).toFixed(2)+"%";
+    leaf.style.setProperty("--leaf-size",rand(mobile?15:19,mobile?25:36).toFixed(1)+"px"); leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
+    leaf.style.setProperty("--drift",rand(-220,220).toFixed(0)+"px"); leaf.style.setProperty("--spin",rand(-720,720).toFixed(0)+"deg"); leaf.style.setProperty("--r0",rand(-40,40).toFixed(0)+"deg"); leaf.style.setProperty("--stem-tilt",rand(-10,10).toFixed(0)+"deg");
+    leaf.style.setProperty("--scale",rand(.72,1.16).toFixed(2)); leaf.style.setProperty("--opacity",rand(.36,.68).toFixed(2)); leaf.style.setProperty("--fall",rand(mobile?28:36,mobile?42:58).toFixed(2)+"s"); leaf.style.setProperty("--delay",(-rand(0,mobile?34:52)).toFixed(2)+"s"); ambient.appendChild(leaf);
+  }
+  if(reduced)ambient.setAttribute("data-motion-disabled","true"); syncPageTravel(); addEventListener("resize",syncPageTravel,{passive:true}); addEventListener("load",syncPageTravel,{once:true});
+  if("ResizeObserver" in window){const ro=new ResizeObserver(syncPageTravel); ro.observe(document.documentElement);}
 })();
 init();
 addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;const progress=$(".progress i");if(progress)progress.style.width=`${max?scrollY/max*100:0}%`},{passive:true});
