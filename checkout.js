@@ -183,7 +183,7 @@
       const price=Number(i.price)||0;
       const original=Number(i.originalPrice)||price;
       const discounted=original>price;
-      return `<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*price)}</span></div>`;
+      return `<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*original)}</span></div>`;
     }).join("");
     const subtotal=items.reduce((sum,i)=>sum+(Number(i.originalPrice ?? i.price)||0)*(Number(i.quantity)||1),0);
     const finalTotal=Number(o.total)||0;
@@ -305,7 +305,7 @@
       const price=Number(x.price)||0;
       const original=Number(x.originalPrice)||price;
       const discounted=original>price;
-      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*price)}</span></div>`;
+      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*original)}</span></div>`;
     }).join("");
     const subtotal=receiptList.reduce((sum,x)=>sum+(Number(x.originalPrice ?? x.price)||0)*(Number(x.quantity)||1),0);
     const finalTotal=Number(total)||0;
