@@ -221,6 +221,13 @@ async function init(){
     products=await loadProducts();
     store=new Store(products);
     renderMini();renderProducts();renderCart();loadReels();
+    // Support shareable photo links such as ?photo=autumn-stillness.
+    // The URL opens the same product viewer used by the catalogue.
+    const photoId=new URLSearchParams(window.location.search).get("photo");
+    if(photoId){
+      const sharedPhoto=products.find(p=>String(p.id)===String(photoId).trim());
+      if(sharedPhoto) setTimeout(()=>openProduct(sharedPhoto.id),0);
+    }
   }catch(error){
     console.error(error);
     const el=$("#products");if(el)el.innerHTML=`<div class="catalogue-error"><strong>Collection temporarily unavailable.</strong><span>Please refresh the journal.</span></div>`;
