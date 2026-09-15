@@ -533,3 +533,34 @@
     flex:0 0 auto !important;
   }
 }
+
+/* UMS91 — DESKTOP PHOTO-OPEN HEADER OVERLAP FIX
+   Keep navigation and utility controls separated while a photograph is open.
+   The photo panel remains below the white topbar. */
+@media (min-width:921px){
+  body.product-view-open .topbar nav{
+    gap:clamp(22px,2.25vw,34px) !important;
+    transform:translateX(-72px) !important;
+    flex-shrink:1 !important;
+  }
+  body.product-view-open .topbar nav a{
+    white-space:nowrap !important;
+    font-size:8.5px !important;
+  }
+  body.product-view-open .topbar .top-actions{
+    right:20px !important;
+    gap:14px !important;
+    z-index:6 !important;
+  }
+  body.product-view-open .topbar .top-actions .order-status-btn{
+    white-space:nowrap !important;
+    min-width:86px !important;
+    font-size:7px !important;
+  }
+  body.product-view-open .topbar .top-actions .bag-btn{
+    white-space:nowrap !important;
+    min-width:48px !important;
+    font-size:7px !important;
+  }
+}
+
