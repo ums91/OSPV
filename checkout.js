@@ -179,13 +179,23 @@
     const status=receiptStatus(o);
     const lines=items.map(i=>{
       const type=String(i?.type||PRODUCT_TYPES[i?.id]||"").trim();
-      return `<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${Number(i.quantity)||1} × ${money(i.price)}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(i.quantity)||1)*Number(i.price))}</span></div>`;
+      const qty=Number(i.quantity)||1;
+      const price=Number(i.price)||0;
+      const original=Number(i.originalPrice)||price;
+      const discounted=original>price;
+      return `<div class="receipt-line"><div><strong>${esc(i.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*price)}</span></div>`;
     }).join("");
+    const subtotal=items.reduce((sum,i)=>sum+(Number(i.originalPrice ?? i.price)||0)*(Number(i.quantity)||1),0);
+    const finalTotal=Number(o.total)||0;
+    const discount=Math.max(0,subtotal-finalTotal);
+    const couponApplied=discount>0 && items.some(i=>Number(i.originalPrice||0)>Number(i.price||0));
+    const couponBlock=couponApplied ? `<div class="receipt-coupon"><div><span>COUPON</span><strong>FALL50</strong></div><div><span>DISCOUNT</span><strong>50% OFF</strong></div><div class="receipt-coupon-discount"><span>SAVING</span><strong>−${money(discount)}</strong></div></div>` : "";
     const receipt=`<div class="receipt-meta"><span>ORDER</span><strong>${esc(o.orderId||"")}</strong><span>DATE</span><strong>${esc(receiptDate(o.date))}</strong></div>
       <div class="receipt-rule dashed"></div>
       <div class="receipt-items">${lines}</div>
+      ${couponBlock}
       <div class="receipt-rule"></div>
-      <div class="receipt-total"><span>TOTAL</span><strong>${money(o.total)}</strong></div>
+      <div class="receipt-total"><span>TOTAL</span><strong>${money(finalTotal)}</strong></div>
       <div class="receipt-stamp-wrap"><div class="receipt-stamp stamp-${receiptStampClass(status[0])}">${esc(status[0])}</div></div>
       <div class="receipt-barcode" aria-hidden="true"></div>
       <div class="receipt-code">${esc(o.orderId||"UMS91")}</div>
@@ -288,11 +298,25 @@
   function fillReceipt(orderId,items,total){
     $("#successOrderId").textContent=orderId||"—";
     $("#receiptDate").textContent=new Intl.DateTimeFormat("en-GB",{day:"2-digit",month:"short",year:"numeric",timeZone:"Asia/Kolkata"}).format(new Date()).toUpperCase();
-    $("#receiptItems").innerHTML=(items||[]).map(x=>{
+    const receiptList=items||[];
+    $("#receiptItems").innerHTML=receiptList.map(x=>{
       const type=String(x?.type||PRODUCT_TYPES[x?.id]||"").trim();
-      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${Number(x.quantity)||1} × ${x.originalPrice&&Number(x.originalPrice)>Number(x.price)?`${money(x.originalPrice)} → ${money(x.price)}`:money(x.price)}${x.originalPrice&&Number(x.originalPrice)>Number(x.price)?` · ${SALE.percent}% OFF`:""}</small>${type?`<em>${esc(type)}</em>`:""}</div><span>${money((Number(x.quantity)||1)*Number(x.price))}</span></div>`;
+      const qty=Number(x.quantity)||1;
+      const price=Number(x.price)||0;
+      const original=Number(x.originalPrice)||price;
+      const discounted=original>price;
+      return `<div class="receipt-line"><div><strong>${esc(x.title)}</strong><small>${qty} × ${discounted?`${money(original)} → ${money(price)}`:money(price)}</small>${discounted?`<em>FALL50 · 50% OFF</em>`:""}${type?`<em>${esc(type)}</em>`:""}</div><span>${money(qty*price)}</span></div>`;
     }).join("");
-    $("#receiptTotal").textContent=money(total);
+    const subtotal=receiptList.reduce((sum,x)=>sum+(Number(x.originalPrice ?? x.price)||0)*(Number(x.quantity)||1),0);
+    const finalTotal=Number(total)||0;
+    const discount=Math.max(0,subtotal-finalTotal);
+    const couponRow=$("#receiptCoupon");
+    if(couponRow){
+      couponRow.innerHTML=discount>0 && receiptList.some(x=>Number(x.originalPrice||0)>Number(x.price||0))
+        ? `<div class="receipt-coupon"><div><span>COUPON</span><strong>FALL50</strong></div><div><span>DISCOUNT</span><strong>50% OFF</strong></div><div class="receipt-coupon-discount"><span>SAVING</span><strong>−${money(discount)}</strong></div></div>`
+        : "";
+    }
+    $("#receiptTotal").textContent=money(finalTotal);
     $("#receiptCode").textContent=String(orderId||"UMS91").replace(/[^A-Z0-9-]/gi,"").toUpperCase();
     setReceiptStamp({paymentStatus:"PENDING",orderStatus:"PAYMENT VERIFICATION"},false);
     const copy=orderFormatCopy(items);
@@ -301,28 +325,6 @@
   }
 
   function stopReceiptPolling(){if(receiptPollTimer){clearTimeout(receiptPollTimer);receiptPollTimer=null;}}
-  function getOrderRequestKey(){
-    const storageKey="ums91_order_request_key";
-    let key="";
-    try{key=sessionStorage.getItem(storageKey)||"";}catch(e){}
-    if(!key){
-      key=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():("req-"+Date.now()+"-"+Math.random().toString(36).slice(2));
-      try{sessionStorage.setItem(storageKey,key);}catch(e){}
-    }
-    return key;
-  }
-
-  async function parseOrderResponse(response){
-    const text=await response.text();
-    let data;
-    try{data=JSON.parse(text);}catch(e){
-      const err=new Error("The order service did not return a valid response. Your order may already have been received; please wait a moment before trying again.");
-      err.retryable=true;
-      throw err;
-    }
-    if(!data.success) throw new Error(data.error||"Unable to create order.");
-    return data;
-  }
   function pollReceiptStatus(){
     stopReceiptPolling();
     if(!receiptPrivateOrder?.orderId||!receiptPrivateOrder?.token)return;
@@ -358,24 +360,12 @@
     showMessage(msg,"Submitting your order for payment verification…");
 
     try{
-      const idempotencyKey=getOrderRequestKey();
-      const payload={
+      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
         action:"createOrder",customerName:name,email,phone,
         address:[addressLine1,city,state,postalCode,country].join(", "),
-        items:window.store.items.map(x=>({id:x.id,quantity:x.qty})),couponCode:appliedCoupon,
-        idempotencyKey:idempotencyKey
-      };
-      let data;
-      try{
-        const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-        data=await parseOrderResponse(response);
-      }catch(firstError){
-        if(!firstError?.retryable) throw firstError;
-        showMessage(msg,"Confirming your order submission…");
-        await new Promise(resolve=>setTimeout(resolve,1200));
-        const retryResponse=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
-        data=await parseOrderResponse(retryResponse);
-      }
+        items:window.store.items.map(x=>({id:x.id,quantity:x.qty})),couponCode:appliedCoupon
+      })});
+      const data=await response.json();
       if(!data.success)throw new Error(data.error||"Unable to create order.");
 
       window.store._items=[];
@@ -397,7 +387,6 @@
         successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
       }
       panel("#orderSuccess",true);
-      try{sessionStorage.removeItem("ums91_order_request_key");}catch(e){}
       pollReceiptStatus();
     }catch(err){
       console.error(err);

@@ -393,3 +393,10 @@
 @media (max-width:430px){
   #cartDrawer{top:58px !important;height:calc(100dvh - 58px) !important;}
 }
+
+/* UMS91 — coupon details on confirmation and private order-status receipts */
+.receipt-coupon{display:grid;gap:7px;margin:0 0 2px;padding:11px 0 0;border-top:1px solid rgba(23,23,19,.12);}
+.receipt-coupon>div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:baseline;}
+.receipt-coupon span{font-size:.5rem;letter-spacing:.15em;opacity:.55;}
+.receipt-coupon strong{text-align:right;font-size:.6rem;letter-spacing:.08em;}
+.receipt-coupon-discount strong{color:#6b5331;}
