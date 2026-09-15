@@ -498,3 +498,38 @@
     top:142px !important;
   }
 }
+
+/* UMS91 — DESKTOP DRAWERS START BELOW THE WHITE TOPBAR
+   Keep the persistent announcement + white navigation header visible.
+   The Bag uses the taller reflowed header; the Photo panel uses the normal header. */
+@media (min-width:921px){
+  /* Normal desktop topbar: 34px announcement + 72px navigation = 106px. */
+  body.product-view-open #productModal.modal,
+  body.product-view-open #productModal.modal.open{
+    top:106px !important;
+    bottom:0 !important;
+    height:calc(100dvh - 106px) !important;
+    max-height:calc(100dvh - 106px) !important;
+    inset-block-start:106px !important;
+    inset-block-end:0 !important;
+  }
+
+  /* Bag-open desktop header is 84px tall and starts at 34px. */
+  body.cart-open #cartDrawer.drawer,
+  body.cart-open #cartDrawer.drawer.open,
+  body.bag-is-open #cartDrawer.drawer,
+  body.bag-is-open #cartDrawer.drawer.open{
+    top:118px !important;
+    bottom:0 !important;
+    height:calc(100dvh - 118px) !important;
+    max-height:calc(100dvh - 118px) !important;
+    inset-block-start:118px !important;
+    inset-block-end:0 !important;
+  }
+
+  /* Keep drawer close controls inside the newly positioned Bag panel. */
+  body.cart-open #cartDrawer .drawer-head,
+  body.bag-is-open #cartDrawer .drawer-head{
+    flex:0 0 auto !important;
+  }
+}
