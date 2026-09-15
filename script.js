@@ -71,8 +71,25 @@ function syncOverlayLock(){
   const productOpen=$("#productModal")?.classList.contains("open");
   document.body.classList.toggle("product-view-open",!!productOpen);
 }
+function setPhotoUrl(id){
+  try{
+    const url=new URL(window.location.href);
+    url.searchParams.set("photo",String(id));
+    // Keep the shareable photo URL without adding a browser-history entry.
+    window.history.replaceState({},document.title,url.pathname+url.search+url.hash);
+  }catch(_){}
+}
+function clearPhotoUrl(){
+  try{
+    const url=new URL(window.location.href);
+    if(!url.searchParams.has("photo"))return;
+    url.searchParams.delete("photo");
+    window.history.replaceState({},document.title,url.pathname+url.search+url.hash);
+  }catch(_){}
+}
 function openProduct(id){
   current=products.find(p=>String(p.id)===String(id)); if(!current)return;
+  setPhotoUrl(current.id);
   $("#mImg").src=current.image;
   $("#mImg").alt=current.title;
   $("#mType").textContent=current.type;
@@ -170,8 +187,7 @@ function addToCart(id,button=null){
   try{
     const added=store.add(id);
     renderCart(added.id);
-    $("#productModal")?.classList.remove("open");
-    $("#productModal")?.setAttribute("aria-hidden","true");
+    close("#productModal");
     const drawer=$("#cartDrawer");
     if(drawer){drawer.classList.add("open");drawer.setAttribute("aria-hidden","false");document.body.classList.add("bag-is-open")}
     syncOverlayLock();
@@ -208,7 +224,10 @@ function close(id){
   if(id==="#videoModal"){
     const v=$("#activeVideo");if(v){v.pause();v.removeAttribute("src");v.load()}
   }
-  if(id==="#productModal")document.body.classList.remove("product-view-open");
+  if(id==="#productModal"){
+    document.body.classList.remove("product-view-open");
+    clearPhotoUrl();
+  }
   if(id==="#cartDrawer"){
     document.body.classList.remove("bag-is-open");
     const bag=$("#bagBtn");
@@ -221,13 +240,11 @@ async function init(){
     products=await loadProducts();
     store=new Store(products);
     renderMini();renderProducts();renderCart();loadReels();
-    // Support shareable photo links such as ?photo=autumn-stillness.
-    // The URL opens the same product viewer used by the catalogue.
-    const photoId=new URLSearchParams(window.location.search).get("photo");
-    if(photoId){
-      const sharedPhoto=products.find(p=>String(p.id)===String(photoId).trim());
-      if(sharedPhoto) setTimeout(()=>openProduct(sharedPhoto.id),0);
-    }
+    // If a photograph URL was shared directly, open that exact photograph.
+    try{
+      const photoId=new URL(window.location.href).searchParams.get("photo");
+      if(photoId)openProduct(photoId);
+    }catch(_){}
   }catch(error){
     console.error(error);
     const el=$("#products");if(el)el.innerHTML=`<div class="catalogue-error"><strong>Collection temporarily unavailable.</strong><span>Please refresh the journal.</span></div>`;
