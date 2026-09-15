@@ -413,3 +413,88 @@
     left:70px !important;
   }
 }
+
+
+/* UMS91 — MOBILE PHOTO CLOSE CONTROL
+   Keep the photograph close button fixed above the modal content/header. */
+@media (max-width:720px){
+  #productModal.modal .modal-close{
+    position:fixed !important;
+    top:14px !important;
+    right:14px !important;
+    z-index:2147483647 !important;
+    float:none !important;
+    margin:0 !important;
+    width:46px !important;
+    height:46px !important;
+    min-width:46px !important;
+    min-height:46px !important;
+    display:block !important;
+    visibility:visible !important;
+    opacity:1 !important;
+    pointer-events:auto !important;
+    color:transparent !important;
+    font-size:0 !important;
+    line-height:0 !important;
+    border:1px solid rgba(20,20,20,.25) !important;
+    border-radius:50% !important;
+    background:rgba(244,240,232,.94) !important;
+    box-shadow:0 6px 20px rgba(0,0,0,.14) !important;
+    overflow:visible !important;
+  }
+  #productModal.modal .modal-close::before,
+  #productModal.modal .modal-close::after{
+    content:"" !important;
+    position:absolute !important;
+    left:50% !important;
+    top:50% !important;
+    width:19px !important;
+    height:2px !important;
+    background:#151515 !important;
+    border-radius:2px !important;
+    transform-origin:center !important;
+  }
+  #productModal.modal .modal-close::before{transform:translate(-50%,-50%) rotate(45deg) !important;}
+  #productModal.modal .modal-close::after{transform:translate(-50%,-50%) rotate(-45deg) !important;}
+}
+
+
+/* UMS91 — MOBILE PHOTO PANEL STARTS BELOW THE FIXED HEADER
+   Keep the sale announcement + mobile topbar visible above an opened photograph. */
+@media (max-width:720px){
+  #productModal.modal,
+  #productModal.modal.open{
+    top:124px !important;
+    right:0 !important;
+    bottom:0 !important;
+    left:auto !important;
+    width:94vw !important;
+    max-width:94vw !important;
+    height:calc(100dvh - 124px) !important;
+    max-height:calc(100dvh - 124px) !important;
+    inset-block-start:124px !important;
+    inset-block-end:0 !important;
+    inset-inline-start:auto !important;
+    inset-inline-end:0 !important;
+  }
+
+  #productModal.modal .modal-close{
+    top:138px !important;
+    right:calc(3vw + 12px) !important;
+    z-index:2147483647 !important;
+  }
+}
+
+@media (max-width:430px){
+  #productModal.modal,
+  #productModal.modal.open{
+    top:128px !important;
+    height:calc(100dvh - 128px) !important;
+    max-height:calc(100dvh - 128px) !important;
+    inset-block-start:128px !important;
+  }
+
+  #productModal.modal .modal-close{
+    top:142px !important;
+  }
+}
