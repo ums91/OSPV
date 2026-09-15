@@ -301,6 +301,28 @@
   }
 
   function stopReceiptPolling(){if(receiptPollTimer){clearTimeout(receiptPollTimer);receiptPollTimer=null;}}
+  function getOrderRequestKey(){
+    const storageKey="ums91_order_request_key";
+    let key="";
+    try{key=sessionStorage.getItem(storageKey)||"";}catch(e){}
+    if(!key){
+      key=(window.crypto&&crypto.randomUUID)?crypto.randomUUID():("req-"+Date.now()+"-"+Math.random().toString(36).slice(2));
+      try{sessionStorage.setItem(storageKey,key);}catch(e){}
+    }
+    return key;
+  }
+
+  async function parseOrderResponse(response){
+    const text=await response.text();
+    let data;
+    try{data=JSON.parse(text);}catch(e){
+      const err=new Error("The order service did not return a valid response. Your order may already have been received; please wait a moment before trying again.");
+      err.retryable=true;
+      throw err;
+    }
+    if(!data.success) throw new Error(data.error||"Unable to create order.");
+    return data;
+  }
   function pollReceiptStatus(){
     stopReceiptPolling();
     if(!receiptPrivateOrder?.orderId||!receiptPrivateOrder?.token)return;
@@ -336,12 +358,24 @@
     showMessage(msg,"Submitting your order for payment verification…");
 
     try{
-      const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({
+      const idempotencyKey=getOrderRequestKey();
+      const payload={
         action:"createOrder",customerName:name,email,phone,
         address:[addressLine1,city,state,postalCode,country].join(", "),
-        items:window.store.items.map(x=>({id:x.id,quantity:x.qty})),couponCode:appliedCoupon
-      })});
-      const data=await response.json();
+        items:window.store.items.map(x=>({id:x.id,quantity:x.qty})),couponCode:appliedCoupon,
+        idempotencyKey:idempotencyKey
+      };
+      let data;
+      try{
+        const response=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+        data=await parseOrderResponse(response);
+      }catch(firstError){
+        if(!firstError?.retryable) throw firstError;
+        showMessage(msg,"Confirming your order submission…");
+        await new Promise(resolve=>setTimeout(resolve,1200));
+        const retryResponse=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+        data=await parseOrderResponse(retryResponse);
+      }
       if(!data.success)throw new Error(data.error||"Unable to create order.");
 
       window.store._items=[];
@@ -363,6 +397,7 @@
         successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
       }
       panel("#orderSuccess",true);
+      try{sessionStorage.removeItem("ums91_order_request_key");}catch(e){}
       pollReceiptStatus();
     }catch(err){
       console.error(err);
