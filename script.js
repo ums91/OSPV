@@ -87,9 +87,39 @@ function clearPhotoUrl(){
     window.history.replaceState({},document.title,url.pathname+url.search+url.hash);
   }catch(_){}
 }
+function updatePhotoDiscoverability(photo){
+  if(!photo)return;
+  const title=`${photo.title} — UMS91 Visual Journal`;
+  const description=photo.description || `${photo.title} — a photograph from the UMS91 Visual Journal collection.`;
+  document.title=title;
+  const setMeta=(selector,content)=>{const el=document.querySelector(selector);if(el)el.setAttribute("content",content)};
+  setMeta('meta[name="description"]',description);
+  setMeta('meta[property="og:title"]',title);
+  setMeta('meta[property="og:description"]',description);
+  setMeta('meta[property="og:image"]',new URL(photo.image,window.location.href).href);
+  setMeta('meta[property="og:image:alt"]',photo.title);
+  setMeta('meta[name="twitter:title"]',title);
+  setMeta('meta[name="twitter:description"]',description);
+  setMeta('meta[name="twitter:image"]',new URL(photo.image,window.location.href).href);
+  setMeta('meta[name="twitter:image:alt"]',photo.title);
+}
+function resetSiteDiscoverability(){
+  document.title="UMS91 — Visual Journal";
+  const setMeta=(selector,content)=>{const el=document.querySelector(selector);if(el)el.setAttribute("content",content)};
+  setMeta('meta[name="description"]','UMS91 Visual Journal — photography from Kashmir, visual stories, motion and collectible fine-art editions.');
+  setMeta('meta[property="og:title"]','UMS91 — Visual Journal');
+  setMeta('meta[property="og:description"]','Photography from Kashmir, visual stories, motion and collectible fine-art editions.');
+  setMeta('meta[property="og:image"]',new URL('assets/hero-autumn-kashmir.jpg',window.location.href).href);
+  setMeta('meta[property="og:image:alt"]','Autumn Kashmir landscape with mountains and a traditional wooden pavilion');
+  setMeta('meta[name="twitter:title"]','UMS91 — Visual Journal');
+  setMeta('meta[name="twitter:description"]','Photography from Kashmir, visual stories, motion and collectible fine-art editions.');
+  setMeta('meta[name="twitter:image"]',new URL('assets/hero-autumn-kashmir.jpg',window.location.href).href);
+  setMeta('meta[name="twitter:image:alt"]','Autumn Kashmir landscape with mountains and a traditional wooden pavilion');
+}
 function openProduct(id){
   current=products.find(p=>String(p.id)===String(id)); if(!current)return;
   setPhotoUrl(current.id);
+  updatePhotoDiscoverability(current);
   $("#mImg").src=current.image;
   $("#mImg").alt=current.title;
   $("#mType").textContent=current.type;
@@ -302,6 +332,7 @@ function close(id){
   if(id==="#productModal"){
     document.body.classList.remove("product-view-open");
     clearPhotoUrl();
+    resetSiteDiscoverability();
   }
   if(id==="#cartDrawer"){
     document.body.classList.remove("bag-is-open");

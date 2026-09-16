@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ums91.github.io/OSPV/sitemap.xml

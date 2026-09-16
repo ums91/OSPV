@@ -1,0 +1,9 @@
+{
+  "name": "UMS91 Visual Journal",
+  "short_name": "UMS91",
+  "start_url": "/OSPV/",
+  "display": "standalone",
+  "background_color": "#10110f",
+  "theme_color": "#10110f",
+  "description": "Photography from Kashmir, visual stories, motion and collectible fine-art editions."
+}
