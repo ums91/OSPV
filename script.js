@@ -104,6 +104,81 @@ function openProduct(id){
   modal.setAttribute("aria-hidden","false");
   syncOverlayLock();
 }
+function photoShareUrl(){
+  const id=current?.id;
+  if(!id)return window.location.href;
+  const url=new URL(window.location.href);
+  url.searchParams.set("photo",String(id));
+  return url.toString();
+}
+function photoShareText(){
+  const title=current?.title||"UMS91 Photograph";
+  return `${title} · UMS91 Visual Journal`;
+}
+function setShareStatus(message){
+  const el=$("#shareStatus");
+  if(!el)return;
+  el.textContent=message||"";
+  el.classList.toggle("is-visible",!!message);
+  clearTimeout(el.__shareTimer);
+  if(message)el.__shareTimer=setTimeout(()=>{el.textContent="";el.classList.remove("is-visible")},2200);
+}
+async function copyPhotoLink(){
+  const url=photoShareUrl();
+  try{
+    if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);
+    else{
+      const area=document.createElement("textarea");
+      area.value=url;area.setAttribute("readonly","");
+      area.style.position="fixed";area.style.opacity="0";
+      document.body.appendChild(area);area.select();document.execCommand("copy");area.remove();
+    }
+    setShareStatus("LINK COPIED");
+    toast("PHOTO LINK COPIED");
+    return true;
+  }catch(error){
+    console.warn("UMS91 copy link failed:",error);
+    setShareStatus("COPY FAILED");
+    toast("COPY FAILED — PLEASE TRY AGAIN");
+    return false;
+  }
+}
+function openShareFallback(){
+  const fallback=$("#shareFallback");
+  if(fallback)fallback.hidden=!fallback.hidden;
+}
+function openPhotoShareChannel(channel){
+  const url=photoShareUrl();
+  const title=photoShareText();
+  const encodedUrl=encodeURIComponent(url);
+  const encodedText=encodeURIComponent(`${title}\n${url}`);
+  const targets={
+    whatsapp:`https://wa.me/?text=${encodedText}`,
+    facebook:`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    x:`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodedUrl}`,
+    email:`mailto:?subject=${encodeURIComponent(title)}&body=${encodedText}`
+  };
+  const target=targets[channel];
+  if(!target)return;
+  if(channel==="email")window.location.href=target;
+  else window.open(target,"_blank","noopener,noreferrer,width=680,height=720");
+  const fallback=$("#shareFallback");if(fallback)fallback.hidden=true;
+}
+async function sharePhoto(){
+  if(!current)return;
+  const shareData={title:photoShareText(),text:`${current.title} — UMS91 Visual Journal`,url:photoShareUrl()};
+  if(navigator.share){
+    try{
+      await navigator.share(shareData);
+      setShareStatus("SHARED");
+      return;
+    }catch(error){
+      if(error?.name==="AbortError")return;
+      console.warn("UMS91 native share unavailable:",error);
+    }
+  }
+  openShareFallback();
+}
 function renderCart(newId=null){
   if(!store)return;
   const items=store.items;
@@ -262,6 +337,24 @@ async function init(){
       e.preventDefault();
       e.stopPropagation();
       openBagDrawer();
+      return;
+    }
+    const share=e.target.closest?.("#sharePhoto");
+    if(share){
+      e.preventDefault();e.stopPropagation();
+      sharePhoto();
+      return;
+    }
+    const copyLink=e.target.closest?.("#copyPhotoLink");
+    if(copyLink){
+      e.preventDefault();e.stopPropagation();
+      copyPhotoLink();
+      return;
+    }
+    const shareChannel=e.target.closest?.("[data-share-channel]");
+    if(shareChannel){
+      e.preventDefault();e.stopPropagation();
+      openPhotoShareChannel(shareChannel.dataset.shareChannel);
       return;
     }
     const add=e.target.closest?.("[data-add],#addProduct");

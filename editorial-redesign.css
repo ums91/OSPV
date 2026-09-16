@@ -1233,6 +1233,81 @@ body.overlay-open{overflow:hidden!important}
 }
 #productModal .modal-close:hover{background:#bd955e;border-color:#bd955e;transform:rotate(90deg)}
 
+/* Photograph sharing — restrained editorial controls */
+#productModal .photo-share{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:0;
+  margin-top:14px;
+  border-top:1px solid rgba(20,20,20,.13);
+  padding-top:14px;
+  position:relative;
+}
+#productModal .photo-share-action{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#575650;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:34px;
+  padding:4px 16px 4px 0;
+  margin-right:16px;
+  font:600 9px/1 "DM Sans",sans-serif;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:color .2s ease,transform .2s ease;
+}
+#productModal .photo-share-action:hover{color:#a8793f;transform:translateY(-1px)}
+#productModal .photo-share-action:focus-visible{outline:1px solid #a8793f;outline-offset:4px}
+#productModal .share-glyph,#productModal .link-glyph{
+  display:inline-grid;
+  place-items:center;
+  width:18px;height:18px;
+  font-size:14px;
+  line-height:1;
+  letter-spacing:0;
+}
+#productModal .link-glyph{font-size:12px;transform:rotate(-45deg)}
+#productModal .photo-share-status{
+  opacity:0;
+  transform:translateY(2px);
+  color:#a8793f;
+  font:600 8px/1 "DM Sans",sans-serif;
+  letter-spacing:.14em;
+  transition:opacity .2s ease,transform .2s ease;
+}
+#productModal .photo-share-status.is-visible{opacity:1;transform:none}
+#productModal .share-fallback{
+  width:100%;
+  margin-top:10px;
+  padding:12px 14px;
+  border:1px solid rgba(20,20,20,.11);
+  background:rgba(255,255,255,.34);
+}
+#productModal .share-fallback>span{
+  display:block;
+  margin-bottom:9px;
+  color:#8a877f;
+  font:600 7px/1 "DM Sans",sans-serif;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+#productModal .share-fallback>div{display:flex;flex-wrap:wrap;gap:7px}
+#productModal .share-fallback button{
+  border:1px solid rgba(20,20,20,.14);
+  background:transparent;
+  color:#3f3e39;
+  padding:7px 10px;
+  font:500 8px/1 "DM Sans",sans-serif;
+  letter-spacing:.08em;
+  cursor:pointer;
+}
+#productModal .share-fallback button:hover{border-color:#a8793f;color:#a8793f}
+
 /* Search overlay */
 #searchModal.search-modal{
   z-index:1120!important;
@@ -2413,3 +2488,5 @@ body.cart-open .sidebar {
 @media (prefers-reduced-motion: reduce) {
   .sidebar { transition: none; }
 }
+
+@media(max-width:600px){#productModal .photo-share{margin-top:12px;padding-top:12px}#productModal .photo-share-action{font-size:8px;margin-right:12px;padding-right:10px}#productModal .photo-share-status{font-size:7px}.share-fallback{font-size:8px!important}}
