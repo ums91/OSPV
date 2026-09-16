@@ -116,7 +116,23 @@ function resetSiteDiscoverability(){
   setMeta('meta[name="twitter:image"]',new URL('assets/hero-autumn-kashmir.jpg',window.location.href).href);
   setMeta('meta[name="twitter:image:alt"]','Autumn Kashmir landscape with mountains and a traditional wooden pavilion');
 }
-function openProduct(id){
+function updatePhotoViewerNav(){
+  const count=$("#photoViewCount"),prev=$("#photoPrev"),next=$("#photoNext");
+  if(!current||!products.length)return;
+  const index=products.findIndex(p=>String(p.id)===String(current.id));
+  if(index<0)return;
+  if(count)count.textContent=`${String(index+1).padStart(2,"0")} / ${String(products.length).padStart(2,"0")}`;
+  if(prev){prev.disabled=products.length<2;prev.setAttribute("aria-label",`Previous photograph: ${products[(index-1+products.length)%products.length]?.title||""}`)}
+  if(next){next.disabled=products.length<2;next.setAttribute("aria-label",`Next photograph: ${products[(index+1)%products.length]?.title||""}`)}
+}
+function stepPhoto(direction){
+  if(!current||products.length<2)return;
+  const index=products.findIndex(p=>String(p.id)===String(current.id));
+  if(index<0)return;
+  const nextIndex=(index+direction+products.length)%products.length;
+  openProduct(products[nextIndex].id,{preserveDrawer:true});
+}
+function openProduct(id,options={}){
   current=products.find(p=>String(p.id)===String(id)); if(!current)return;
   setPhotoUrl(current.id);
   updatePhotoDiscoverability(current);
@@ -124,11 +140,12 @@ function openProduct(id){
   $("#mImg").alt=current.title;
   $("#mType").textContent=current.type;
   $("#mTitle").textContent=current.title;
-  $("#mDesc").textContent=current.description || photoDescriptions[current.id] || "A quiet OMER photograph selected for its atmosphere, light and sense of place.";
+  $("#mDesc").textContent=current.description || photoDescriptions[current.id] || "A quiet UMS91 photograph selected for its atmosphere, light and sense of place.";
   $("#mEdition").textContent=current.edition;
   $("#mSize").textContent=current.size;
   $("#mPrice").textContent=money(current.price);
-  close("#cartDrawer");
+  updatePhotoViewerNav();
+  if(!options.preserveDrawer)close("#cartDrawer");
   const modal=$("#productModal");
   modal.classList.add("open");
   modal.setAttribute("aria-hidden","false");
@@ -382,6 +399,18 @@ async function init(){
       copyPhotoLink();
       return;
     }
+    const photoPrev=e.target.closest?.("#photoPrev");
+    if(photoPrev){
+      e.preventDefault();e.stopPropagation();
+      stepPhoto(-1);
+      return;
+    }
+    const photoNext=e.target.closest?.("#photoNext");
+    if(photoNext){
+      e.preventDefault();e.stopPropagation();
+      stepPhoto(1);
+      return;
+    }
     const shareChannel=e.target.closest?.("[data-share-channel]");
     if(shareChannel){
       e.preventDefault();e.stopPropagation();
@@ -536,7 +565,12 @@ if(matchMedia("(pointer:fine)").matches){
     c.classList.toggle("cursor-photo",!!e.target.closest(".product-image,.editorial-journal-feature,.editorial-note-media,.editorial-archive-main,.editorial-archive-side,.edition-page"));
   });
 }
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(close);$("#menuBtn")?.classList.remove("is-open");$("#menuBtn")?.setAttribute("aria-expanded","false")}});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){["#cartDrawer","#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(close);$("#menuBtn")?.classList.remove("is-open");$("#menuBtn")?.setAttribute("aria-expanded","false");return}
+  if(!$("#productModal")?.classList.contains("open"))return;
+  if(e.key==="ArrowLeft"){e.preventDefault();stepPhoto(-1)}
+  if(e.key==="ArrowRight"){e.preventDefault();stepPhoto(1)}
+});
 
 (() => {
   const syncCartLayout = () => {

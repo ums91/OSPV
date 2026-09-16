@@ -2490,3 +2490,53 @@ body.cart-open .sidebar {
 }
 
 @media(max-width:600px){#productModal .photo-share{margin-top:12px;padding-top:12px}#productModal .photo-share-action{font-size:8px;margin-right:12px;padding-right:10px}#productModal .photo-share-status{font-size:7px}.share-fallback{font-size:8px!important}}
+
+
+/* =========================================================
+   UMS91 — PHOTO VIEWER REFINEMENT
+   Editorial navigation and clearer photograph-to-photograph browsing.
+   ========================================================= */
+#productModal .photo-view-nav{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:16px;
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid rgba(20,20,20,.12);
+}
+#productModal .photo-view-nav button{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:#24231f;
+  min-height:40px;
+  padding:4px 0;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font:600 8px/1 "DM Sans",sans-serif;
+  letter-spacing:.18em;
+  cursor:pointer;
+  transition:color .2s ease,transform .2s ease,opacity .2s ease;
+}
+#productModal .photo-view-nav button:first-child{justify-self:start}
+#productModal .photo-view-nav button:last-child{justify-self:end}
+#productModal .photo-view-nav button span{font-size:16px;line-height:1;letter-spacing:0}
+#productModal .photo-view-nav button small{font:600 8px/1 "DM Sans",sans-serif;letter-spacing:.18em}
+#productModal .photo-view-nav button:hover:not(:disabled){color:#a8793f;transform:translateY(-1px)}
+#productModal .photo-view-nav button:focus-visible{outline:1px solid #a8793f;outline-offset:4px}
+#productModal .photo-view-nav button:disabled{opacity:.35;cursor:default}
+#productModal .photo-view-count{justify-self:center;color:#8a877f;font:600 8px/1 "DM Sans",sans-serif;letter-spacing:.18em;white-space:nowrap}
+
+@media(max-width:600px){
+  #productModal .photo-view-nav{margin-top:22px;padding-top:14px;gap:10px}
+  #productModal .photo-view-nav button{min-height:36px;font-size:7px}
+  #productModal .photo-view-nav button small{font-size:7px}
+  #productModal .photo-view-nav button span{font-size:14px}
+  #productModal .photo-view-count{font-size:7px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #productModal .photo-view-nav button{transition:none}
+}
