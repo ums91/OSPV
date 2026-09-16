@@ -491,3 +491,119 @@ html body .sale-announcement a{pointer-events:auto !important;}
     max-height: calc(100vh - 58px) !important;
   }
 }
+
+/* ── UMS91 Autumn Editorial Atmosphere — restrained seasonal refinement ──
+   Visual-only layer. Does not alter product, cart, checkout, sharing,
+   subscription, payment, or backend behaviour. */
+:root{
+  --autumn-ink:#171714;
+  --autumn-paper:#f4f0e8;
+  --autumn-line:rgba(84,64,44,.16);
+  --autumn-accent:#9a6f3f;
+  --autumn-rust:#a45132;
+}
+
+/* A very restrained warm paper treatment for the page surfaces. */
+body{
+  background:
+    radial-gradient(circle at 88% 8%,rgba(169,111,63,.055),transparent 28%),
+    radial-gradient(circle at 8% 72%,rgba(129,91,57,.035),transparent 24%),
+    var(--autumn-paper);
+}
+
+/* Give the existing fixed leaf layer a quieter, gallery-like presence. */
+.chinar-ambient{z-index:145;}
+.chinar-leaf{filter:drop-shadow(0 1px 2px rgba(35,20,10,.13));}
+
+/* Fine editorial rules between major sections. */
+main>section:not(.hero){position:relative;}
+main>section:not(.hero)::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:clamp(24px,5vw,80px);
+  right:clamp(24px,5vw,80px);
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--autumn-line) 18%,var(--autumn-line) 82%,transparent);
+  pointer-events:none;
+}
+
+/* Subtle autumn accent on section eyebrows / labels without recolouring imagery. */
+.eyebrow,
+.section-kicker,
+.section-label{
+  text-decoration-color:rgba(154,111,63,.38);
+  text-underline-offset:5px;
+}
+
+/* Premium hover language for editorial cards. */
+.product-card,
+.editorial-journal-feature,
+.editorial-note,
+.editorial-archive-main,
+.editorial-archive-side{
+  transition:transform .45s cubic-bezier(.2,.65,.2,1),box-shadow .45s ease;
+}
+.product-card:hover,
+.editorial-journal-feature:hover,
+.editorial-note:hover,
+.editorial-archive-main:hover,
+.editorial-archive-side:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 38px rgba(38,29,20,.07);
+}
+
+/* Keep the autumn mood visible at the end of the page as well. */
+footer{
+  position:relative;
+  overflow:hidden;
+}
+footer::before{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(154,111,63,.28),transparent);
+  pointer-events:none;
+}
+footer::after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  right:-150px;
+  bottom:-190px;
+  border:1px solid rgba(154,111,63,.09);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+/* Light mode stays intentionally restrained rather than becoming orange. */
+body.light{
+  --autumn-line:rgba(84,64,44,.13);
+}
+
+@media(max-width:720px){
+  main>section:not(.hero)::before{
+    left:18px;
+    right:18px;
+  }
+  .product-card:hover,
+  .editorial-journal-feature:hover,
+  .editorial-note:hover,
+  .editorial-archive-main:hover,
+  .editorial-archive-side:hover{
+    transform:none;
+    box-shadow:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .product-card,
+  .editorial-journal-feature,
+  .editorial-note,
+  .editorial-archive-main,
+  .editorial-archive-side{transition:none;}
+}
