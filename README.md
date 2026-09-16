@@ -17,13 +17,12 @@ The project may contain experimental implementations and third-party services us
 ```text
 ╔══════════════════════════════════════════════════════════════╗
 ║                                                              ║
-║                 U M S 9 1                                    ║
+║                       U M S 9 1                              ║
 ║                                                              ║
-║        P H O T O G R A P H Y  ·  P R I N T                  ║
-║                     ·  P A P E R                             ║
+║               PLACES · MOMENTS · PERSPECTIVE                 ║
 ║                                                              ║
-║             O C C A S I O N A L   N O T E S .               ║
-║                    N O   N O I S E .                        ║
+║             O C C A S I O N A L   N O T E S .                ║
+║                    N O   N O I S E .                         ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝
 
