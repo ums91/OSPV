@@ -6,6 +6,8 @@
   const heroNumber = document.querySelector("#heroPage strong");
   const railNumber = document.querySelector("#railIndex b");
   const railFill = document.querySelector("#railIndex span i");
+  const progressFill = document.querySelector(".progress i");
+  const sectionAccents = ["#bd955e", "#c59a61", "#a98058", "#b48754", "#9b7653"];
 
   const updateProgress = () => {
     const marker = window.scrollY + window.innerHeight * 0.35;
@@ -22,6 +24,11 @@
     if (railFill) {
       railFill.style.height =
         `${(active / Math.max(sectionIds.length - 1, 1)) * 100}%`;
+      railFill.style.backgroundColor = sectionAccents[active] || sectionAccents[0];
+    }
+
+    if (progressFill) {
+      progressFill.style.backgroundColor = sectionAccents[active] || sectionAccents[0];
     }
 
     document.querySelectorAll(".sidebar nav a, .topbar nav a").forEach(link => {

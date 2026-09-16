@@ -565,12 +565,38 @@
 }
 
 
-/* UMS91 — MOBILE PHOTO TITLE CONTRAST FIX
-   Keep product/photo titles dark on the light mobile photo panel. */
-@media (max-width:720px){
-  #productModal.modal #mTitle,
-  #productModal.modal.open #mTitle{
-    color:#151515 !important;
-    -webkit-text-fill-color:#151515 !important;
-  }
+
+/* UMS91 — desktop rail + theme interaction fix
+   The rail previously contained an empty <i>, so only the 04/05 labels
+   and the grey track were visible. The theme button also toggled body.light
+   without synchronising the sidebar theme classes. */
+.rail-index span {
+  position: relative;
+  overflow: hidden;
+}
+
+.rail-index span i {
+  display: block;
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 0;
+  background: var(--ums91-gold, #bd955e);
+  transition: height .55s cubic-bezier(.2,.8,.2,1), background-color .35s ease;
+}
+
+.progress i {
+  transition: width .35s ease, background-color .35s ease;
+}
+
+body.light .progress i {
+  background: var(--ums91-gold, #bd955e);
+}
+
+.sidebar.sidebar-light .rail-index span i {
+  background: var(--ums91-gold, #bd955e);
+}
+
+.sidebar.sidebar-dark .rail-index span i {
+  background: var(--ums91-gold, #bd955e);
 }
