@@ -492,118 +492,156 @@ html body .sale-announcement a{pointer-events:auto !important;}
   }
 }
 
-/* ── UMS91 Autumn Editorial Atmosphere — restrained seasonal refinement ──
-   Visual-only layer. Does not alter product, cart, checkout, sharing,
-   subscription, payment, or backend behaviour. */
-:root{
-  --autumn-ink:#171714;
-  --autumn-paper:#f4f0e8;
-  --autumn-line:rgba(84,64,44,.16);
-  --autumn-accent:#9a6f3f;
-  --autumn-rust:#a45132;
+
+/* ================================================================
+   UMS91 — PREMIUM HOMEPAGE HERO / PHASE 1
+   Restrained editorial art direction. Visual-only; no commerce logic.
+   ================================================================ */
+.hero{
+  isolation:isolate;
 }
-
-/* A very restrained warm paper treatment for the page surfaces. */
-body{
-  background:
-    radial-gradient(circle at 88% 8%,rgba(169,111,63,.055),transparent 28%),
-    radial-gradient(circle at 8% 72%,rgba(129,91,57,.035),transparent 24%),
-    var(--autumn-paper);
-}
-
-/* Give the existing fixed leaf layer a quieter, gallery-like presence. */
-.chinar-ambient{z-index:145;}
-.chinar-leaf{filter:drop-shadow(0 1px 2px rgba(35,20,10,.13));}
-
-/* Fine editorial rules between major sections. */
-main>section:not(.hero){position:relative;}
-main>section:not(.hero)::before{
+.hero::before{
   content:"";
   position:absolute;
-  top:0;
-  left:clamp(24px,5vw,80px);
-  right:clamp(24px,5vw,80px);
+  inset:18px 18px 18px 18px;
+  z-index:7;
+  pointer-events:none;
+  border:1px solid rgba(243,240,234,.22);
+  opacity:.72;
+  transition:opacity .6s ease, inset .6s ease;
+}
+.hero::after{
+  content:"UMS91  /  VISUAL JOURNAL";
+  position:absolute;
+  top:24px;
+  right:28px;
+  z-index:8;
+  pointer-events:none;
+  color:rgba(243,240,234,.78);
+  font:500 8px/1 "DM Sans",sans-serif;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  text-shadow:0 1px 8px rgba(0,0,0,.25);
+}
+.hero-copy{
+  width:min(720px,72%);
+  padding:30px 38px 34px;
+  border:1px solid rgba(243,240,234,.26);
+  background:rgba(243,240,234,.20);
+  box-shadow:0 18px 60px rgba(25,22,17,.08);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+  transition:transform .55s ease, background .55s ease, border-color .55s ease;
+}
+.hero-copy::before{
+  content:"";
+  display:block;
+  width:42px;
   height:1px;
-  background:linear-gradient(90deg,transparent,var(--autumn-line) 18%,var(--autumn-line) 82%,transparent);
-  pointer-events:none;
+  margin:0 auto 18px;
+  background:rgba(189,149,94,.9);
 }
-
-/* Subtle autumn accent on section eyebrows / labels without recolouring imagery. */
-.eyebrow,
-.section-kicker,
-.section-label{
-  text-decoration-color:rgba(154,111,63,.38);
-  text-underline-offset:5px;
+.hero-copy .eyebrow{
+  margin-bottom:10px;
+  color:#71583d;
+  letter-spacing:.28em;
 }
-
-/* Premium hover language for editorial cards. */
-.product-card,
-.editorial-journal-feature,
-.editorial-note,
-.editorial-archive-main,
-.editorial-archive-side{
-  transition:transform .45s cubic-bezier(.2,.65,.2,1),box-shadow .45s ease;
+.hero h1{
+  margin:0;
+  font-size:clamp(72px,9.2vw,142px);
+  line-height:.88;
+  letter-spacing:.045em;
+  text-shadow:0 2px 18px rgba(0,0,0,.10);
 }
-.product-card:hover,
-.editorial-journal-feature:hover,
-.editorial-note:hover,
-.editorial-archive-main:hover,
-.editorial-archive-side:hover{
-  transform:translateY(-2px);
-  box-shadow:0 16px 38px rgba(38,29,20,.07);
+.hero-subline{
+  margin-top:17px;
+  font-size:9px;
+  letter-spacing:.34em;
 }
-
-/* Keep the autumn mood visible at the end of the page as well. */
-footer{
-  position:relative;
-  overflow:hidden;
+.hero-quote{
+  max-width:520px;
+  margin:20px auto 0;
+  font-size:17px;
+  line-height:1.55;
 }
-footer::before{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  top:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(154,111,63,.28),transparent);
-  pointer-events:none;
+.hero-actions{
+  margin-top:26px;
+  gap:18px;
 }
-footer::after{
-  content:"";
-  position:absolute;
-  width:280px;
-  height:280px;
-  right:-150px;
-  bottom:-190px;
-  border:1px solid rgba(154,111,63,.09);
-  border-radius:50%;
-  pointer-events:none;
+.hero-actions .pill{
+  box-shadow:0 8px 24px rgba(25,22,17,.12);
 }
-
-/* Light mode stays intentionally restrained rather than becoming orange. */
-body.light{
-  --autumn-line:rgba(84,64,44,.13);
+.hero-page{
+  right:4.2%;
+  bottom:76px;
+  z-index:9;
+  display:flex;
+  align-items:baseline;
+  gap:5px;
+  color:rgba(243,240,234,.88);
 }
-
+.hero-page strong{
+  font-size:76px;
+  line-height:.8;
+  font-weight:500;
+}
+.hero-page span{
+  font-size:9px;
+  letter-spacing:.16em;
+}
+.hero-scroll{
+  z-index:9;
+  letter-spacing:.18em;
+  transition:transform .25s ease, opacity .25s ease;
+}
+.hero-scroll:hover{
+  transform:translateY(3px);
+}
+.hero:hover::before{
+  inset:14px 14px 14px 14px;
+  opacity:.9;
+}
+.hero:hover .hero-copy{
+  background:rgba(243,240,234,.24);
+  border-color:rgba(243,240,234,.34);
+}
+@media(max-width:1100px){
+  .hero-copy{width:min(680px,76%);}
+  .hero h1{font-size:clamp(68px,10vw,118px);}
+}
 @media(max-width:720px){
-  main>section:not(.hero)::before{
-    left:18px;
+  .hero::before{
+    inset:12px;
+    border-color:rgba(243,240,234,.20);
+  }
+  .hero::after{
+    top:17px;
     right:18px;
+    font-size:7px;
+    letter-spacing:.16em;
   }
-  .product-card:hover,
-  .editorial-journal-feature:hover,
-  .editorial-note:hover,
-  .editorial-archive-main:hover,
-  .editorial-archive-side:hover{
-    transform:none;
-    box-shadow:none;
+  .hero-copy{
+    width:88%;
+    padding:24px 20px 26px;
+    background:rgba(243,240,234,.43);
+    border-color:rgba(111,88,61,.18);
+    box-shadow:0 14px 40px rgba(25,22,17,.10);
   }
+  .hero-copy::before{margin-bottom:14px;}
+  .hero-copy .eyebrow{margin-bottom:8px;}
+  .hero h1{font-size:clamp(62px,18vw,92px);}
+  .hero-subline{font-size:8px;letter-spacing:.25em;}
+  .hero-quote{font-size:15px;margin-top:17px;}
+  .hero-actions{margin-top:21px;gap:12px;}
+  .hero-page{display:none;}
+  .hero-scroll{font-size:7px;}
 }
-
+@media(max-width:460px){
+  .hero::after{display:none;}
+  .hero-copy{width:90%;bottom:58px;padding:22px 17px 24px;}
+  .hero h1{font-size:64px;}
+  .hero-quote{font-size:14px;}
+}
 @media(prefers-reduced-motion:reduce){
-  .product-card,
-  .editorial-journal-feature,
-  .editorial-note,
-  .editorial-archive-main,
-  .editorial-archive-side{transition:none;}
+  .hero::before,.hero-copy,.hero-scroll{transition:none;}
 }
