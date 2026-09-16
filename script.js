@@ -57,12 +57,35 @@ function renderMini(){
   el.innerHTML=products.slice(0,3).map(p=>`<article class="mini" data-product="${esc(p.id)}"><img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy"><div class="mini-info"><h3>${esc(p.title)}</h3><p>${esc(p.type)}</p><strong>${money(p.price)}</strong></div></article>`).join("");
   $$(".mini").forEach(x=>x.onclick=()=>openProduct(x.dataset.product));
 }
-function renderProducts(filter="all"){
+const collectionMembers={
+  landscapes:new Set(["mountain-lake","valley-light","winter-lake","summer-field","mountain-stream","quiet-water","winter-birds","river-stone","cloud-valley","lake-ridge","winter-water","snow-lake","light-after-rain","golden-road","river-and-ridge"]),
+  autumn:new Set(["autumn-stillness","golden-road","light-after-rain"]),
+  winter:new Set(["winter-lake","winter-birds","quiet-water","cloud-valley","courtyard-blue-sky","winter-water","snow-lake"]),
+  architecture:new Set(["garden-pool","garden-path","orchard-garden","courtyard-morning","quiet-interior","courtyard-blue-sky","rose-study"])
+};
+const collectionLabels={all:"Showing the complete UMS91 archive.",landscapes:"Landscapes, water and open country from the UMS91 archive.",autumn:"Autumn frames selected for warm light, foliage and seasonal atmosphere.",winter:"Winter frames shaped by snow, muted water and colder light.",architecture:"Courtyards, gardens and built spaces from the visual archive."};
+let activeCollection="all";
+let activeType="all";
+function renderProducts(type=activeType,collection=activeCollection){
   const el=$("#products"); if(!el)return;
-  const list=filter==="all"?products:products.filter(p=>p.type===filter);
+  activeType=type; activeCollection=collection;
+  const members=collectionMembers[collection];
+  const list=products.filter(p=>(type==="all"||p.type===type)&&(!members||members.has(String(p.id))));
   el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
+  const context=$("#collectionContext");
+  if(context)context.textContent=collectionLabels[collection]||collectionLabels.all;
   $$(".product").forEach(card=>card.addEventListener("click",e=>{if(!e.target.closest("button"))openProduct(card.dataset.product)}));
   $$('[data-view]').forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openProduct(btn.dataset.view)}));
+}
+function syncCollectionTabs(){
+  $$(".collection-tab").forEach(btn=>{
+    const active=btn.dataset.collection===activeCollection;
+    btn.classList.toggle("active",active);
+    btn.setAttribute("aria-selected",active?"true":"false");
+  });
+}
+function syncTypeFilters(){
+  $$(".filters [data-filter]").forEach(btn=>btn.classList.toggle("active",btn.dataset.filter===activeType));
 }
 function syncOverlayLock(){
   const anyOverlay=["#searchModal","#mobileMenu","#videoModal"].some(id=>$(id)?.classList.contains("open"));
@@ -362,7 +385,7 @@ async function init(){
   try{
     products=await loadProducts();
     store=new Store(products);
-    renderMini();renderProducts();renderCart();loadReels();
+    renderMini();renderProducts();syncCollectionTabs();syncTypeFilters();renderCart();loadReels();
     // If a photograph URL was shared directly, open that exact photograph.
     try{
       const photoId=new URL(window.location.href).searchParams.get("photo");
@@ -429,7 +452,16 @@ async function init(){
     }
   });
 
-  $$(".filters button").forEach(b=>b.onclick=()=>{$$(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");renderProducts(b.dataset.filter)});
+  $$(".filters button").forEach(b=>b.onclick=()=>{
+    activeType=b.dataset.filter;
+    syncTypeFilters();
+    renderProducts(activeType,activeCollection);
+  });
+  $$(".collection-tab").forEach(b=>b.onclick=()=>{
+    activeCollection=b.dataset.collection;
+    syncCollectionTabs();
+    renderProducts(activeType,activeCollection);
+  });
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#cartLines").addEventListener("click",e=>{
     const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");
