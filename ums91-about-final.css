@@ -564,3 +564,13 @@
   }
 }
 
+
+/* UMS91 — MOBILE PHOTO TITLE CONTRAST FIX
+   Keep product/photo titles dark on the light mobile photo panel. */
+@media (max-width:720px){
+  #productModal.modal #mTitle,
+  #productModal.modal.open #mTitle{
+    color:#151515 !important;
+    -webkit-text-fill-color:#151515 !important;
+  }
+}
