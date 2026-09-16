@@ -263,10 +263,10 @@
   fragment.className = "editorial-archive-fragment";
   fragment.innerHTML = `
     <div class="archive-fragment-image">
-      <img src="assets/instagram/06-17888974866154874.webp"
-           alt="UMS91 archive frame after rain"
+      <img src="assets/instagram/05-17919169577868859.webp"
+           alt="Mountain Stream — UMS91 archive photograph"
            loading="lazy">
-      <span>FRAME 015 · AFTER RAIN</span>
+      <span>FRAME 014 · MOUNTAIN STREAM</span>
     </div>
     <div class="archive-fragment-meta">
       <span>FIELD ARCHIVE / 015</span>
@@ -340,7 +340,7 @@
 
       .archive-fragment-image{
         position:relative;
-        aspect-ratio:16/9;
+        aspect-ratio:4/5;
         overflow:hidden;
         background:#d5d0c7;
       }
@@ -349,7 +349,7 @@
         display:block;
         width:100%;
         height:100%;
-        object-fit:cover;
+        object-fit:contain;
         filter:saturate(.72) contrast(.96);
         transition:transform .7s cubic-bezier(.2,.8,.2,1);
       }
