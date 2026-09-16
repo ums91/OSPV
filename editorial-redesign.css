@@ -2540,3 +2540,168 @@ body.cart-open .sidebar {
 @media(prefers-reduced-motion:reduce){
   #productModal .photo-view-nav button{transition:none}
 }
+
+/* =========================================================
+   UMS91 — JOURNAL STORY READER
+   A focused reading layer for the existing FIELD NOTE cards.
+   ========================================================= */
+
+body.story-dialog-open {
+  overflow: hidden;
+}
+
+.editorial-story-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease;
+}
+
+.editorial-story-dialog.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.editorial-story-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 9, 8, .78);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+.editorial-story-panel {
+  position: relative;
+  width: min(720px, 100%);
+  max-height: min(760px, calc(100vh - 56px));
+  overflow: auto;
+  padding: clamp(42px, 6vw, 76px) clamp(28px, 7vw, 76px);
+  background: #f1ede4;
+  color: #151515;
+  box-shadow: 0 28px 90px rgba(0,0,0,.35);
+  transform: translateY(18px);
+  transition: transform .38s cubic-bezier(.2,.8,.2,1);
+}
+
+.editorial-story-dialog.is-open .editorial-story-panel {
+  transform: translateY(0);
+}
+
+.editorial-story-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(21,21,21,.18);
+  border-radius: 50%;
+  background: transparent;
+  color: #151515;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease;
+}
+
+.editorial-story-close:hover {
+  background: #151515;
+  color: #f1ede4;
+  border-color: #151515;
+}
+
+.editorial-story-index {
+  margin-bottom: 34px;
+  color: #777066;
+  font-size: 8px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+}
+
+.editorial-story-index span {
+  margin: 0 5px;
+}
+
+.editorial-story-panel > small {
+  display: block;
+  margin-bottom: 14px;
+  color: #a77d49;
+  font-size: 9px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.editorial-story-panel h2 {
+  max-width: 580px;
+  margin: 0 0 28px;
+  font: 500 clamp(44px, 6vw, 72px)/.92 "Playfair Display", Georgia, serif;
+  letter-spacing: -.045em;
+}
+
+.editorial-story-panel > p:not(.editorial-story-note) {
+  max-width: 590px;
+  margin: 0;
+  color: #45413b;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.editorial-story-rule {
+  width: 70px;
+  height: 1px;
+  margin: 38px 0 22px;
+  background: #b88a52;
+}
+
+.editorial-story-panel .editorial-story-note {
+  max-width: 520px;
+  margin: 0;
+  color: #817a70;
+  font-size: 11px;
+  line-height: 1.8;
+  letter-spacing: .02em;
+}
+
+@media (max-width: 700px) {
+  .editorial-story-dialog {
+    padding: 12px;
+  }
+
+  .editorial-story-panel {
+    max-height: calc(100vh - 24px);
+    padding: 42px 24px 32px;
+  }
+
+  .editorial-story-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .editorial-story-index {
+    margin-bottom: 28px;
+  }
+
+  .editorial-story-panel h2 {
+    margin-bottom: 22px;
+    font-size: clamp(40px, 12vw, 58px);
+  }
+
+  .editorial-story-panel > p:not(.editorial-story-note) {
+    font-size: 13px;
+    line-height: 1.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-story-dialog,
+  .editorial-story-panel,
+  .editorial-story-close {
+    transition: none;
+  }
+}

@@ -50,26 +50,76 @@
     });
   });
 
-  const storyText = {
-    mist: "FIELD NOTE — KASHMIR · Into the Mist",
-    light: "OBSERVATION — Light After Rain",
-    road: "FIELD NOTE — The Quiet Road"
+  const stories = {
+    mist: {
+      label: "FIELD NOTE · KASHMIR",
+      title: "Into the Mist",
+      text: "The morning arrived quietly. Mist settled between the pines and softened the distance, turning the familiar landscape into something briefly unknown. There was no rush to reach the view — only the rhythm of walking, damp earth beneath the feet and the occasional opening through the trees. This frame came from one of those pauses when the landscape seemed to hold its breath.",
+      note: "A study of quiet mornings, softened horizons and the spaces between places."
+    },
+    light: {
+      label: "OBSERVATION · LIGHT",
+      title: "Light After Rain",
+      text: "Rain had left the field muted and still. Then, for a few minutes, the clouds opened and a low wash of sunlight crossed the landscape. Wet ground caught the light, shadows lengthened and the whole scene seemed to change before it could settle again. The photograph is about that brief transition — the moment between weather and clearing sky.",
+      note: "Collected for the few minutes when changing light makes an ordinary landscape feel new."
+    },
+    road: {
+      label: "FIELD NOTE · KASHMIR",
+      title: "The Quiet Road",
+      text: "Some roads are memorable because of where they lead. Others stay with you because of the feeling of travelling along them. This one disappeared beneath trees and autumn colour, with no particular destination demanding attention. It became less about arrival and more about the pause between leaving one place and reaching another.",
+      note: "A frame about movement, stillness and the spaces between leaving and arriving."
+    }
+  };
+
+  let storyDialog = null;
+  const closeStory = () => {
+    if (!storyDialog) return;
+    storyDialog.classList.remove("is-open");
+    storyDialog.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("story-dialog-open");
+  };
+
+  const openStory = key => {
+    const story = stories[key];
+    if (!story) return;
+
+    if (!storyDialog) {
+      storyDialog = document.createElement("div");
+      storyDialog.className = "editorial-story-dialog";
+      storyDialog.setAttribute("aria-hidden", "true");
+      storyDialog.innerHTML = `
+        <div class="editorial-story-backdrop" data-story-close></div>
+        <article class="editorial-story-panel" role="dialog" aria-modal="true" aria-labelledby="editorialStoryTitle">
+          <button class="editorial-story-close" type="button" aria-label="Close story" data-story-close>×</button>
+          <div class="editorial-story-index">FIELD NOTES <span>·</span> UMS91</div>
+          <small id="editorialStoryLabel"></small>
+          <h2 id="editorialStoryTitle"></h2>
+          <p id="editorialStoryText"></p>
+          <div class="editorial-story-rule"></div>
+          <p class="editorial-story-note" id="editorialStoryNote"></p>
+        </article>`;
+      document.body.appendChild(storyDialog);
+      storyDialog.addEventListener("click", event => {
+        if (event.target.closest("[data-story-close]")) closeStory();
+      });
+    }
+
+    storyDialog.querySelector("#editorialStoryLabel").textContent = story.label;
+    storyDialog.querySelector("#editorialStoryTitle").textContent = story.title;
+    storyDialog.querySelector("#editorialStoryText").textContent = story.text;
+    storyDialog.querySelector("#editorialStoryNote").textContent = story.note;
+    storyDialog.classList.add("is-open");
+    storyDialog.setAttribute("aria-hidden", "false");
+    document.body.classList.add("story-dialog-open");
+    storyDialog.querySelector(".editorial-story-close").focus();
   };
 
   document.querySelectorAll(".editorial-story-btn").forEach(button => {
-    button.addEventListener("click", () => {
-      const message = storyText[button.dataset.story];
-      if (!message) return;
+    button.addEventListener("click", () => openStory(button.dataset.story));
+  });
 
-      const toast = document.querySelector("#toast");
-      if (!toast) return;
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(window.__editorialStoryToast);
-      window.__editorialStoryToast = setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2600);
-    });
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && storyDialog?.classList.contains("is-open")) closeStory();
   });
 
   const archive = document.querySelector(".editorial-archive-main");
