@@ -122,6 +122,53 @@
     if (event.key === "Escape" && storyDialog?.classList.contains("is-open")) closeStory();
   });
 
+  // Limited Edition / Print Details — uses the catalogue metadata already present in the product viewer.
+  const setupEditionDetails = () => {
+    const modal = document.querySelector("#productModal");
+    const anchor = modal?.querySelector("#addProduct");
+    if (!modal || !anchor || modal.querySelector(".edition-details-toggle")) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "edition-details-wrap";
+    wrap.innerHTML = `
+      <button type="button" class="edition-details-toggle" aria-expanded="false" aria-controls="editionDetailsPanel">
+        VIEW EDITION DETAILS <span aria-hidden="true">+</span>
+      </button>
+      <div class="edition-details-panel" id="editionDetailsPanel" aria-hidden="true">
+        <div>
+          <div class="edition-details-grid">
+            <div class="edition-detail-item"><small>FORMAT</small><strong id="editionDetailFormat"></strong></div>
+            <div class="edition-detail-item"><small>EDITION</small><strong id="editionDetailEdition"></strong></div>
+            <div class="edition-detail-item"><small>SIZE</small><strong id="editionDetailSize"></strong></div>
+          </div>
+        </div>
+      </div>`;
+    anchor.insertAdjacentElement("afterend", wrap);
+
+    const toggle = wrap.querySelector(".edition-details-toggle");
+    const panel = wrap.querySelector(".edition-details-panel");
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      panel.classList.toggle("is-open", !open);
+      panel.setAttribute("aria-hidden", String(open));
+    });
+
+    const sync = () => {
+      const type = modal.querySelector("#mType")?.textContent?.trim() || "Photograph";
+      const edition = modal.querySelector("#mEdition")?.textContent?.trim() || "—";
+      const size = modal.querySelector("#mSize")?.textContent?.trim() || "—";
+      modal.querySelector("#editionDetailFormat").textContent = type;
+      modal.querySelector("#editionDetailEdition").textContent = edition;
+      modal.querySelector("#editionDetailSize").textContent = size;
+    };
+    new MutationObserver(sync).observe(modal.querySelector("#mType"), {childList:true, characterData:true, subtree:true});
+    new MutationObserver(sync).observe(modal.querySelector("#mEdition"), {childList:true, characterData:true, subtree:true});
+    new MutationObserver(sync).observe(modal.querySelector("#mSize"), {childList:true, characterData:true, subtree:true});
+    sync();
+  };
+  setupEditionDetails();
+
   const archive = document.querySelector(".editorial-archive-main");
   const archiveImage = archive?.querySelector("img");
   if (archive && archiveImage && matchMedia("(pointer:fine)").matches) {

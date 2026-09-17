@@ -2705,3 +2705,45 @@ body.story-dialog-open {
     transition: none;
   }
 }
+
+/* UMS91 — Limited Edition / Print Details refinement */
+.edition-details-toggle {
+  margin: 6px 0 0;
+  padding: 0 0 8px;
+  border: 0;
+  border-bottom: 1px solid rgba(189,149,94,.45);
+  background: transparent;
+  color: #bd955e;
+  font: 700 8px/1.2 "DM Sans", sans-serif;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.edition-details-toggle span { display:inline-block; margin-left:7px; transition:transform .25s ease; }
+.edition-details-toggle[aria-expanded="true"] span { transform:rotate(45deg); }
+.edition-details-panel {
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  transition:grid-template-rows .3s ease, opacity .25s ease, margin-top .3s ease;
+  margin-top:0;
+}
+.edition-details-panel > div { overflow:hidden; }
+.edition-details-panel.is-open { grid-template-rows:1fr; opacity:1; margin-top:18px; }
+.edition-details-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border-top:1px solid rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.edition-detail-item { padding:13px 14px 13px 0; }
+.edition-detail-item + .edition-detail-item { border-left:1px solid rgba(255,255,255,.1); padding-left:14px; }
+.edition-detail-item small { display:block; color:#bd955e; font-size:7px; letter-spacing:.16em; margin-bottom:6px; }
+.edition-detail-item strong { display:block; color:#ddd; font:500 11px/1.4 "DM Sans",sans-serif; }
+@media(max-width:720px){
+  .edition-details-grid { grid-template-columns:1fr 1fr; }
+  .edition-detail-item:nth-child(3) { grid-column:1/-1; border-left:0; border-top:1px solid rgba(255,255,255,.1); padding-left:0; }
+}
+@media(prefers-reduced-motion:reduce){
+  .edition-details-panel,.edition-details-toggle span { transition:none; }
+}
