@@ -2747,3 +2747,51 @@ body.story-dialog-open {
 @media(prefers-reduced-motion:reduce){
   .edition-details-panel,.edition-details-toggle span { transition:none; }
 }
+
+
+/* UMS91 — Print & Delivery confidence panel */
+.print-delivery-wrap { margin-top: 14px; }
+.print-delivery-toggle {
+  width:100%; text-align:left;
+  padding: 9px 0 8px;
+  border:0;
+  border-bottom:1px solid rgba(189,149,94,.32);
+  background:transparent;
+  color:#bd955e;
+  font:700 8px/1.2 "DM Sans",sans-serif;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.print-delivery-toggle span { display:inline-block; margin-left:7px; transition:transform .25s ease; }
+.print-delivery-toggle[aria-expanded="true"] span { transform:rotate(45deg); }
+.print-delivery-panel {
+  display:grid;
+  grid-template-rows:0fr;
+  opacity:0;
+  margin-top:0;
+  transition:grid-template-rows .3s ease, opacity .25s ease, margin-top .3s ease;
+}
+.print-delivery-panel.is-open { grid-template-rows:1fr; opacity:1; margin-top:14px; }
+.print-delivery-panel > * { min-height:0; overflow:hidden; }
+.print-delivery-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  border-top:1px solid rgba(255,255,255,.1);
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.print-delivery-item { padding:12px 14px 13px 0; }
+.print-delivery-item:nth-child(even) { border-left:1px solid rgba(255,255,255,.1); padding-left:14px; }
+.print-delivery-item:nth-child(n+3) { border-top:1px solid rgba(255,255,255,.1); }
+.print-delivery-item small { display:block; color:#bd955e; font-size:7px; letter-spacing:.16em; margin-bottom:6px; }
+.print-delivery-item strong { display:block; color:#ddd; font:500 11px/1.4 "DM Sans",sans-serif; margin-bottom:4px; }
+.print-delivery-item p { margin:0; color:rgba(221,221,221,.68); font:400 10px/1.55 "DM Sans",sans-serif; }
+@media(max-width:720px){
+  .print-delivery-grid { grid-template-columns:1fr; }
+  .print-delivery-item:nth-child(even) { border-left:0; padding-left:0; }
+  .print-delivery-item + .print-delivery-item { border-top:1px solid rgba(255,255,255,.1); }
+  .print-delivery-item:nth-child(n+3) { border-top:1px solid rgba(255,255,255,.1); }
+}
+@media(prefers-reduced-motion:reduce){
+  .print-delivery-panel,.print-delivery-toggle span { transition:none; }
+}

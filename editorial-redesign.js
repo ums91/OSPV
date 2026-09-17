@@ -169,6 +169,55 @@
   };
   setupEditionDetails();
 
+  // Print & Delivery — informational only; avoids asserting unconfirmed production specifications.
+  const setupPrintDelivery = () => {
+    const modal = document.querySelector("#productModal");
+    const anchor = modal?.querySelector(".edition-details-wrap");
+    if (!modal || !anchor || modal.querySelector(".print-delivery-wrap")) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "print-delivery-wrap";
+    wrap.innerHTML = `
+      <button type="button" class="print-delivery-toggle" aria-expanded="false" aria-controls="printDeliveryPanel">
+        PRINT &amp; DELIVERY <span aria-hidden="true">+</span>
+      </button>
+      <div class="print-delivery-panel" id="printDeliveryPanel" aria-hidden="true">
+        <div class="print-delivery-grid">
+          <div class="print-delivery-item">
+            <small>PRINT</small>
+            <strong>Fine-art photograph</strong>
+            <p>Print format and size are shown with the selected photograph.</p>
+          </div>
+          <div class="print-delivery-item">
+            <small>CARE</small>
+            <strong>Handle with care</strong>
+            <p>Follow the care guidance supplied with your print.</p>
+          </div>
+          <div class="print-delivery-item">
+            <small>PACKAGING</small>
+            <strong>Prepared for delivery</strong>
+            <p>Your order is prepared and protected for shipment.</p>
+          </div>
+          <div class="print-delivery-item">
+            <small>DELIVERY</small>
+            <strong>Details at checkout</strong>
+            <p>Available shipping information is shown during checkout.</p>
+          </div>
+        </div>
+      </div>`;
+    anchor.insertAdjacentElement("afterend", wrap);
+
+    const toggle = wrap.querySelector(".print-delivery-toggle");
+    const panel = wrap.querySelector(".print-delivery-panel");
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      panel.classList.toggle("is-open", !open);
+      panel.setAttribute("aria-hidden", String(open));
+    });
+  };
+  setupPrintDelivery();
+
   const archive = document.querySelector(".editorial-archive-main");
   const archiveImage = archive?.querySelector("img");
   if (archive && archiveImage && matchMedia("(pointer:fine)").matches) {
