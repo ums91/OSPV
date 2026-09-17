@@ -218,6 +218,64 @@
   };
   setupPrintDelivery();
 
+  // Postcard-specific details — keeps postcards distinct from fine-art print/edition messaging.
+  const setupPostcardDetails = () => {
+    const modal = document.querySelector("#productModal");
+    const anchor = modal?.querySelector(".print-delivery-wrap") || modal?.querySelector(".edition-details-wrap");
+    if (!modal || !anchor || modal.querySelector(".postcard-details-wrap")) return;
+
+    const wrap = document.createElement("div");
+    wrap.className = "postcard-details-wrap";
+    wrap.innerHTML = `
+      <button type="button" class="postcard-details-toggle" aria-expanded="false" aria-controls="postcardDetailsPanel">
+        POSTCARD DETAILS <span aria-hidden="true">+</span>
+      </button>
+      <div class="postcard-details-panel" id="postcardDetailsPanel" aria-hidden="true">
+        <div>
+          <div class="postcard-details-grid">
+            <div class="postcard-detail-item"><small>FORMAT</small><strong>Postcard</strong></div>
+            <div class="postcard-detail-item"><small>SIZE</small><strong id="postcardDetailSize">—</strong></div>
+            <div class="postcard-detail-item"><small>DELIVERY</small><strong>Details at checkout</strong></div>
+          </div>
+        </div>
+      </div>`;
+    anchor.insertAdjacentElement("afterend", wrap);
+
+    const toggle = wrap.querySelector(".postcard-details-toggle");
+    const panel = wrap.querySelector(".postcard-details-panel");
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      panel.classList.toggle("is-open", !open);
+      panel.setAttribute("aria-hidden", String(open));
+    });
+
+    const sync = () => {
+      const type = modal.querySelector("#mType")?.textContent?.trim() || "";
+      const isPostcard = type.toLowerCase() === "postcard";
+      wrap.hidden = !isPostcard;
+      const editionWrap = modal.querySelector(".edition-details-wrap");
+      const printWrap = modal.querySelector(".print-delivery-wrap");
+      if (editionWrap) editionWrap.hidden = isPostcard;
+      if (printWrap) printWrap.hidden = isPostcard;
+      if (isPostcard) {
+        modal.querySelector("#postcardDetailSize").textContent = modal.querySelector("#mSize")?.textContent?.trim() || "—";
+      }
+      if (!isPostcard) {
+        toggle.setAttribute("aria-expanded", "false");
+        panel.classList.remove("is-open");
+        panel.setAttribute("aria-hidden", "true");
+      }
+    };
+
+    ["#mType", "#mSize"].forEach(selector => {
+      const node = modal.querySelector(selector);
+      if (node) new MutationObserver(sync).observe(node, {childList:true, characterData:true, subtree:true});
+    });
+    sync();
+  };
+  setupPostcardDetails();
+
   const archive = document.querySelector(".editorial-archive-main");
   const archiveImage = archive?.querySelector("img");
   if (archive && archiveImage && matchMedia("(pointer:fine)").matches) {
