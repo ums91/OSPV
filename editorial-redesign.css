@@ -2840,3 +2840,26 @@ body.story-dialog-open {
 @media(prefers-reduced-motion:reduce){
   .postcard-details-panel,.postcard-details-toggle span { transition:none; }
 }
+
+/* UMS91 — PHOTO DETAIL CONTRAST FIX
+   Keep expanded edition / print / postcard information readable
+   when the photo viewer is rendered on the light editorial surface. */
+#productModal .edition-detail-item strong,
+#productModal .print-delivery-item strong,
+#productModal .postcard-detail-item strong {
+  color:#2a2925 !important;
+}
+#productModal .print-delivery-item p {
+  color:#5f5c55 !important;
+}
+#productModal .edition-detail-item small,
+#productModal .print-delivery-item small,
+#productModal .postcard-detail-item small {
+  color:#a8793f !important;
+}
+#productModal .specs {
+  color:#5f5c55 !important;
+}
+#productModal .specs span {
+  color:#5f5c55 !important;
+}
