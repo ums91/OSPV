@@ -1,0 +1,6 @@
+
+/* UMS91 — Editorial Journal index/story links */
+.editorial-journal-footer-actions{display:flex;align-items:center;gap:24px}
+.editorial-journal-index-link{padding-bottom:7px;border-bottom:1px solid rgba(189,149,94,.45)}
+.editorial-story-link{display:inline-block;text-decoration:none}
+@media(max-width:720px){.editorial-journal-footer{align-items:flex-start;gap:18px;flex-direction:column}.editorial-journal-footer-actions{width:100%;justify-content:space-between;gap:14px}.editorial-story-link{display:inline-block}}
