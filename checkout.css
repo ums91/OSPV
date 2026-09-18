@@ -401,3 +401,54 @@
 .receipt-coupon>div{display:flex;align-items:center;justify-content:space-between;gap:20px;}
 .receipt-coupon span{opacity:.58;}
 .receipt-coupon strong{font-weight:600;letter-spacing:.1em;}
+
+/* V3.8 — immediate editorial waiting state while the order service responds */
+.receipt-waiting{
+  display:none;
+  min-height:min(680px,82vh);
+  width:min(520px,100%);
+  margin:0 auto;
+  box-sizing:border-box;
+  padding:40px 24px;
+  place-content:center;
+  justify-items:center;
+  text-align:center;
+}
+.order-success-panel.is-waiting .receipt-waiting{display:grid;}
+.order-success-panel.is-waiting .receipt-scene{display:none;}
+.receipt-waiting .eyebrow{font-size:.56rem;letter-spacing:.24em;}
+.receipt-waiting h2{
+  margin:18px 0 12px;
+  font-family:"Playfair Display",serif;
+  font-size:clamp(2.8rem,7vw,5.5rem);
+  font-weight:500;
+  line-height:.92;
+}
+.receipt-waiting p{max-width:430px;margin:0;line-height:1.7;opacity:.68;font-size:.78rem;}
+.receipt-waiting small{margin-top:18px;font-size:.5rem;letter-spacing:.2em;opacity:.5;}
+.waiting-mark{position:relative;width:112px;height:112px;margin-bottom:30px;display:grid;place-items:center;}
+.waiting-ring{position:absolute;border:1px solid rgba(16,17,15,.35);border-radius:50%;box-sizing:border-box;}
+.waiting-ring-a{inset:3px;animation:waitingSpin 3.8s linear infinite;}
+.waiting-ring-b{inset:18px;border-style:dashed;animation:waitingSpinReverse 2.4s linear infinite;}
+.waiting-core{width:18px;height:18px;border-radius:50%;background:#10110f;box-shadow:0 0 0 9px rgba(16,17,15,.08),0 0 0 18px rgba(16,17,15,.035);animation:waitingPulse 1.4s ease-in-out infinite;}
+.waiting-progress{display:flex;gap:7px;margin-top:25px;}
+.waiting-progress span{width:5px;height:5px;border-radius:50%;background:#10110f;opacity:.2;animation:waitingDot 1.2s ease-in-out infinite;}
+.waiting-progress span:nth-child(2){animation-delay:.16s}.waiting-progress span:nth-child(3){animation-delay:.32s}
+@keyframes waitingSpin{to{transform:rotate(360deg)}}
+@keyframes waitingSpinReverse{to{transform:rotate(-360deg)}}
+@keyframes waitingPulse{0%,100%{transform:scale(.72);opacity:.65}50%{transform:scale(1.05);opacity:1}}
+@keyframes waitingDot{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:.85;transform:translateY(-3px)}}
+.order-success-panel.receipt-ready .receipt-scene{display:block;animation:waitingReveal .45s ease both;}
+.order-success-panel.receipt-ready .order-receipt{animation:receiptFeed 1.65s cubic-bezier(.22,.68,.25,1) .12s forwards;}
+@keyframes waitingReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){
+  .receipt-waiting{min-height:78vh;padding:30px 20px;}
+  .waiting-mark{width:94px;height:94px;margin-bottom:26px;}
+  .receipt-waiting h2{font-size:clamp(2.7rem,14vw,4.6rem);}
+  .receipt-waiting p{font-size:.72rem;max-width:330px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .waiting-ring-a,.waiting-ring-b,.waiting-core,.waiting-progress span{animation:none;}
+  .order-success-panel.receipt-ready .receipt-scene{animation:none;}
+  .order-success-panel.receipt-ready .order-receipt{animation:none;transform:none;}
+}

@@ -10,6 +10,22 @@
   let receiptPollTimer=null;
   let receiptPrivateOrder=null;
 
+  function showReceiptWaiting(){
+    const success=$("#orderSuccess");
+    if(!success)return;
+    success.classList.add("is-waiting");
+    success.classList.remove("receipt-ready");
+  }
+
+  function showReceiptReady(){
+    const success=$("#orderSuccess");
+    if(!success)return;
+    success.classList.remove("is-waiting");
+    // Force the ready state to be painted after the waiting screen, so the
+    // receipt-feed animation begins only when the receipt is actually ready.
+    requestAnimationFrame(()=>requestAnimationFrame(()=>success.classList.add("receipt-ready")));
+  }
+
   function panel(id, open=true){
     const el=$(id); if(!el)return;
     el.classList.toggle("open",open);
@@ -391,6 +407,14 @@
     button.innerHTML="SUBMITTING…";
     showMessage(msg,"Submitting your order for payment verification…");
 
+    // Open the confirmation scene immediately. The network request can take
+    // a few seconds (especially when the order service is waking up), so the
+    // customer gets an intentional editorial waiting state instead of a
+    // frozen checkout screen.
+    showReceiptWaiting();
+    panel("#checkoutPanel",false);
+    panel("#orderSuccess",true);
+
     try{
       const idempotencyKey=getOrderRequestKey();
       const payload={
@@ -415,7 +439,6 @@
       window.store._items=[];
       window.store.save();
       if(typeof window.renderCart==="function")window.renderCart();
-      panel("#checkoutPanel",false);
 
       fillReceipt(data.orderId,receiptItems,Number(data.total)||receiptTotal);
       const link=new URL(SITE);
@@ -430,11 +453,13 @@
         successLink.dataset.statusUrl=statusLink;
         successLink.onclick=()=>openOrderStatusFromPrivateLink(statusLink);
       }
-      panel("#orderSuccess",true);
+      showReceiptReady();
       try{sessionStorage.removeItem("ums91_order_request_key");}catch(e){}
       pollReceiptStatus();
     }catch(err){
       console.error(err);
+      panel("#orderSuccess",false);
+      panel("#checkoutPanel",true);
       showMessage(msg,(err.message||"Unable to submit order.").toUpperCase(),true);
     }finally{
       button.disabled=false;
