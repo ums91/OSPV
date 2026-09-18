@@ -600,3 +600,44 @@ body.light .progress i {
 .sidebar.sidebar-dark .rail-index span i {
   background: var(--ums91-gold, #bd955e);
 }
+
+/* UMS91 — MOBILE MENU TOUCH TARGET REFINEMENT
+   Keep the visible hamburger/X compact while giving the control a reliable
+   48px touch target and centering the two internal strokes. */
+@media (max-width:720px){
+  #menuBtn.menu-btn{
+    width:48px !important;
+    min-width:48px !important;
+    height:48px !important;
+    min-height:48px !important;
+    padding:0 !important;
+    margin:0 !important;
+    display:grid !important;
+    place-items:center !important;
+    position:relative !important;
+    touch-action:manipulation !important;
+    -webkit-tap-highlight-color:transparent !important;
+    cursor:pointer !important;
+  }
+
+  #menuBtn.menu-btn i{
+    position:absolute !important;
+    left:17px !important;
+    top:23px !important;
+    width:14px !important;
+    height:1px !important;
+    margin:0 !important;
+    pointer-events:none !important;
+    transform-origin:center !important;
+  }
+
+  #menuBtn.menu-btn i:first-child{ transform:translateY(-3px) !important; }
+  #menuBtn.menu-btn i:last-child{ transform:translateY(3px) !important; }
+
+  #menuBtn.menu-btn.is-open i:first-child{
+    transform:rotate(45deg) !important;
+  }
+  #menuBtn.menu-btn.is-open i:last-child{
+    transform:rotate(-45deg) !important;
+  }
+}
