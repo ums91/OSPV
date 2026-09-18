@@ -9,6 +9,7 @@
 <meta name="description" content="UMS91 Visual Journal — photography from Kashmir, visual stories, motion and collectible fine-art editions.">
 <link rel="canonical" href="https://ums91.github.io/OSPV/">
 <link rel="manifest" href="site.webmanifest">
+<link rel="preload" as="image" href="assets/hero-autumn-kashmir.jpg" fetchpriority="high">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="UMS91 Visual Journal">
 <meta property="og:title" content="UMS91 — Visual Journal">
@@ -54,6 +55,7 @@
   "about":"Fine-art photography and collectible editions from UMS91."
 }
 </script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"UMS91 Photography Collection","numberOfItems":24,"itemListElement":[{"@type":"ListItem","position":1,"name":"Mountain Lake","url":"https://ums91.github.io/OSPV/photos/mountain-lake.html"},{"@type":"ListItem","position":2,"name":"Valley Light","url":"https://ums91.github.io/OSPV/photos/valley-light.html"},{"@type":"ListItem","position":3,"name":"Winter Lake","url":"https://ums91.github.io/OSPV/photos/winter-lake.html"},{"@type":"ListItem","position":4,"name":"Summer Field","url":"https://ums91.github.io/OSPV/photos/summer-field.html"},{"@type":"ListItem","position":5,"name":"Mountain Stream","url":"https://ums91.github.io/OSPV/photos/mountain-stream.html"},{"@type":"ListItem","position":6,"name":"Quiet Water","url":"https://ums91.github.io/OSPV/photos/quiet-water.html"},{"@type":"ListItem","position":7,"name":"Winter Birds","url":"https://ums91.github.io/OSPV/photos/winter-birds.html"},{"@type":"ListItem","position":8,"name":"Garden Pool","url":"https://ums91.github.io/OSPV/photos/garden-pool.html"},{"@type":"ListItem","position":9,"name":"Garden Path","url":"https://ums91.github.io/OSPV/photos/garden-path.html"},{"@type":"ListItem","position":10,"name":"Orchard Garden","url":"https://ums91.github.io/OSPV/photos/orchard-garden.html"},{"@type":"ListItem","position":11,"name":"Rose Study","url":"https://ums91.github.io/OSPV/photos/rose-study.html"},{"@type":"ListItem","position":12,"name":"River Stone","url":"https://ums91.github.io/OSPV/photos/river-stone.html"},{"@type":"ListItem","position":13,"name":"Cloud Valley","url":"https://ums91.github.io/OSPV/photos/cloud-valley.html"},{"@type":"ListItem","position":14,"name":"Courtyard Morning","url":"https://ums91.github.io/OSPV/photos/courtyard-morning.html"},{"@type":"ListItem","position":15,"name":"Quiet Interior","url":"https://ums91.github.io/OSPV/photos/quiet-interior.html"},{"@type":"ListItem","position":16,"name":"Courtyard Blue Sky","url":"https://ums91.github.io/OSPV/photos/courtyard-blue-sky.html"},{"@type":"ListItem","position":17,"name":"Lake & Ridge","url":"https://ums91.github.io/OSPV/photos/lake-ridge.html"},{"@type":"ListItem","position":18,"name":"Winter Water","url":"https://ums91.github.io/OSPV/photos/winter-water.html"},{"@type":"ListItem","position":19,"name":"Snow Lake","url":"https://ums91.github.io/OSPV/photos/snow-lake.html"},{"@type":"ListItem","position":20,"name":"Autumn Stillness","url":"https://ums91.github.io/OSPV/photos/autumn-stillness.html"},{"@type":"ListItem","position":21,"name":"Light After Rain","url":"https://ums91.github.io/OSPV/photos/light-after-rain.html"},{"@type":"ListItem","position":22,"name":"Golden Road","url":"https://ums91.github.io/OSPV/photos/golden-road.html"},{"@type":"ListItem","position":23,"name":"Blossom Walk","url":"https://ums91.github.io/OSPV/photos/blossom-walk.html"},{"@type":"ListItem","position":24,"name":"River & Ridge","url":"https://ums91.github.io/OSPV/photos/river-and-ridge.html"}]}</script>
 </head>
 <body>
 <div class="sale-announcement" role="region" aria-label="Fall sale announcement"><span>LIMITED · 50% FALL SALE · SELECT EDITIONS OVER ₹1,000 · USE FALL50</span><a href="#editions">SHOP THE SALE <b>→</b></a></div>
@@ -431,20 +433,8 @@
   </div>
 </div>
 <div class="order-success-panel receipt-success" id="orderSuccess" aria-hidden="true">
-  <button class="commerce-close receipt-close" type="button" data-close="orderSuccess" aria-label="Close">×</button>
-  <div class="receipt-waiting" id="receiptWaiting" aria-live="polite">
-    <div class="waiting-mark" aria-hidden="true">
-      <span class="waiting-ring waiting-ring-a"></span>
-      <span class="waiting-ring waiting-ring-b"></span>
-      <span class="waiting-core"></span>
-    </div>
-    <span class="eyebrow dark">ORDER RECEIVED</span>
-    <h2>Preparing your receipt.</h2>
-    <p>Your payment confirmation is being recorded securely. The receipt will appear as soon as the order service responds.</p>
-    <div class="waiting-progress" aria-hidden="true"><span></span><span></span><span></span></div>
-    <small>PLEASE WAIT A FEW SECONDS</small>
-  </div>
   <div class="receipt-scene">
+    <button class="commerce-close receipt-close" type="button" data-close="orderSuccess" aria-label="Close">×</button>
     <div class="receipt-printer" aria-hidden="true"><div class="printer-top"><div class="printer-message"><strong>ORDER RECEIVED</strong><span>THANK YOU FOR PLACING YOUR ORDER</span><span id="receiptProductCopy">Your piece is now reserved. We'll carefully prepare it for its journey.</span></div></div><div class="printer-slot"></div></div>
     <div class="receipt-feed">
       <article class="order-receipt" id="orderReceipt">
@@ -478,7 +468,7 @@ Your order is created only after you submit your payment confirmation.</small></
 <script type="module" src="script.js?v=20260916-photo-viewer-1"></script>
 <script src="editorial-redesign.js?v=20260916-journal-reader-1"></script>
 <script src="edition-flip.js?v=20260829-frame-1-2"></script>
-<script src="checkout.js?v=20260918-receipt-waiting-1"></script>
+<script src="checkout.js?v=20260915-coupon-idempotency-3"></script>
 <script src="ums91-about-final.js?v=20260829-final-1"></script>
 </body>
 </html>

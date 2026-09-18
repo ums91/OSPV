@@ -21,7 +21,7 @@ function readCart(){
   }catch(error){console.warn("OMER cart storage read failed; starting with an empty cart.",error);return [];}
 }
 export async function loadProducts(){
-  const r=await fetch("assets/products.json?v=20260823-cartfix",{cache:"no-store"});
+  const r=await fetch("assets/products.json?v=20260918-catalog-1",{cache:"default"});
   if(!r.ok)throw new Error("Product catalogue unavailable");
   const data=await r.json();
   if(!Array.isArray(data))throw new Error("Invalid product catalogue");

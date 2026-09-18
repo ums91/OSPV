@@ -177,9 +177,8 @@ function openProduct(id,options={}){
 function photoShareUrl(){
   const id=current?.id;
   if(!id)return window.location.href;
-  const url=new URL(window.location.href);
-  url.searchParams.set("photo",String(id));
-  return url.toString();
+  const base=new URL(window.location.href);
+  return new URL(`photos/${encodeURIComponent(String(id))}.html`,base).toString();
 }
 function photoShareText(){
   const title=current?.title||"UMS91 Photograph";

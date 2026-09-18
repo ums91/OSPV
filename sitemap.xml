@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://ums91.github.io/OSPV/</loc>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url><loc>https://ums91.github.io/OSPV/</loc></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/mountain-lake.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/01-18346022980152797.webp</image:loc><image:title>Mountain Lake</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/valley-light.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/02-18095911612535573.webp</image:loc><image:title>Valley Light</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/winter-lake.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/03-18023495780629861.webp</image:loc><image:title>Winter Lake</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/summer-field.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/04-18006758585188862.webp</image:loc><image:title>Summer Field</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/mountain-stream.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/05-17919169577868859.webp</image:loc><image:title>Mountain Stream</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/quiet-water.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/06-17888974866154874.webp</image:loc><image:title>Quiet Water</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/winter-birds.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/07-17891686938141350.webp</image:loc><image:title>Winter Birds</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/garden-pool.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/08-18048637495653082.webp</image:loc><image:title>Garden Pool</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/garden-path.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/09-18071117389500708.webp</image:loc><image:title>Garden Path</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/orchard-garden.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/10-18028730626847376.webp</image:loc><image:title>Orchard Garden</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/rose-study.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/11-18073600268301389.webp</image:loc><image:title>Rose Study</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/river-stone.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/12-18066812045467456.webp</image:loc><image:title>River Stone</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/cloud-valley.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/13-18117832828328939.webp</image:loc><image:title>Cloud Valley</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/courtyard-morning.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/14-17850584337171468.webp</image:loc><image:title>Courtyard Morning</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/quiet-interior.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/15-18524130307032995.webp</image:loc><image:title>Quiet Interior</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/courtyard-blue-sky.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/16-courtyard-blue-sky.jpeg</image:loc><image:title>Courtyard Blue Sky</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/lake-ridge.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/17-lake-ridge.jpeg</image:loc><image:title>Lake &amp; Ridge</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/winter-water.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/18-winter-water.jpeg</image:loc><image:title>Winter Water</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/snow-lake.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/19-snow-lake.jpeg</image:loc><image:title>Snow Lake</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/autumn-stillness.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/20-autumn-stillness.jpg</image:loc><image:title>Autumn Stillness</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/light-after-rain.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/21-light-after-rain.jpg</image:loc><image:title>Light After Rain</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/golden-road.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/22-golden-road.jpg</image:loc><image:title>Golden Road</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/blossom-walk.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/23-blossom-walk.jpg</image:loc><image:title>Blossom Walk</image:title></image:image></url>
+  <url><loc>https://ums91.github.io/OSPV/photos/river-and-ridge.html</loc><image:image><image:loc>https://ums91.github.io/OSPV/assets/instagram/24-river-and-ridge.jpg</image:loc><image:title>River &amp; Ridge</image:title></image:image></url>
 </urlset>
