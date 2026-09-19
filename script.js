@@ -67,8 +67,8 @@ const collectionLabels={all:"Showing the complete UMS91 archive.",landscapes:"La
 let activeCollection="all";
 let activeType="all";
 let activeSort="curated";
-let visibleCount=8;
-const LOAD_MORE_STEP=8;
+let visibleCount=6;
+const LOAD_MORE_STEP=6;
 function renderProducts(type=activeType,collection=activeCollection){
   const el=$("#products"); if(!el)return;
   activeType=type; activeCollection=collection;
@@ -498,7 +498,7 @@ async function init(){
 
   $$(".collection-tab").forEach(b=>b.onclick=()=>{
     activeCollection=b.dataset.collection;
-    visibleCount=8;
+    visibleCount=6;
     syncCollectionTabs();
     syncArchiveControls();
     renderProducts(activeType,activeCollection);
@@ -507,13 +507,13 @@ async function init(){
   $("#formatFilterBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("formatFilterMenu","formatFilterBtn")});
   $("#sortBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("sortMenu","sortBtn")});
   $$("[data-menu-collection]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeCollection=b.dataset.menuCollection; visibleCount=8; syncCollectionTabs(); syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeCollection=b.dataset.menuCollection; visibleCount=6; syncCollectionTabs(); syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
   $$("[data-menu-type]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeType=b.dataset.menuType; visibleCount=8; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeType=b.dataset.menuType; visibleCount=6; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
   $$("[data-sort]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeSort=b.dataset.sort; visibleCount=8; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeSort=b.dataset.sort; visibleCount=6; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
   $("#loadMoreBtn")?.addEventListener("click",()=>{
     visibleCount+=LOAD_MORE_STEP;
