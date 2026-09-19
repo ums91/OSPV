@@ -98,6 +98,9 @@ function collectionIconMarkup(name){
   };
   return icons[name]||icons.all;
 }
+function syncTypeFilters(){
+  $$(".filters [data-filter]").forEach(btn=>btn.classList.toggle("active",btn.dataset.filter===activeType));
+}
 function syncArchiveControls(){
   const label=$("#collectionFilterLabel");
   const icon=$("[data-control-icon=collection]");
