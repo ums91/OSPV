@@ -90,3 +90,110 @@
   .benefits .benefit-icon{width:24px;height:24px;flex-basis:24px}
   .benefits .benefit-icon svg{width:24px;height:24px}
 }
+
+/* =========================================================
+   UMS91 — COLLECTION CARD REFINEMENT
+   Keep ADD TO BAG below the photograph; remove hover VIEW.
+   ========================================================= */
+.shop .product-image{
+  aspect-ratio:auto!important;
+  height:auto!important;
+  overflow:visible!important;
+  background:transparent!important;
+}
+.shop .product-image > img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:4/5;
+  object-fit:cover;
+}
+.shop .product-overlay{
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  padding:9px 0 0!important;
+  background:transparent!important;
+  color:#171714!important;
+}
+.shop .product-overlay-meta{
+  display:none!important;
+}
+.shop .product-overlay-actions{
+  display:block!important;
+}
+.shop .product-overlay .quick-view{
+  display:none!important;
+}
+.shop .product-overlay .card-add{
+  width:100%!important;
+  min-height:34px;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px;
+  padding:9px 10px!important;
+  border:1px solid #d0c8bd!important;
+  background:transparent!important;
+  color:#2b2925!important;
+  font-family:"DM Sans",sans-serif!important;
+  font-size:7px!important;
+  font-weight:500!important;
+  letter-spacing:.16em!important;
+  line-height:1!important;
+  transition:background .2s ease,border-color .2s ease,color .2s ease;
+}
+.shop .product-overlay .card-add::before{
+  content:"";
+  width:12px;
+  height:12px;
+  flex:0 0 12px;
+  display:block;
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232b2925' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8h14l-1 12H6L5 8Z'/%3E%3Cpath d='M9 8a3 3 0 0 1 6 0'/%3E%3C/svg%3E");
+}
+.shop .product-overlay .card-add span{
+  margin-left:2px!important;
+  font-size:12px!important;
+}
+.shop .product-overlay .card-add:hover,
+.shop .product-overlay .card-add.is-added{
+  background:#171714!important;
+  border-color:#171714!important;
+  color:#fff!important;
+}
+.shop .product-overlay .card-add:hover::before,
+.shop .product-overlay .card-add.is-added::before{
+  filter:invert(1);
+}
+.shop .product-info{
+  padding-top:12px!important;
+}
+
+/* =========================================================
+   UMS91 — FOLLOW THE JOURNEY / INSTAGRAM MARK
+   ========================================================= */
+.ums91-strip-head #visualStripTitle{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+}
+.ums91-strip-head #visualStripTitle::before{
+  content:"";
+  width:11px;
+  height:11px;
+  flex:0 0 11px;
+  display:inline-block;
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237d7972' stroke-width='1.55' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='3.5' width='17' height='17' rx='4.5'/%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Ccircle cx='17.3' cy='6.8' r='1' fill='%237d7972' stroke='none'/%3E%3C/svg%3E");
+}
+.ums91-strip-head a{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+}
+@media(max-width:720px){
+  .shop .product-overlay{padding-top:7px!important}
+  .shop .product-overlay .card-add{min-height:32px;font-size:6.5px!important}
+  .shop .product-overlay .card-add::before{width:11px;height:11px;flex-basis:11px}
+  .ums91-strip-head #visualStripTitle{gap:6px}
+  .ums91-strip-head #visualStripTitle::before{width:10px;height:10px;flex-basis:10px}
+}
