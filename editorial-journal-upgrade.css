@@ -4,3 +4,34 @@
 .editorial-journal-index-link{padding-bottom:7px;border-bottom:1px solid rgba(189,149,94,.45)}
 .editorial-story-link{display:inline-block;text-decoration:none}
 @media(max-width:720px){.editorial-journal-footer{align-items:flex-start;gap:18px;flex-direction:column}.editorial-journal-footer-actions{width:100%;justify-content:space-between;gap:14px}.editorial-story-link{display:inline-block}}
+
+/* UMS91 — Editorial heading scale refinement
+   Keep the existing Playfair Display treatment, but make the large numbered section headings slightly more restrained. */
+.editorial-section-kicker h2{
+  font-size:clamp(52px,5.8vw,92px)!important;
+}
+
+.motion-head h2{
+  font-size:clamp(50px,5.7vw,84px)!important;
+}
+
+.shop h2{
+  font-size:clamp(54px,6.2vw,88px)!important;
+}
+
+/* Preserve the same scale if this editorial block is present in another current page. */
+.editorial-philosophy-title h2{
+  font-size:clamp(52px,6.2vw,96px)!important;
+}
+
+.contact h2{
+  font-size:clamp(52px,7.1vw,96px)!important;
+}
+
+@media(max-width:720px){
+  .editorial-section-kicker h2{font-size:clamp(44px,11vw,70px)!important}
+  .motion-head h2{font-size:clamp(42px,10.5vw,66px)!important}
+  .shop h2{font-size:clamp(48px,12vw,76px)!important}
+  .editorial-philosophy-title h2{font-size:clamp(44px,11vw,72px)!important}
+  .contact h2{font-size:clamp(46px,11.5vw,76px)!important}
+}
