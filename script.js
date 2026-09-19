@@ -67,6 +67,8 @@ const collectionLabels={all:"Showing the complete UMS91 archive.",landscapes:"La
 let activeCollection="all";
 let activeType="all";
 let activeSort="curated";
+let visibleCount=8;
+const LOAD_MORE_STEP=8;
 function renderProducts(type=activeType,collection=activeCollection){
   const el=$("#products"); if(!el)return;
   activeType=type; activeCollection=collection;
@@ -75,9 +77,18 @@ function renderProducts(type=activeType,collection=activeCollection){
   if(activeSort==="price-low") list=[...list].sort((a,b)=>Number(a.price)-Number(b.price));
   else if(activeSort==="price-high") list=[...list].sort((a,b)=>Number(b.price)-Number(a.price));
   else if(activeSort==="title") list=[...list].sort((a,b)=>String(a.title).localeCompare(String(b.title)));
-  el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
+  const shown=list.slice(0,visibleCount);
+  el.innerHTML=shown.map((p,i)=>productCard(p,i)).join("");
   const context=$("#collectionContext");
   if(context)context.textContent=collectionLabels[collection]||collectionLabels.all;
+  const more=$("#loadMoreBtn"), meta=$("#loadMoreMeta"), wrap=$("#loadMoreWrap");
+  if(more&&wrap){
+    const remaining=Math.max(0,list.length-shown.length);
+    more.hidden=remaining===0;
+    more.disabled=remaining===0;
+    if(remaining>0)more.innerHTML=`LOAD MORE <span>→</span>`;
+    if(meta)meta.textContent=remaining>0?`${shown.length} OF ${list.length} WORKS · ${remaining} REMAINING`:list.length?`SHOWING ALL ${list.length} WORKS`:"";
+  }
   $$(".product").forEach(card=>card.addEventListener("click",e=>{if(!e.target.closest("button"))openProduct(card.dataset.product)}));
   $$('[data-view]').forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openProduct(btn.dataset.view)}));
 }
@@ -487,6 +498,7 @@ async function init(){
 
   $$(".collection-tab").forEach(b=>b.onclick=()=>{
     activeCollection=b.dataset.collection;
+    visibleCount=8;
     syncCollectionTabs();
     syncArchiveControls();
     renderProducts(activeType,activeCollection);
@@ -495,14 +507,18 @@ async function init(){
   $("#formatFilterBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("formatFilterMenu","formatFilterBtn")});
   $("#sortBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("sortMenu","sortBtn")});
   $$("[data-menu-collection]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeCollection=b.dataset.menuCollection; syncCollectionTabs(); syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeCollection=b.dataset.menuCollection; visibleCount=8; syncCollectionTabs(); syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
   $$("[data-menu-type]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeType=b.dataset.menuType; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeType=b.dataset.menuType; visibleCount=8; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
   $$("[data-sort]").forEach(b=>b.addEventListener("click",e=>{
-    e.stopPropagation(); activeSort=b.dataset.sort; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+    e.stopPropagation(); activeSort=b.dataset.sort; visibleCount=8; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
   }));
+  $("#loadMoreBtn")?.addEventListener("click",()=>{
+    visibleCount+=LOAD_MORE_STEP;
+    renderProducts(activeType,activeCollection);
+  });
   document.addEventListener("click",e=>{if(!e.target.closest(".archive-control-group"))closeArchiveMenus()});
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#cartLines").addEventListener("click",e=>{

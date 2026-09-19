@@ -1,0 +1,70 @@
+/* UMS91 — Story, visual strip & collection pagination. */
+.ums91-story-section{
+  margin-left:142px;
+  display:grid;
+  grid-template-columns:1.08fr .9fr .82fr;
+  min-height:430px;
+  background:#111310;
+  color:#fff;
+}
+.ums91-story-copy{padding:76px 5vw 68px;display:flex;flex-direction:column;justify-content:center}
+.ums91-story-copy .eyebrow{margin-bottom:18px}
+.ums91-story-copy h2{font:500 clamp(44px,5vw,72px)/.9 "Playfair Display",serif;letter-spacing:-.045em;margin:0 0 24px}
+.ums91-story-copy h2 em{color:#bd955e;font-style:normal}
+.ums91-story-copy>p:not(.eyebrow){max-width:430px;color:#aaa;font-size:12px;line-height:1.85;margin:0 0 27px}
+.ums91-story-copy>a{width:max-content;color:#fff;text-decoration:none;font-size:8px;letter-spacing:.17em;border-bottom:1px solid #666;padding-bottom:8px}
+.ums91-story-copy>a span{font-size:14px;margin-left:10px}
+.ums91-story-image{position:relative;min-height:430px;overflow:hidden;border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
+.ums91-story-image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.82);transition:transform .8s ease}
+.ums91-story-image:hover img{transform:scale(1.035)}
+.ums91-story-image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.55))}
+.ums91-story-image span{position:absolute;z-index:2;left:24px;bottom:22px;font-size:7px;letter-spacing:.18em;color:#eee}
+.ums91-story-quote{padding:65px 5vw;display:flex;flex-direction:column;justify-content:center;background:#e8e4dc;color:#171714}
+.ums91-story-quote blockquote{font:italic 500 clamp(24px,2.4vw,36px)/1.18 "Playfair Display",serif;margin:0 0 24px}
+.ums91-story-quote cite{font-style:normal;font-size:8px;letter-spacing:.18em;color:#8b6a45}
+
+.ums91-visual-strip{margin-left:142px;background:#f3f0ea;padding:18px 3.5vw 24px;border-bottom:1px solid #d8d3ca}
+.ums91-strip-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:8px;letter-spacing:.18em;color:#555}
+.ums91-strip-head a{color:#555;text-decoration:none}
+.ums91-strip-track{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;overflow:hidden}
+.ums91-strip-track a{display:block;aspect-ratio:1/1;overflow:hidden;background:#ddd}
+.ums91-strip-track img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .5s ease}
+.ums91-strip-track a:hover img{transform:scale(1.06);filter:saturate(1.05)}
+
+.load-more-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin:48px auto 0}
+.load-more-btn{border:1px solid #bdb7ad;background:transparent;color:#171714;padding:14px 28px;min-width:180px;font:600 8px "DM Sans",sans-serif;letter-spacing:.18em;cursor:pointer;transition:background .25s ease,color .25s ease,border-color .25s ease}
+.load-more-btn span{font-size:15px;margin-left:14px;vertical-align:-1px}
+.load-more-btn:hover{background:#171714;color:#fff;border-color:#171714}
+.load-more-btn[hidden]{display:none}
+.load-more-meta{margin:0;font-size:7px;letter-spacing:.15em;color:#999;text-transform:uppercase;min-height:10px}
+
+@media(max-width:1100px){
+  .ums91-story-section,.ums91-visual-strip{margin-left:90px}
+  .ums91-story-section{grid-template-columns:1fr 1fr}
+  .ums91-story-copy{padding:60px 5vw}
+  .ums91-story-quote{grid-column:1/-1;min-height:190px;padding:42px 5vw}
+  .ums91-story-quote blockquote{margin-bottom:16px}
+  .ums91-strip-track{grid-template-columns:repeat(7,minmax(0,1fr))}
+  .ums91-strip-track a:nth-child(n+8){display:none}
+}
+@media(max-width:720px){
+  .ums91-story-section,.ums91-visual-strip{margin-left:0}
+  .ums91-story-section{display:grid;grid-template-columns:1fr}
+  .ums91-story-copy{padding:64px 8vw 48px}
+  .ums91-story-copy h2{font-size:clamp(42px,12vw,62px)}
+  .ums91-story-image{min-height:330px;border-left:0;border-right:0}
+  .ums91-story-quote{grid-column:auto;min-height:260px;padding:48px 8vw}
+  .ums91-story-quote blockquote{font-size:30px}
+  .ums91-visual-strip{padding:16px 0 20px}
+  .ums91-strip-head{padding:0 8vw}
+  .ums91-strip-track{display:flex;gap:5px;overflow-x:auto;padding:0 8vw 2px;scrollbar-width:none}
+  .ums91-strip-track::-webkit-scrollbar{display:none}
+  .ums91-strip-track a{flex:0 0 88px}
+  .load-more-wrap{margin-top:38px}
+  .load-more-btn{min-width:165px}
+}
+@media(max-width:430px){
+  .ums91-story-image{min-height:285px}
+  .ums91-story-quote{min-height:235px}
+  .ums91-story-quote blockquote{font-size:26px}
+}

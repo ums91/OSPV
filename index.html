@@ -56,6 +56,7 @@
 }
 </script>
 <link rel="stylesheet" href="editorial-journal-upgrade.css?v=20260918-journal-1">
+<link rel="stylesheet" href="story-strip-loadmore.css?v=20260919-story-strip-1">
 </head>
 <body>
 <div class="sale-announcement" role="region" aria-label="Fall sale announcement"><span>LIMITED · 50% FALL SALE · SELECT EDITIONS OVER ₹1,000 · USE FALL50</span><a href="#editions">SHOP THE SALE <b>→</b></a></div>
@@ -87,6 +88,7 @@
     <a href="#motion">MOTION</a>
     <a href="#editions">EDITIONS</a>
     <a href="#about">ABOUT</a>
+    <a href="#story">STORY</a>
     <a href="#contact">CONTACT</a>
   </nav>
   <div class="top-actions">
@@ -258,6 +260,43 @@
     <a href="collections/architecture.html">ARCHITECTURE <span>↗</span></a>
   </nav>
   <div class="products" id="products"></div>
+  <div class="load-more-wrap" id="loadMoreWrap">
+    <button class="load-more-btn" id="loadMoreBtn" type="button" hidden>LOAD MORE <span>→</span></button>
+    <p class="load-more-meta" id="loadMoreMeta" aria-live="polite"></p>
+  </div>
+</section>
+<section class="ums91-story-section" id="story" aria-labelledby="storyTitle">
+  <div class="ums91-story-copy">
+    <p class="eyebrow dark">05 — THE STORY</p>
+    <h2 id="storyTitle">A journey through<br><em>light and places.</em></h2>
+    <p>UMS91 is a visual journal of quiet moments, changing light and the places that stay with you. Each frame begins as an observation and becomes part of a larger story.</p>
+    <a href="#journal">ENTER THE JOURNAL <span>↗</span></a>
+  </div>
+  <div class="ums91-story-image">
+    <img src="assets/instagram/20-autumn-stillness.jpg" alt="Autumn stillness from the UMS91 visual archive" loading="lazy">
+    <span>FIELD ARCHIVE · KASHMIR</span>
+  </div>
+  <div class="ums91-story-quote">
+    <blockquote>“In every frame,<br>there is a story.<br>In every story,<br>a place to belong.”</blockquote>
+    <cite>— UMS91</cite>
+  </div>
+</section>
+<section class="ums91-visual-strip" aria-labelledby="visualStripTitle">
+  <div class="ums91-strip-head">
+    <span id="visualStripTitle">FOLLOW THE JOURNEY</span>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer">@UMS91 ↗</a>
+  </div>
+  <div class="ums91-strip-track">
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/20-autumn-stillness.jpg" alt="Autumn stillness" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/01-18346022980152797.webp" alt="Mountain Lake" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/03-18023495780629861.webp" alt="Winter Lake" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/05-17919169577868859.webp" alt="Mountain Stream" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/21-light-after-rain.jpg" alt="Light After Rain" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/02-18095911612535573.webp" alt="Valley Light" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/07-17891686938141350.webp" alt="Winter Birds" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/12-18066812045467456.webp" alt="River Stone" loading="lazy"></a>
+    <a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener noreferrer"><img src="assets/instagram/04-18006758585188862.webp" alt="Summer Field" loading="lazy"></a>
+  </div>
 </section>
 <section class="about editorial-philosophy-wrap" id="about">
   <div class="editorial-philosophy-title"><p class="eyebrow dark">05 — THE PHILOSOPHY</p><h2>Less noise.<br><em>More feeling.</em></h2></div>
@@ -519,7 +558,7 @@ Your order is created only after you submit your payment confirmation.</small></
 <div class="modal" id="productModal" aria-hidden="true"><button data-close="productModal" class="modal-close">×</button><div class="modal-grid"><div class="modal-img"><img id="mImg" alt=""></div><div><small id="mType"></small><h2 id="mTitle"></h2><p id="mDesc"></p><div class="specs"><span id="mEdition"></span><span id="mSize"></span></div><strong id="mPrice"></strong><button id="addProduct" class="pill dark-pill">ADD TO BAG <span>+</span></button><div class="photo-share" aria-label="Share photograph"><button type="button" id="sharePhoto" class="photo-share-action"><span class="share-glyph" aria-hidden="true">↗</span><span>SHARE</span></button><button type="button" id="copyPhotoLink" class="photo-share-action"><span class="link-glyph" aria-hidden="true">↗</span><span>COPY LINK</span></button><span id="shareStatus" class="photo-share-status" role="status" aria-live="polite"></span></div><div id="shareFallback" class="share-fallback" hidden><span>SHARE THIS PHOTOGRAPH</span><div><button type="button" data-share-channel="whatsapp">WhatsApp</button><button type="button" data-share-channel="facebook">Facebook</button><button type="button" data-share-channel="x">X</button><button type="button" data-share-channel="email">Email</button></div></div><nav class="photo-view-nav" aria-label="Photograph navigation"><button type="button" id="photoPrev" aria-label="Previous photograph"><span>←</span><small>PREVIOUS</small></button><span class="photo-view-count" id="photoViewCount">01 / 24</span><button type="button" id="photoNext" aria-label="Next photograph"><small>NEXT</small><span>→</span></button></nav></div></div></div>
 <div class="search-modal" id="searchModal" aria-hidden="true"><button data-close="searchModal">×</button><div><small>SEARCH THE JOURNAL</small><input id="searchInput" placeholder="Mountains, postcards, stories..." autofocus><p id="searchResults"></p></div></div>
 <div class="video-modal" id="videoModal" aria-hidden="true"><button class="video-close" data-close="videoModal" aria-label="Close video">×</button><div class="video-stage"><video id="activeVideo" controls playsinline></video><div class="video-meta"><span id="videoLabel"></span><a href="https://www.instagram.com/ums91/" target="_blank" rel="noopener">@UMS91 ↗</a></div></div></div>
-<div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#motion">Motion</a><a href="#editions">Editions</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#" data-open-order-status>Order Status</a></div>
+<div class="mobile-menu" id="mobileMenu"><button data-close="mobileMenu">×</button><a href="#home">Home</a><a href="#journal">Journal</a><a href="#motion">Motion</a><a href="#editions">Editions</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#story">Story</a><a href="#contact">Contact</a><a href="#" data-open-order-status>Order Status</a></div>
 <div class="toast" id="toast"></div>
 <script type="module" src="script.js?v=20260916-photo-viewer-1"></script>
 <script src="editorial-redesign.js?v=20260916-journal-reader-1"></script>
