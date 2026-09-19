@@ -1,0 +1,92 @@
+/* UMS91 — four-item benefits strip with Premium Quality */
+.benefits{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0;
+  padding:20px 3.5vw;
+  align-items:stretch;
+}
+.benefits .benefit-item{
+  min-width:0;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:2px 2.8vw;
+  position:relative;
+}
+.benefits .benefit-item + .benefit-item::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:8px;
+  bottom:8px;
+  width:1px;
+  background:rgba(255,255,255,.18);
+}
+.benefits .benefit-icon{
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  display:grid;
+  place-items:center;
+  color:#f3f0ea;
+  font-size:0;
+  font-weight:400;
+}
+.benefits .benefit-icon svg{
+  width:29px;
+  height:29px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.45;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.benefits .benefit-item span{min-width:0}
+.benefits .benefit-item strong{
+  font-size:9px;
+  letter-spacing:.18em;
+  white-space:nowrap;
+}
+.benefits .benefit-item small{
+  font-size:9px;
+  margin-top:5px;
+  white-space:nowrap;
+}
+@media(max-width:1100px){
+  .benefits{padding:20px 2vw}
+  .benefits .benefit-item{padding:2px 1.6vw;gap:12px}
+  .benefits .benefit-icon{width:27px;height:27px;flex-basis:27px}
+  .benefits .benefit-icon svg{width:27px;height:27px}
+  .benefits .benefit-item strong{font-size:8px}
+  .benefits .benefit-item small{font-size:8px}
+}
+@media(max-width:720px){
+  .benefits{
+    grid-template-columns:1fr 1fr;
+    padding:18px 5vw;
+    gap:0;
+  }
+  .benefits .benefit-item{
+    min-height:70px;
+    padding:12px 10px;
+  }
+  .benefits .benefit-item:nth-child(odd)::before{display:none}
+  .benefits .benefit-item:nth-child(n+3)::after{
+    content:"";
+    position:absolute;
+    left:10px;
+    right:10px;
+    top:0;
+    height:1px;
+    background:rgba(255,255,255,.12);
+  }
+  .benefits .benefit-item:nth-child(3)::before{display:none}
+  .benefits .benefit-item strong{font-size:7px;letter-spacing:.14em}
+  .benefits .benefit-item small{font-size:8px;white-space:normal;line-height:1.35}
+}
+@media(max-width:430px){
+  .benefits{padding:15px 4vw}
+  .benefits .benefit-item{gap:10px;padding:11px 7px}
+  .benefits .benefit-icon{width:24px;height:24px;flex-basis:24px}
+  .benefits .benefit-icon svg{width:24px;height:24px}
+}
