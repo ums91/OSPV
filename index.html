@@ -193,14 +193,38 @@
   <div class="collection-rail" aria-label="Browse photograph collections">
     <div class="collection-rail-label">EXPLORE BY</div>
     <div class="collection-tabs" role="tablist" aria-label="Photograph collections">
-      <button class="collection-tab active" type="button" data-collection="all" role="tab" aria-selected="true">ALL WORKS</button>
-      <button class="collection-tab" type="button" data-collection="landscapes" role="tab" aria-selected="false">LANDSCAPES</button>
-      <button class="collection-tab" type="button" data-collection="autumn" role="tab" aria-selected="false">AUTUMN</button>
-      <button class="collection-tab" type="button" data-collection="winter" role="tab" aria-selected="false">WINTER</button>
-      <button class="collection-tab" type="button" data-collection="architecture" role="tab" aria-selected="false">ARCHITECTURE</button>
+      <button class="collection-tab active" type="button" data-collection="all" role="tab" aria-selected="true">
+        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><span>ALL WORKS</span>
+      </button>
+      <button class="collection-tab" type="button" data-collection="landscapes" role="tab" aria-selected="false">
+        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 19 9.2 10.8l3.7 4.1 2.7-3.2L21 19H3Z"/><path d="m6.8 19 5.4-7.1L17.5 19"/></svg></span><span>LANDSCAPES</span>
+      </button>
+      <button class="collection-tab" type="button" data-collection="autumn" role="tab" aria-selected="false">
+        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V8"/><path d="M12 12c-4.5-.2-6.6-2.5-6.8-6.5C9.2 5.5 11.5 7 12 10"/><path d="M12 15c4.2-.2 6.4-2.2 6.7-5.9-4 .1-6.1 1.6-6.7 4.6"/></svg></span><span>AUTUMN</span>
+      </button>
+      <button class="collection-tab" type="button" data-collection="winter" role="tab" aria-selected="false">
+        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M7 5.8l2.1 2.1M17 18.2l-2.1-2.1M17 5.8l-2.1 2.1M7 18.2l2.1-2.1"/></svg></span><span>WINTER</span>
+      </button>
+      <button class="collection-tab" type="button" data-collection="architecture" role="tab" aria-selected="false">
+        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 20h14M7 20V9h10v11M5 9h14L12 4 5 9Z"/><path d="M9 12h2M13 12h2M9 15h2M13 15h2"/></svg></span><span>ARCHITECTURE</span>
+      </button>
     </div>
   </div>
-  <div class="collection-context" id="collectionContext" aria-live="polite">Showing the complete UMS91 archive.</div>
+  <div class="collection-archive-meta">
+    <div class="collection-context" id="collectionContext" aria-live="polite">Showing the complete UMS91 archive.</div>
+    <div class="collection-count" id="collectionCount">24 WORKS</div>
+    <div class="collection-sort">
+      <button class="collection-sort-button" id="collectionSortButton" type="button" aria-expanded="false" aria-controls="collectionSortMenu">
+        <span>SORT</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+      </button>
+      <div class="collection-sort-menu" id="collectionSortMenu" role="menu" hidden>
+        <button type="button" role="menuitemradio" aria-checked="true" data-sort="curated">Curated</button>
+        <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-asc">Price: Low to High</button>
+        <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-desc">Price: High to Low</button>
+        <button type="button" role="menuitemradio" aria-checked="false" data-sort="title">Title: A–Z</button>
+      </div>
+    </div>
+  </div>
   <nav class="collection-page-links" aria-label="Explore collection pages">
     <a href="collections/index.html">ALL WORKS <span>↗</span></a>
     <a href="collections/landscapes.html">LANDSCAPES <span>↗</span></a>

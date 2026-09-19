@@ -509,3 +509,44 @@ html body .sale-announcement a{pointer-events:auto !important;}
   .collection-tab{font-size:7px}
   .collection-context{font-size:8px;margin-bottom:22px}
 }
+
+/* UMS91 — MOBILE COLLECTION DISCOVERY / SORT POLISH */
+.collection-icon{display:none}
+.collection-archive-meta{display:flex;align-items:center;gap:18px;margin:0 0 28px;min-height:34px}
+.collection-archive-meta .collection-context{flex:1;margin:0}
+.collection-count{font-size:8px;line-height:1;letter-spacing:.2em;color:#9a7950;white-space:nowrap}
+.collection-sort{position:relative;flex:0 0 auto}
+.collection-sort-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:42px;padding:0 15px;border:1px solid #d8d1c7;background:rgba(255,255,255,.42);color:#24231f;font:500 8px/1 "DM Sans",sans-serif;letter-spacing:.17em;cursor:pointer;appearance:none;-webkit-appearance:none}
+.collection-sort-button svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5}
+.collection-sort-menu{position:absolute;right:0;top:calc(100% + 8px);width:188px;padding:7px;background:#f8f4ec;border:1px solid #d8d1c7;box-shadow:0 14px 32px rgba(35,30,24,.12);z-index:30}
+.collection-sort-menu[hidden]{display:none}
+.collection-sort-menu button{display:block;width:100%;padding:11px 12px;border:0;background:transparent;color:#666159;text-align:left;font:500 9px/1.2 "DM Sans",sans-serif;letter-spacing:.05em;cursor:pointer}
+.collection-sort-menu button:hover,.collection-sort-menu button[aria-checked="true"]{background:#eee8dd;color:#171714}
+
+@media(max-width:720px){
+  .collection-rail{display:block;margin:-6px 0 18px;padding:17px 0 16px;border-top:1px solid #d8d1c7;border-bottom:1px solid #d8d1c7}
+  .collection-rail-label{margin:0 0 13px;font-size:7px;letter-spacing:.25em}
+  .collection-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;align-items:stretch}
+  .collection-tab{display:flex!important;min-width:0;min-height:74px!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 3px!important;border:1px solid #e3ddd4!important;background:#f8f5ef!important;color:#555149!important;font-size:6.5px!important;line-height:1.15!important;letter-spacing:.08em!important;white-space:normal;transition:background .2s ease,color .2s ease,border-color .2s ease}
+  .collection-tab::after{display:none}
+  .collection-tab.active{background:#1d1c19!important;border-color:#1d1c19!important;color:#c7a36d!important}
+  .collection-icon{display:flex;width:23px;height:23px;align-items:center;justify-content:center;flex:0 0 23px}
+  .collection-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+  .collection-tab[data-collection="all"] .collection-icon svg rect{fill:none}
+  .collection-archive-meta{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;margin:0 0 22px;min-height:42px}
+  .collection-archive-meta .collection-context{font-size:7.5px;line-height:1.5;color:#77736b;max-width:145px}
+  .collection-count{font-size:7px;letter-spacing:.16em}
+  .collection-sort-button{min-height:42px;padding:0 12px;gap:7px;font-size:7px;letter-spacing:.15em;background:#f8f5ef}
+  .collection-sort-menu{width:180px}
+  .collection-page-links{display:none!important}
+}
+
+@media(max-width:380px){
+  .collection-tabs{gap:5px}
+  .collection-tab{min-height:70px!important;font-size:6px!important;padding-left:2px!important;padding-right:2px!important}
+  .collection-icon{width:21px;height:21px;flex-basis:21px}
+  .collection-icon svg{width:20px;height:20px}
+  .collection-archive-meta{grid-template-columns:minmax(0,1fr) auto auto;gap:7px}
+  .collection-count{font-size:6.5px}
+  .collection-sort-button{padding:0 9px}
+}

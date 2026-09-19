@@ -66,14 +66,25 @@ const collectionMembers={
 const collectionLabels={all:"Showing the complete UMS91 archive.",landscapes:"Landscapes, water and open country from the UMS91 archive.",autumn:"Autumn frames selected for warm light, foliage and seasonal atmosphere.",winter:"Winter frames shaped by snow, muted water and colder light.",architecture:"Courtyards, gardens and built spaces from the visual archive."};
 let activeCollection="all";
 let activeType="all";
+let activeSort="curated";
+function sortProductList(list){
+  const copy=[...list];
+  if(activeSort==="price-asc") return copy.sort((a,b)=>Number(a.price||0)-Number(b.price||0));
+  if(activeSort==="price-desc") return copy.sort((a,b)=>Number(b.price||0)-Number(a.price||0));
+  if(activeSort==="title") return copy.sort((a,b)=>String(a.title||"").localeCompare(String(b.title||""),undefined,{sensitivity:"base"}));
+  return copy;
+}
 function renderProducts(type=activeType,collection=activeCollection){
   const el=$("#products"); if(!el)return;
   activeType=type; activeCollection=collection;
   const members=collectionMembers[collection];
-  const list=products.filter(p=>(type==="all"||p.type===type)&&(!members||members.has(String(p.id))));
+  const list=sortProductList(products.filter(p=>(type==="all"||p.type===type)&&(!members||members.has(String(p.id)))));
   el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
   const context=$("#collectionContext");
   if(context)context.textContent=collectionLabels[collection]||collectionLabels.all;
+  const count=$("#collectionCount");
+  if(count)count.textContent=`${list.length} ${list.length===1?"WORK":"WORKS"}`;
+  $$("[data-sort]").forEach(btn=>btn.setAttribute("aria-checked",btn.dataset.sort===activeSort?"true":"false"));
   $$(".product").forEach(card=>card.addEventListener("click",e=>{if(!e.target.closest("button"))openProduct(card.dataset.product)}));
   $$('[data-view]').forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openProduct(btn.dataset.view)}));
 }
@@ -461,6 +472,18 @@ async function init(){
     syncCollectionTabs();
     renderProducts(activeType,activeCollection);
   });
+  const sortButton=$("#collectionSortButton"), sortMenu=$("#collectionSortMenu");
+  if(sortButton&&sortMenu){
+    const closeSort=()=>{sortMenu.hidden=true;sortButton.setAttribute("aria-expanded","false")};
+    sortButton.onclick=e=>{e.preventDefault();sortMenu.hidden=!sortMenu.hidden;sortButton.setAttribute("aria-expanded",sortMenu.hidden?"false":"true")};
+    $$("[data-sort]").forEach(btn=>btn.onclick=()=>{
+      activeSort=btn.dataset.sort||"curated";
+      closeSort();
+      renderProducts(activeType,activeCollection);
+    });
+    document.addEventListener("click",e=>{if(!e.target.closest(".collection-sort"))closeSort()});
+    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSort()});
+  }
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#cartLines").addEventListener("click",e=>{
     const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");
