@@ -67,24 +67,17 @@ const collectionLabels={all:"Showing the complete UMS91 archive.",landscapes:"La
 let activeCollection="all";
 let activeType="all";
 let activeSort="curated";
-function sortProductList(list){
-  const copy=[...list];
-  if(activeSort==="price-asc") return copy.sort((a,b)=>Number(a.price||0)-Number(b.price||0));
-  if(activeSort==="price-desc") return copy.sort((a,b)=>Number(b.price||0)-Number(a.price||0));
-  if(activeSort==="title") return copy.sort((a,b)=>String(a.title||"").localeCompare(String(b.title||""),undefined,{sensitivity:"base"}));
-  return copy;
-}
 function renderProducts(type=activeType,collection=activeCollection){
   const el=$("#products"); if(!el)return;
   activeType=type; activeCollection=collection;
   const members=collectionMembers[collection];
-  const list=sortProductList(products.filter(p=>(type==="all"||p.type===type)&&(!members||members.has(String(p.id)))));
+  let list=products.filter(p=>(type==="all"||p.type===type)&&(!members||members.has(String(p.id))));
+  if(activeSort==="price-low") list=[...list].sort((a,b)=>Number(a.price)-Number(b.price));
+  else if(activeSort==="price-high") list=[...list].sort((a,b)=>Number(b.price)-Number(a.price));
+  else if(activeSort==="title") list=[...list].sort((a,b)=>String(a.title).localeCompare(String(b.title)));
   el.innerHTML=list.map((p,i)=>productCard(p,i)).join("");
   const context=$("#collectionContext");
   if(context)context.textContent=collectionLabels[collection]||collectionLabels.all;
-  const count=$("#collectionCount");
-  if(count)count.textContent=`${list.length} ${list.length===1?"WORK":"WORKS"}`;
-  $$("[data-sort]").forEach(btn=>btn.setAttribute("aria-checked",btn.dataset.sort===activeSort?"true":"false"));
   $$(".product").forEach(card=>card.addEventListener("click",e=>{if(!e.target.closest("button"))openProduct(card.dataset.product)}));
   $$('[data-view]').forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();openProduct(btn.dataset.view)}));
 }
@@ -95,8 +88,35 @@ function syncCollectionTabs(){
     btn.setAttribute("aria-selected",active?"true":"false");
   });
 }
-function syncTypeFilters(){
-  $$(".filters [data-filter]").forEach(btn=>btn.classList.toggle("active",btn.dataset.filter===activeType));
+function collectionIconMarkup(name){
+  const icons={
+    all:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+    landscapes:'<svg viewBox="0 0 28 24"><path d="M2 21 10.5 9l4.3 5.2L18 8l8 13Z"/><path d="M8 16.2 10.5 13l2.2 2.7"/></svg>',
+    autumn:'<svg viewBox="0 0 24 24"><path d="M12 21c-1-5.2.1-10.4 5.9-15.8C19 11.2 17.5 17.7 12 21Z"/><path d="M12 21c-2.4-4.1-5.2-6.8-8.8-8.2C4.5 18 8.2 20.5 12 21Z"/><path d="M12 21V7"/></svg>',
+    winter:'<svg viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M7.5 4.6 12 9l4.5-4.4M7.5 19.4 12 15l4.5 4.4M4.2 12h15.6"/></svg>',
+    architecture:'<svg viewBox="0 0 24 24"><path d="M4 21h16M6 18V8h12v10M3 8h18M5 5h14M8 3h8M9 11v7M15 11v7"/></svg>'
+  };
+  return icons[name]||icons.all;
+}
+function syncArchiveControls(){
+  const label=$("#collectionFilterLabel");
+  const icon=$("[data-control-icon=collection]");
+  if(label) label.textContent=({all:"ALL WORKS",landscapes:"LANDSCAPES",autumn:"AUTUMN",winter:"WINTER",architecture:"ARCHITECTURE"}[activeCollection]||"ALL WORKS");
+  if(icon) icon.innerHTML=collectionIconMarkup(activeCollection);
+  $$("[data-menu-collection]").forEach(btn=>btn.classList.toggle("active",btn.dataset.menuCollection===activeCollection));
+  $$("[data-menu-type]").forEach(btn=>btn.classList.toggle("active",btn.dataset.menuType===activeType));
+  $$("[data-sort]").forEach(btn=>btn.classList.toggle("active",btn.dataset.sort===activeSort));
+}
+function closeArchiveMenus(except){
+  ["collectionFilterMenu","formatFilterMenu","sortMenu"].forEach(id=>{
+    const menu=$("#"+id),btn=$("#"+({collectionFilterMenu:"collectionFilterBtn",formatFilterMenu:"formatFilterBtn",sortMenu:"sortBtn"}[id]));
+    if(!menu||!btn)return;
+    if(id!==except){menu.hidden=true;btn.setAttribute("aria-expanded","false");}
+  });
+}
+function toggleArchiveMenu(menuId,buttonId){
+  const menu=$("#"+menuId),btn=$("#"+buttonId); if(!menu||!btn)return;
+  const opening=menu.hidden; closeArchiveMenus(opening?menuId:null); menu.hidden=!opening; btn.setAttribute("aria-expanded",opening?"true":"false");
 }
 function syncOverlayLock(){
   const anyOverlay=["#searchModal","#mobileMenu","#videoModal"].some(id=>$(id)?.classList.contains("open"));
@@ -395,7 +415,7 @@ async function init(){
   try{
     products=await loadProducts();
     store=new Store(products);
-    renderMini();renderProducts();syncCollectionTabs();syncTypeFilters();renderCart();loadReels();
+    renderMini();renderProducts();syncCollectionTabs();syncArchiveControls();syncTypeFilters();renderCart();loadReels();
     // If a photograph URL was shared directly, open that exact photograph.
     try{
       const photoId=new URL(window.location.href).searchParams.get("photo");
@@ -462,28 +482,25 @@ async function init(){
     }
   });
 
-  $$(".filters button").forEach(b=>b.onclick=()=>{
-    activeType=b.dataset.filter;
-    syncTypeFilters();
-    renderProducts(activeType,activeCollection);
-  });
   $$(".collection-tab").forEach(b=>b.onclick=()=>{
     activeCollection=b.dataset.collection;
     syncCollectionTabs();
+    syncArchiveControls();
     renderProducts(activeType,activeCollection);
   });
-  const sortButton=$("#collectionSortButton"), sortMenu=$("#collectionSortMenu");
-  if(sortButton&&sortMenu){
-    const closeSort=()=>{sortMenu.hidden=true;sortButton.setAttribute("aria-expanded","false")};
-    sortButton.onclick=e=>{e.preventDefault();sortMenu.hidden=!sortMenu.hidden;sortButton.setAttribute("aria-expanded",sortMenu.hidden?"false":"true")};
-    $$("[data-sort]").forEach(btn=>btn.onclick=()=>{
-      activeSort=btn.dataset.sort||"curated";
-      closeSort();
-      renderProducts(activeType,activeCollection);
-    });
-    document.addEventListener("click",e=>{if(!e.target.closest(".collection-sort"))closeSort()});
-    document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSort()});
-  }
+  $("#collectionFilterBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("collectionFilterMenu","collectionFilterBtn")});
+  $("#formatFilterBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("formatFilterMenu","formatFilterBtn")});
+  $("#sortBtn")?.addEventListener("click",e=>{e.stopPropagation();toggleArchiveMenu("sortMenu","sortBtn")});
+  $$("[data-menu-collection]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation(); activeCollection=b.dataset.menuCollection; syncCollectionTabs(); syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+  }));
+  $$("[data-menu-type]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation(); activeType=b.dataset.menuType; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+  }));
+  $$("[data-sort]").forEach(b=>b.addEventListener("click",e=>{
+    e.stopPropagation(); activeSort=b.dataset.sort; syncArchiveControls(); renderProducts(activeType,activeCollection); closeArchiveMenus();
+  }));
+  document.addEventListener("click",e=>{if(!e.target.closest(".archive-control-group"))closeArchiveMenus()});
   $$('[data-close]').forEach(b=>b.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();close("#"+b.dataset.close)}));
   $("#cartLines").addEventListener("click",e=>{
     const plus=e.target.closest("[data-cart-plus]"),minus=e.target.closest("[data-cart-minus]"),remove=e.target.closest("[data-remove]");

@@ -188,40 +188,65 @@
 </section>
 <section class="shop" id="shop">
   <div class="shop-head">
-    <div><p class="eyebrow dark">04 — THE COLLECTION</p><h2>Own the frame.</h2></div><div class="filters"><button class="active" data-filter="all">ALL</button><button data-filter="Fine Art Print">PRINTS</button><button data-filter="Postcard">POSTCARDS</button></div>
+    <div><p class="eyebrow dark">04 — THE COLLECTION</p><h2>Own the frame.</h2></div>
   </div>
-  <div class="collection-rail" aria-label="Browse photograph collections">
-    <div class="collection-rail-label">EXPLORE BY</div>
+  <div class="collection-rail collection-icon-rail" aria-label="Browse photograph collections">
     <div class="collection-tabs" role="tablist" aria-label="Photograph collections">
       <button class="collection-tab active" type="button" data-collection="all" role="tab" aria-selected="true">
-        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span><span>ALL WORKS</span>
+        <span class="collection-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span><span>ALL WORKS</span>
       </button>
       <button class="collection-tab" type="button" data-collection="landscapes" role="tab" aria-selected="false">
-        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M3 19 9.2 10.8l3.7 4.1 2.7-3.2L21 19H3Z"/><path d="m6.8 19 5.4-7.1L17.5 19"/></svg></span><span>LANDSCAPES</span>
+        <span class="collection-tab-icon" aria-hidden="true"><svg viewBox="0 0 28 24"><path d="M2 21 10.5 9l4.3 5.2L18 8l8 13Z"/><path d="M8 16.2 10.5 13l2.2 2.7"/></svg></span><span>LANDSCAPES</span>
       </button>
       <button class="collection-tab" type="button" data-collection="autumn" role="tab" aria-selected="false">
-        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 20V8"/><path d="M12 12c-4.5-.2-6.6-2.5-6.8-6.5C9.2 5.5 11.5 7 12 10"/><path d="M12 15c4.2-.2 6.4-2.2 6.7-5.9-4 .1-6.1 1.6-6.7 4.6"/></svg></span><span>AUTUMN</span>
+        <span class="collection-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21c-1-5.2.1-10.4 5.9-15.8C19 11.2 17.5 17.7 12 21Z"/><path d="M12 21c-2.4-4.1-5.2-6.8-8.8-8.2C4.5 18 8.2 20.5 12 21Z"/><path d="M12 21V7"/></svg></span><span>AUTUMN</span>
       </button>
       <button class="collection-tab" type="button" data-collection="winter" role="tab" aria-selected="false">
-        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9M7 5.8l2.1 2.1M17 18.2l-2.1-2.1M17 5.8l-2.1 2.1M7 18.2l2.1-2.1"/></svg></span><span>WINTER</span>
+        <span class="collection-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v20M3.3 7l17.4 10M3.3 17 20.7 7M7.5 4.6 12 9l4.5-4.4M7.5 19.4 12 15l4.5 4.4M4.2 12h15.6"/></svg></span><span>WINTER</span>
       </button>
       <button class="collection-tab" type="button" data-collection="architecture" role="tab" aria-selected="false">
-        <span class="collection-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M5 20h14M7 20V9h10v11M5 9h14L12 4 5 9Z"/><path d="M9 12h2M13 12h2M9 15h2M13 15h2"/></svg></span><span>ARCHITECTURE</span>
+        <span class="collection-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21h16M6 18V8h12v10M3 8h18M5 5h14M8 3h8M9 11v7M15 11v7"/></svg></span><span>ARCHITECTURE</span>
       </button>
     </div>
   </div>
-  <div class="collection-archive-meta">
-    <div class="collection-context" id="collectionContext" aria-live="polite">Showing the complete UMS91 archive.</div>
-    <div class="collection-count" id="collectionCount">24 WORKS</div>
-    <div class="collection-sort">
-      <button class="collection-sort-button" id="collectionSortButton" type="button" aria-expanded="false" aria-controls="collectionSortMenu">
-        <span>SORT</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+  <div class="collection-context" id="collectionContext" aria-live="polite">Showing the complete UMS91 archive.</div>
+  <div class="archive-controls" aria-label="Collection filters and sorting">
+    <div class="archive-explore-label">EXPLORE BY</div>
+    <div class="archive-control-group">
+      <button class="archive-control archive-explore" id="collectionFilterBtn" type="button" aria-expanded="false" aria-controls="collectionFilterMenu">
+        <span class="archive-control-icon" data-control-icon="collection" aria-hidden="true"></span><span id="collectionFilterLabel">ALL WORKS</span><span class="archive-chevron">⌄</span>
       </button>
-      <div class="collection-sort-menu" id="collectionSortMenu" role="menu" hidden>
-        <button type="button" role="menuitemradio" aria-checked="true" data-sort="curated">Curated</button>
-        <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-asc">Price: Low to High</button>
-        <button type="button" role="menuitemradio" aria-checked="false" data-sort="price-desc">Price: High to Low</button>
-        <button type="button" role="menuitemradio" aria-checked="false" data-sort="title">Title: A–Z</button>
+      <div class="archive-menu collection-filter-menu" id="collectionFilterMenu" hidden>
+        <div class="archive-menu-title">EXPLORE BY</div>
+        <button type="button" data-menu-collection="all"><span class="menu-item-icon" data-menu-icon="all"></span><span>ALL WORKS</span></button>
+        <button type="button" data-menu-collection="landscapes"><span class="menu-item-icon" data-menu-icon="landscapes"></span><span>LANDSCAPES</span></button>
+        <button type="button" data-menu-collection="autumn"><span class="menu-item-icon" data-menu-icon="autumn"></span><span>AUTUMN</span></button>
+        <button type="button" data-menu-collection="winter"><span class="menu-item-icon" data-menu-icon="winter"></span><span>WINTER</span></button>
+        <button type="button" data-menu-collection="architecture"><span class="menu-item-icon" data-menu-icon="architecture"></span><span>ARCHITECTURE</span></button>
+        <div class="archive-menu-divider"></div>
+        <div class="archive-menu-title">FORMAT</div>
+        <button type="button" data-menu-type="all"><span>ALL FORMATS</span></button>
+        <button type="button" data-menu-type="Fine Art Print"><span>FINE ART PRINTS</span></button>
+        <button type="button" data-menu-type="Postcard"><span>POSTCARDS</span></button>
+      </div>
+    </div>
+    <div class="archive-control-group archive-filter-group">
+      <button class="archive-control" id="formatFilterBtn" type="button" aria-expanded="false" aria-controls="formatFilterMenu"><span class="archive-control-icon filter-icon" aria-hidden="true"></span><span>FILTER</span><span class="archive-chevron">⌄</span></button>
+      <div class="archive-menu format-filter-menu" id="formatFilterMenu" hidden>
+        <div class="archive-menu-title">FILTER</div>
+        <button type="button" data-menu-type="all">ALL FORMATS</button>
+        <button type="button" data-menu-type="Fine Art Print">FINE ART PRINTS</button>
+        <button type="button" data-menu-type="Postcard">POSTCARDS</button>
+      </div>
+    </div>
+    <div class="archive-control-group archive-sort-group">
+      <button class="archive-control" id="sortBtn" type="button" aria-expanded="false" aria-controls="sortMenu"><span class="archive-control-icon sort-icon" aria-hidden="true"></span><span>SORT</span><span class="archive-chevron">⌄</span></button>
+      <div class="archive-menu sort-menu" id="sortMenu" hidden>
+        <div class="archive-menu-title">SORT BY</div>
+        <button type="button" data-sort="curated">CURATED</button>
+        <button type="button" data-sort="price-low">PRICE: LOW TO HIGH</button>
+        <button type="button" data-sort="price-high">PRICE: HIGH TO LOW</button>
+        <button type="button" data-sort="title">TITLE: A–Z</button>
       </div>
     </div>
   </div>
