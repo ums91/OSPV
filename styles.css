@@ -697,3 +697,97 @@ html body .sale-announcement a{pointer-events:auto !important;}
   .archive-control-group:first-of-type .archive-control{padding-right:8px!important}
   .archive-control-icon{display:none}
 }
+
+/* UMS91 — FINAL COLLECTION SCALE / ORIGINAL TYPOGRAPHY
+   Preserve the original collection typography while keeping the new icon controls compact. */
+.collection-icon-rail .collection-tab{
+  min-height:78px!important;
+  padding:10px 6px 9px!important;
+  gap:7px;
+}
+.collection-tab-icon{
+  width:16px!important;
+  height:16px!important;
+}
+.collection-tab-icon svg{
+  width:14px!important;
+  height:14px!important;
+  stroke-width:1.45;
+}
+.collection-tab>span:last-child{
+  font-size:8px!important;
+  line-height:1!important;
+  letter-spacing:.16em!important;
+}
+.collection-context{
+  font-size:9px!important;
+  line-height:1.6!important;
+  letter-spacing:.03em!important;
+  margin:0 0 20px!important;
+  text-transform:none!important;
+}
+.archive-explore-label{
+  font-size:7px!important;
+  letter-spacing:.24em!important;
+}
+.archive-control{
+  min-height:46px;
+  font-size:8px!important;
+  letter-spacing:.16em!important;
+}
+.archive-control-icon{
+  width:17px;
+  height:17px;
+  flex-basis:17px;
+}
+.archive-control-icon svg{
+  width:16px;
+  height:16px;
+}
+.archive-control-icon.sort-icon::before{font-size:18px}
+.archive-chevron{font-size:13px}
+
+@media(max-width:720px){
+  .collection-icon-rail .collection-tabs{gap:4px}
+  .collection-icon-rail .collection-tab{
+    min-height:64px!important;
+    padding:8px 3px 7px!important;
+    gap:5px;
+  }
+  .collection-tab-icon{
+    width:15px!important;
+    height:15px!important;
+  }
+  .collection-tab-icon svg{
+    width:13px!important;
+    height:13px!important;
+  }
+  .collection-tab>span:last-child{
+    font-size:7px!important;
+    letter-spacing:.12em!important;
+  }
+  .collection-context{
+    font-size:8px!important;
+    letter-spacing:.03em!important;
+    margin-bottom:16px!important;
+  }
+  .archive-explore-label{font-size:7px!important}
+  .archive-control{
+    min-height:43px;
+    font-size:6.5px!important;
+    letter-spacing:.11em!important;
+  }
+  .archive-control-icon{
+    width:16px;
+    height:16px;
+    flex-basis:16px;
+  }
+  .archive-control-icon svg{width:15px;height:15px}
+  .archive-control-icon.sort-icon::before{font-size:17px}
+}
+@media(max-width:390px){
+  .collection-icon-rail .collection-tab{min-height:60px!important}
+  .collection-tab-icon{width:14px!important;height:14px!important}
+  .collection-tab-icon svg{width:12px!important;height:12px!important}
+  .collection-tab>span:last-child{font-size:6.5px!important;letter-spacing:.09em!important}
+}
