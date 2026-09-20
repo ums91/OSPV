@@ -1,5 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <rect width="64" height="64" rx="14" fill="#10110f"/>
-  <path d="M18 17h6v19a8 8 0 0 0 16 0V17h6v19a14 14 0 0 1-28 0V17Z" fill="#f2efe8"/>
-  <circle cx="50" cy="15" r="3" fill="#f2efe8"/>
+  <g fill="none" stroke="#d8b27a" stroke-width="1.5" opacity=".95">
+    <path d="M9 27 A23 23 0 0 1 55 27"/>
+  </g>
+  <g fill="#d9d3c8">
+    <path d="M14 28 L23 20 L28 24 L36 14 L43 23 L50 20 L55 28 L46 25 L41 28 L36 21 L31 29 L26 25 L21 29 Z"/>
+  </g>
+  <text x="32" y="46" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="15" font-weight="700" letter-spacing="-1.2"
+        fill="#f2efe8">UMS<tspan fill="#d8b27a">91</tspan></text>
 </svg>
