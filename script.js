@@ -630,10 +630,11 @@ async function init(){
     const flake=document.createElement("span");
     flake.className="snowflake";
     flake.setAttribute("aria-hidden","true");
+    flake.innerHTML='<svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><g class="flake-main"><path d="M20 3v34M5.3 11.5l29.4 17M5.3 28.5l29.4-17"/><path d="M20 3l-3.2 4M20 3l3.2 4M20 37l-3.2-4M20 37l3.2-4"/><path d="M5.3 11.5l5.1.2M5.3 11.5l1.5 4.8M34.7 28.5l-5.1-.2M34.7 28.5l-1.5-4.8"/><path d="M5.3 28.5l1.5-4.8M5.3 28.5l5.1-.2M34.7 11.5l-1.5 4.8M34.7 11.5l-5.1.2"/></g></svg>';
     flake.style.left=rand(0,100).toFixed(2)+"%";
-    flake.style.setProperty("--snow-size",rand(mobile?2:2.5,mobile?4.5:6.5).toFixed(1)+"px");
+    flake.style.setProperty("--snow-size",rand(mobile?10:12,mobile?16:21).toFixed(1)+"px");
     flake.style.setProperty("--drift",rand(-90,90).toFixed(0)+"px");
-    flake.style.setProperty("--snow-opacity",rand(.35,.78).toFixed(2));
+    flake.style.setProperty("--snow-opacity",rand(.38,.82).toFixed(2));
     flake.style.setProperty("--fall",rand(11,21).toFixed(2)+"s");
     flake.style.setProperty("--delay",(-rand(0,21)).toFixed(2)+"s");
     ambient.appendChild(flake);
