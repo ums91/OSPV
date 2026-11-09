@@ -130,72 +130,48 @@ footer .ums91-flag-link img{
   }
 }
 
-/* ── Autumn Chinar atmosphere ───────────────────────────────────────────── */
-/* Fixed to the viewport so leaves continue falling while the page scrolls,
-   including across the sections all the way to the footer. */
-.chinar-ambient{
+/* ── Winter snowfall atmosphere ─────────────────────────────────────────── */
+/* Fixed to the viewport so snow continues falling while the page scrolls,
+   including across sections and down to the footer. */
+.snow-ambient{
   position:fixed;
   inset:0;
   pointer-events:none;
   overflow:hidden;
   z-index:12;
 }
-.chinar-leaf{
-  --leaf-size:26px;
-  --leaf-color:#b55a32;
+.snowflake{
   position:absolute;
   top:-10vh;
   left:0;
-  width:var(--leaf-size);
-  height:calc(var(--leaf-size) * .92);
+  width:var(--snow-size,5px);
+  height:var(--snow-size,5px);
+  border-radius:50%;
+  background:rgba(245,249,255,.94);
   opacity:0;
-  transform-origin:48% 45%;
+  filter:drop-shadow(0 0 3px rgba(210,229,255,.42));
   will-change:transform,opacity;
-  filter:drop-shadow(0 2px 2px rgba(35,20,10,.18));
-  animation:chinarFall var(--fall,12s) linear var(--delay,0s) infinite;
+  animation:snowFall var(--fall,14s) linear var(--delay,0s) infinite;
 }
-.chinar-leaf::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:var(--leaf-color);
-  clip-path:polygon(50% 0%,58% 22%,76% 10%,73% 34%,100% 31%,82% 50%,98% 63%,72% 62%,78% 88%,58% 72%,50% 100%,42% 72%,22% 88%,28% 62%,2% 63%,18% 50%,0% 31%,27% 34%,24% 10%,42% 22%);
-  border-radius:40% 45% 42% 46%;
+@keyframes snowFall{
+  0%{transform:translate3d(0,-12vh,0);opacity:0}
+  8%{opacity:var(--snow-opacity,.62)}
+  25%{transform:translate3d(calc(var(--drift)*.22),25vh,0)}
+  50%{transform:translate3d(calc(var(--drift)*.58),50vh,0)}
+  75%{transform:translate3d(calc(var(--drift)*.82),75vh,0)}
+  94%{opacity:var(--snow-opacity,.62)}
+  100%{transform:translate3d(var(--drift),112vh,0);opacity:0}
 }
-.chinar-leaf::after{
-  content:"";
-  position:absolute;
-  left:48%;
-  top:3%;
-  width:1px;
-  height:93%;
-  background:rgba(91,49,28,.42);
-  transform:rotate(var(--vein-tilt,0deg));
-  transform-origin:center;
-}
-@keyframes chinarFall{
-  0%{transform:translate3d(0,-12vh,0) rotate(var(--r0,0deg)) scale(var(--scale,1));opacity:0}
-  7%{opacity:var(--opacity,.62)}
-  28%{transform:translate3d(calc(var(--drift)*.28),28vh,0) rotate(calc(var(--spin)*.3 + var(--r0,0deg))) scale(var(--scale,1))}
-  52%{transform:translate3d(calc(var(--drift)*.62),52vh,0) rotate(calc(var(--spin)*.58 + var(--r0,0deg))) scale(var(--scale,1))}
-  76%{transform:translate3d(calc(var(--drift)*.84),76vh,0) rotate(calc(var(--spin)*.82 + var(--r0,0deg))) scale(var(--scale,1))}
-  94%{opacity:var(--opacity,.62)}
-  100%{transform:translate3d(var(--drift),112vh,0) rotate(calc(var(--spin) + var(--r0,0deg))) scale(var(--scale,1));opacity:0}
-}
-.hero-image img{content-visibility:auto}
-.hero-copy{z-index:8}
-.hero-vignette{z-index:2}
-.hero-page,.hero-scroll{z-index:9}
 @media(max-width:720px){
-  .chinar-leaf{--leaf-size:20px}
+  .snowflake{filter:drop-shadow(0 0 2px rgba(210,229,255,.35))}
 }
 @media(prefers-reduced-motion:reduce){
-  .chinar-leaf{animation:none;opacity:0!important}
+  .snowflake{animation:none;opacity:0!important}
 }
 
-/* ── Autumn Kashmir hero treatment ──────────────────────────────────────── */
+/* ── Winter Kashmir hero treatment ──────────────────────────────────────── */
 .hero{
-  background:#d9d1c6;
+  background:#cbd5df;
 }
 .hero-image{
   width:100%;
@@ -207,14 +183,14 @@ footer .ums91-flag-link img{
   height:100%;
   object-fit:cover;
   object-position:center 47%;
-  filter:saturate(.92) contrast(.98);
+  filter:saturate(.78) contrast(1.02) brightness(.96);
   transform:scale(1.015);
 }
 .hero:hover .hero-image img{transform:scale(1.02)}
 .hero-vignette{
   background:
-    linear-gradient(90deg,rgba(10,12,10,.18) 0%,rgba(243,240,234,.04) 25%,rgba(243,240,234,.18) 48%,rgba(243,240,234,.74) 78%,rgba(243,240,234,.9) 100%),
-    linear-gradient(180deg,rgba(10,10,8,.08) 0%,transparent 42%,rgba(8,9,7,.2) 100%);
+    linear-gradient(90deg,rgba(9,17,27,.22) 0%,rgba(224,235,246,.04) 25%,rgba(224,235,246,.18) 48%,rgba(224,235,246,.72) 78%,rgba(224,235,246,.9) 100%),
+    linear-gradient(180deg,rgba(8,15,24,.12) 0%,transparent 42%,rgba(8,15,24,.24) 100%);
 }
 .hero-copy{
   left:50%;
@@ -224,13 +200,13 @@ footer .ums91-flag-link img{
   transform:translate(-50%,-50%);
   text-align:center;
   padding:28px 34px 32px;
-  border:1px solid rgba(255,255,255,.2);
-  background:rgba(243,240,234,.22);
+  border:1px solid rgba(255,255,255,.32);
+  background:rgba(232,240,248,.28);
   backdrop-filter:blur(2px);
   -webkit-backdrop-filter:blur(2px);
 }
 .hero-copy .eyebrow{
-  color:#6f583d;
+  color:#52677d;
   text-shadow:0 1px 10px rgba(255,255,255,.6);
 }
 .hero h1{
@@ -238,8 +214,8 @@ footer .ums91-flag-link img{
   font-size:clamp(64px,8vw,112px);
   line-height:.9;
   letter-spacing:.08em;
-  color:#171511;
-  text-shadow:0 2px 18px rgba(255,255,255,.48);
+  color:#101b28;
+  text-shadow:0 2px 18px rgba(255,255,255,.55);
 }
 .hero h1 em{color:inherit}
 .hero-subline{
@@ -247,7 +223,7 @@ footer .ums91-flag-link img{
   margin:0 auto;
   font-size:9px;
   letter-spacing:.36em;
-  color:#25221d;
+  color:#26384b;
   font-weight:600;
 }
 .hero-quote{

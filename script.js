@@ -617,31 +617,26 @@ async function init(){
   ["#productModal","#searchModal","#mobileMenu","#videoModal"].forEach(id=>$(id)?.addEventListener("click",e=>{if(e.target===e.currentTarget)close(id)}));
 }
 
-/* Autumn Chinar leaves: same slow, ambient fall language as the wedding reference. */
-(function initChinarLeaves(){
-  const ambient=document.getElementById("chinarAmbient");
+/* Winter snowfall: gentle, low-density flakes across the viewport. */
+(function initSnowfall(){
+  const ambient=document.getElementById("snowAmbient");
   if(!ambient)return;
   const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const mobile=window.matchMedia&&window.matchMedia("(max-width:720px)").matches;
-  const colors=["#a8432a","#b8542e","#c36532","#d17835","#91402a","#9f4828","#c8753a"];
-  const count=mobile?7:9;
-  const rand=(a,b)=>a+Math.random()*(b-a);
+  const count=mobile?15:25;
+  const rand=(min,max)=>min+Math.random()*(max-min);
 
   for(let i=0;i<count;i++){
-    const leaf=document.createElement("span");
-    leaf.className="chinar-leaf";
-    leaf.style.left=rand(0,100).toFixed(2)+"%";
-    leaf.style.setProperty("--leaf-size",rand(mobile?16:19,mobile?25:34).toFixed(1)+"px");
-    leaf.style.setProperty("--leaf-color",colors[Math.floor(Math.random()*colors.length)]);
-    leaf.style.setProperty("--drift",rand(-170,170).toFixed(0)+"px");
-    leaf.style.setProperty("--spin",rand(-620,620).toFixed(0)+"deg");
-    leaf.style.setProperty("--r0",rand(-32,32).toFixed(0)+"deg");
-    leaf.style.setProperty("--vein-tilt",rand(-7,7).toFixed(0)+"deg");
-    leaf.style.setProperty("--scale",rand(.72,1.16).toFixed(2));
-    leaf.style.setProperty("--opacity",rand(.46,.72).toFixed(2));
-    leaf.style.setProperty("--fall",rand(10.5,16.5).toFixed(2)+"s");
-    leaf.style.setProperty("--delay",(-rand(0,16)).toFixed(2)+"s");
-    ambient.appendChild(leaf);
+    const flake=document.createElement("span");
+    flake.className="snowflake";
+    flake.setAttribute("aria-hidden","true");
+    flake.style.left=rand(0,100).toFixed(2)+"%";
+    flake.style.setProperty("--snow-size",rand(mobile?2:2.5,mobile?4.5:6.5).toFixed(1)+"px");
+    flake.style.setProperty("--drift",rand(-90,90).toFixed(0)+"px");
+    flake.style.setProperty("--snow-opacity",rand(.35,.78).toFixed(2));
+    flake.style.setProperty("--fall",rand(11,21).toFixed(2)+"s");
+    flake.style.setProperty("--delay",(-rand(0,21)).toFixed(2)+"s");
+    ambient.appendChild(flake);
   }
   if(reduced)ambient.setAttribute("data-motion-disabled","true");
 })();
